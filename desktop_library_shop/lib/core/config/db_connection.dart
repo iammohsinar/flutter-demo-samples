@@ -3,8 +3,13 @@ import 'dart:async';
 import 'package:desktop_library_shop/core/models/user.dart';
 import 'package:mysql1/mysql1.dart';
 
-void main() {
-  DbConnection().login('mohsin', '123456');
+void main() async {
+  try {
+    User u = await DbConnection().login('mohsin', '123456');
+    print(u == User.initial());
+  } catch (e) {
+    print('caught $e');
+  }
 }
 
 class DbConnection {
@@ -26,16 +31,14 @@ class DbConnection {
   //   var con = await connection;
   //   return await con.query('select * from my_users');
   // }
-  Future<Results> login(String userName, String password) async {
+  Future<User> login(String userName, String password) async {
     try {
       var con = await connection;
-      Results result = await con.query('select u.* from users u');
-      // con.query('select u.userName from users u').then((value) => print(value));
-      print('--- ${result.fields}');
-      //  where u.userName = ? AND u.password = ?',
-      // [userName, password]);
-      return result; //User.fromResult(result.first);
+      Results result = await con.query(
+          'select u.* from users u where userName = ? and password = ?', [userName, password]);
+      return result.isNotEmpty ? User.fromResult(result.first) : User.initial();
     } catch (e) {
+      //return User.initial();
       throw Exception('No record found $e');
     }
   }
