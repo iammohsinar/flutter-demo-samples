@@ -5,7 +5,7 @@ import 'package:mysql1/mysql1.dart';
 
 void main() async {
   try {
-    User u = await DbConnection().login('mohsin', '123456');
+    User u = await DbConnection().getUserData('mohsin', '123456');
     print(u == User.initial());
   } catch (e) {
     print('caught $e');
@@ -19,7 +19,7 @@ class DbConnection {
   static Future<MySqlConnection> _getConnection() async {
     var conn = await MySqlConnection.connect(ConnectionSettings(
         //host: '192.168.0.121',
-        host: '127.0.0.1',
+        host: 'localhost',
         port: 3306,
         user: 'flutter_user',
         db: 'flutter_library_shop_demo',
@@ -31,11 +31,12 @@ class DbConnection {
   //   var con = await connection;
   //   return await con.query('select * from my_users');
   // }
-  Future<User> login(String userName, String password) async {
+  Future<User> getUserData(String userName, String password) async {
     try {
       var con = await connection;
       Results result = await con.query(
-          'select u.* from users u where userName = ? and password = ?', [userName, password]);
+          'select u.* from users u where userName = ? and password = ? and isActive = 1',
+          [userName, password]);
       return result.isNotEmpty ? User.fromResult(result.first) : User.initial();
     } catch (e) {
       //return User.initial();
