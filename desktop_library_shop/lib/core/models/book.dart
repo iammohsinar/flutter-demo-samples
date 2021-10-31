@@ -1,7 +1,9 @@
 import 'package:desktop_library_shop/core/models/student.dart';
 import 'package:desktop_library_shop/core/models/user.dart';
+import 'package:equatable/equatable.dart';
+import 'package:mysql1/src/results/row.dart';
 
-class Book {
+class Book extends Equatable {
   Book({
     required this.bookId,
     required this.title,
@@ -36,6 +38,24 @@ class Book {
   late final User stockKeeper;
   late final DateTime stockOn;
   late final int isIssued;
+
+  Book.initial()
+      : bookId = 0,
+        title = '',
+        author = '',
+        publisher = '',
+        cost = 0,
+        categoryId = 0,
+        borrower = Student.initial(),
+        issuer = User.initial(),
+        issueOn = DateTime.now(),
+        returnOn = DateTime.now(),
+        shouldReturnOn = DateTime.now(),
+        fineAmount = 0,
+        isActive = 0,
+        stockKeeper = User.initial(),
+        stockOn = DateTime.now(),
+        isIssued = 0;
 
   Book.fromJson(Map<String, dynamic> json) {
     bookId = json['bookId'];
@@ -76,4 +96,43 @@ class Book {
     _data['isIssued'] = isIssued;
     return _data;
   }
+
+  Book.fromResult(ResultRow r) {
+    bookId = r['bookId'];
+    title = r['title'];
+    author = r['author'];
+    publisher = r['publisher'];
+    cost = r['cost'];
+    categoryId = r['categoryId'];
+    borrower = Student.fromResult(r);
+    issuer = User.fromResult(r);
+    issueOn = r['issueOn'];
+    returnOn = r['returnOn'] ?? DateTime(DateTime.now().year - 1);
+    shouldReturnOn = r['shouldReturnOn'];
+    fineAmount = r['fineAmount'];
+    isActive = r['isActive'];
+    stockKeeper = User.fromResult(r);
+    stockOn = r['stockOn'];
+    isIssued = r['isIssued'];
+  }
+
+  @override
+  List<Object?> get props => [
+        bookId,
+        title,
+        author,
+        publisher,
+        cost,
+        categoryId,
+        borrower,
+        issuer,
+        issueOn,
+        returnOn,
+        shouldReturnOn,
+        fineAmount,
+        isActive,
+        stockKeeper,
+        stockOn,
+        isIssued
+      ];
 }
