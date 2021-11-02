@@ -13,18 +13,25 @@ class UserDaoImpl extends UserDao {
 
   @override
   Future<bool> getAuthUser(String userName, String password) async {
-    var fetchUser = await _userRepository.getUserData(userName, password);
-    var isAuthenticated = fetchUser != User.initial();
-    if (isAuthenticated) {
-      // add user for global stream
+    try {
+      var fetchUser = await _userRepository.getUserData(userName, password);
+      var isAuthenticated = fetchUser != User.initial();
+      if (isAuthenticated) {
+        // add user for global stream
+      }
+      return isAuthenticated;
+    } catch (e) {
+      rethrow;
     }
-    return isAuthenticated;
   }
 
   @override
-  Future<User> getOne(int id) {
-    // TODO: implement getOne
-    throw UnimplementedError();
+  Future<User> getOne(int id) async {
+    try {
+      return await _userRepository.getUserById(id);
+    } catch (e) {
+      rethrow;
+    }
   }
 }
 

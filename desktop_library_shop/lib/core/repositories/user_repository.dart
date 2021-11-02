@@ -11,20 +11,17 @@ class UserRepository {
           [userName, password]);
       return result.isNotEmpty ? User.fromResult(result.first) : User.initial();
     } catch (e) {
-      //return User.initial();
       throw Exception('No record found $e');
     }
   }
 
-  Future<User> getUserById(String userName, String password) async {
+  Future<User> getUserById(int id) async {
     try {
       var con = await Db.connection;
-      Results result = await con.query(
-          'select u.* from users u where userName = ? and password = ? and isActive = 1',
-          [userName, password]);
+      Results result =
+          await con.query('select u.* from users u where u.userId = ? and isActive = 1', [id]);
       return result.isNotEmpty ? User.fromResult(result.first) : User.initial();
     } catch (e) {
-      //return User.initial();
       throw Exception('No record found $e');
     }
   }
