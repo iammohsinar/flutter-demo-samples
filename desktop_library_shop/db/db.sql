@@ -24,21 +24,22 @@ DROP TABLE IF EXISTS `books`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `books` (
   `bookId` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) NOT NULL,
   `title` varchar(45) DEFAULT NULL,
   `author` varchar(45) DEFAULT NULL,
   `publisher` varchar(45) DEFAULT NULL,
   `cost` int DEFAULT NULL,
   `categoryId` int DEFAULT NULL,
-  `isActive` int DEFAULT NULL,
+  `isActive` int NOT NULL DEFAULT '1',
   `stockKeeper` int DEFAULT NULL,
   `stockOn` datetime DEFAULT NULL,
-  `isIssued` int DEFAULT NULL,
+  `isIssue` int DEFAULT NULL,
   PRIMARY KEY (`bookId`),
   KEY `categoryId_idx` (`categoryId`),
   KEY `stockKeeper_idx` (`stockKeeper`),
   CONSTRAINT `categoryId` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`),
   CONSTRAINT `stockKeeper` FOREIGN KEY (`stockKeeper`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,6 +48,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` VALUES (2,'CS10001','Clean Code','Uncle Bob','abc publisher',23,2,1,1,'2021-11-02 00:00:00',1),(3,'CS10002','Introduction to Algorithms 3rd Edition','Ronald Rivest','xyz publisher',69,2,1,1,'2021-11-02 00:00:00',0),(4,'CS10003','Cracking the Coding Interview','Gayle Laakmann','def publisher',24,2,1,1,'2021-11-02 00:00:00',0);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,9 +62,9 @@ DROP TABLE IF EXISTS `books_borrowed`;
 CREATE TABLE `books_borrowed` (
   `bookId` int NOT NULL,
   `borrower` int NOT NULL,
-  `borrowerOn` datetime NOT NULL,
+  `borrowOn` datetime NOT NULL,
   `issuer` int NOT NULL,
-  `issuedOn` datetime NOT NULL,
+  `issueOn` datetime NOT NULL,
   `returnOn` datetime DEFAULT NULL,
   `shouldReturnOn` datetime DEFAULT NULL,
   `fineAmount` int NOT NULL DEFAULT '0',
@@ -81,6 +83,7 @@ CREATE TABLE `books_borrowed` (
 
 LOCK TABLES `books_borrowed` WRITE;
 /*!40000 ALTER TABLE `books_borrowed` DISABLE KEYS */;
+INSERT INTO `books_borrowed` VALUES (2,1,'2021-11-01 00:00:00',1,'2021-11-01 00:00:00','2021-11-03 14:18:49','2021-11-09 14:09:34',0),(3,1,'2021-11-02 00:00:00',1,'2021-11-02 00:00:00',NULL,'2021-11-10 14:22:24',0);
 /*!40000 ALTER TABLE `books_borrowed` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-01 15:12:22
+-- Dump completed on 2021-11-02 17:43:24

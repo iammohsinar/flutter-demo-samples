@@ -1,10 +1,12 @@
 import 'package:desktop_library_shop/core/enums/state_enums.dart';
 import 'package:desktop_library_shop/core/services/auth_service.dart';
+import 'package:desktop_library_shop/core/services/user_dao.dart';
 import 'package:desktop_library_shop/locator.dart';
 import 'package:flutter/material.dart';
 
 class LoginModel extends ChangeNotifier {
-  final AuthService _authService = loc<AuthService>();
+  //final AuthService _authService = loc<AuthService>();
+  final UserDao _userDao = loc<UserDao>();
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
 
@@ -23,7 +25,7 @@ class LoginModel extends ChangeNotifier {
       return false;
     }
 
-    var success = await _authService.login(userName, password);
+    var success = await _userDao.getAuthUser(userName, password);
     _state = StateEnum.idle;
     notifyListeners();
     return success;
