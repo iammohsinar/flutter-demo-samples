@@ -37,6 +37,7 @@ dependencies:
   mysql1: ^0.19.2
   equatable: ^2.0.3
   get_it: ^7.2.0
+  provider: ^6.0.1
 
 dev_dependencies:
   flutter_test:
