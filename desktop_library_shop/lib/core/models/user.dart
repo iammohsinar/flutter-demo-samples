@@ -31,6 +31,7 @@ class User extends Equatable {
   }
 
   User.fromResult(ResultRow row) {
+    print(row.fields);
     userId = row['userId'];
     userName = row['userName'];
     password = row['password'];

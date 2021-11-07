@@ -1,3 +1,4 @@
+import 'package:desktop_library_shop/core/enums/state_enums.dart';
 import 'package:desktop_library_shop/core/viewmodels/auth_bo.dart';
 import 'package:desktop_library_shop/ui/views/base_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,22 @@ class _LoginViewState extends State<LoginView> {
     return BaseView<AuthBo>(
         builder: (context, model, child) => Scaffold(
               body: Container(
-                child: Text('login'),
+                child: Column(
+                  children: [
+                    const Text('user:Mohsin pass:123456 '),
+                    (model.state == StateEnum.busy)
+                        ? CircularProgressIndicator(
+                            value: null,
+                          )
+                        : ElevatedButton(
+                            onPressed: () async {
+                              var success = await model.login('mohsin', '1234563');
+                              print(success);
+                              if (success) Navigator.pushNamed(context, '/');
+                            },
+                            child: Text('login'))
+                  ],
+                ),
               ),
             ));
   }
