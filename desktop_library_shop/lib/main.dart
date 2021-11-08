@@ -20,7 +20,7 @@ class LibraryShopApp extends StatelessWidget {
       initialData: User.initial(),
       child: MaterialApp(
         title: 'Library Shop',
-        theme: ThemeData(),
+        theme: ThemeData(backgroundColor: const Color(0xFFF7F5ee)),
         initialRoute: 'login',
         onGenerateRoute: AppRouter.generateRoute,
       ),
