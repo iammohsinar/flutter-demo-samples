@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class ElevatedBtn extends StatelessWidget {
+class AppElevatedBtn extends StatelessWidget {
   final FocusNode focusNode;
 
-  final bool isDisabled;
+  final bool isEnable;
   final Function()? onPressedFn;
-  final String imgUrl;
+  String imgUrl;
   final String text;
 
-  ElevatedBtn(
+  AppElevatedBtn(
       {required this.focusNode,
-      required this.isDisabled,
+      required this.isEnable,
       required this.onPressedFn,
-      required this.imgUrl,
+      this.imgUrl = '',
       required this.text,
       Key? key})
       : super(key: key);
@@ -40,17 +40,19 @@ class ElevatedBtn extends StatelessWidget {
                 elevation: 0.0,
                 shadowColor: Colors.transparent,
                 onPrimary: Colors.black),
-            onPressed: (isDisabled) ? null : onPressedFn,
-            child: Container(
+            onPressed: (!isEnable) ? null : onPressedFn,
+            child: SizedBox(
               width: 70.0,
               child: Row(
                 children: [
-                  Image.asset(
-                    imgUrl,
-                    // 'assets/save_icon.png',
-                    width: 26,
-                    height: 26,
-                  ),
+                  (imgUrl != '')
+                      ? Image.asset(
+                          imgUrl,
+                          // 'assets/save_icon.png',
+                          width: 26,
+                          height: 26,
+                        )
+                      : const SizedBox(),
                   Text(
                     text,
                     style: const TextStyle(fontWeight: FontWeight.bold),
