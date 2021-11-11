@@ -42,8 +42,10 @@ class AppElevatedBtn extends StatelessWidget {
                 onPrimary: Colors.black),
             onPressed: (!isEnable) ? null : onPressedFn,
             child: SizedBox(
-              width: 70.0,
+              height: 35.0,
+              width: 80.0,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   (imgUrl != '')
                       ? Image.asset(
@@ -53,9 +55,11 @@ class AppElevatedBtn extends StatelessWidget {
                           height: 26,
                         )
                       : const SizedBox(),
+                  const SizedBox(
+                    width: 5.0,
+                  ),
                   Text(
                     text,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
