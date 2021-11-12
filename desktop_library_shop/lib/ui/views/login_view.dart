@@ -57,10 +57,12 @@ class _LoginViewState extends State<LoginView> {
                     left: MediaQuery.of(context).size.width / 6,
                     right: MediaQuery.of(context).size.width / 6,
                     child: Container(
+                      height: MediaQuery.of(context).size.height / 2,
+                      width: MediaQuery.of(context).size.width / 2,
                       clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0), color: Colors.blue),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
                       child: FittedBox(
+                        fit: BoxFit.cover,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -78,12 +80,12 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height / 5,
-                    left: MediaQuery.of(context).size.width / 2.6,
-                    right: MediaQuery.of(context).size.width / 2.6,
-                    bottom: MediaQuery.of(context).size.height / 2.7,
+                    top: MediaQuery.of(context).size.height / 5.5,
+                    left: MediaQuery.of(context).size.width / 2.8,
+                    right: MediaQuery.of(context).size.width / 2.8,
+                    bottom: MediaQuery.of(context).size.height / 6,
                     child: Container(
-                      padding: const EdgeInsets.only(top: 50.0, left: 35.0, right: 35.0),
+                      padding: const EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: const Color(0xff999999), width: 0.8),
                         borderRadius: BorderRadius.circular(20.0),
@@ -110,7 +112,8 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           UIUtil.vMediumSpace(),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(child: AppTextLabel('User Name')),
                               UIUtil.hSmallSpace(),
@@ -121,15 +124,16 @@ class _LoginViewState extends State<LoginView> {
                                     validationMsg: 'Please type your user name',
                                     icon: Icons.person,
                                     width: 150.0,
-                                    height: 30.0,
+                                    height: 55.0,
                                     current: _userNameFocus,
                                     next: _passwordFocus),
                               ),
                             ],
                           ),
-                          UIUtil.vSmallSpace(),
+                          // UIUtil.vSmallSpace(),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(child: AppTextLabel('Password')),
 
@@ -145,13 +149,13 @@ class _LoginViewState extends State<LoginView> {
                                     validationMsg: 'Please Enter your password',
                                     icon: Icons.vpn_key,
                                     width: 150.0,
-                                    height: 30.0,
+                                    height: 55.0,
                                     current: _passwordFocus,
                                     next: _loginFocus),
                               ),
                             ],
                           ),
-                          UIUtil.vSmallSpace(),
+                          // UIUtil.vSmallSpace(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -171,7 +175,7 @@ class _LoginViewState extends State<LoginView> {
                                   text: 'Login')
                             ],
                           ),
-                          UIUtil.vSmallSpace(),
+                          // UIUtil.vSmallSpace(),
                           // Row(children: [Expanded(child:
                           // A],)
                         ],

@@ -43,17 +43,19 @@ class AppTextFormField extends StatelessWidget {
         },
         focusNode: current,
         decoration: InputDecoration(
+            helperText: ' ',
             prefixIcon: Icon(icon),
             enabled: isEnable,
             contentPadding: const EdgeInsets.all(10.0),
             fillColor: (isEnable) ? const Color(0xFFFFFFD6) : const Color(0xffC9C7BB),
             filled: true,
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xff999999), width: 0.8)),
             focusedErrorBorder: const OutlineInputBorder(
-                gapPadding: 5.0, borderSide: BorderSide(color: Color(0xFFe28568), width: 0.8)),
+                borderSide: BorderSide(color: Color(0xFFe28568), width: 0.8)),
             errorBorder: const OutlineInputBorder(
-                gapPadding: 5.0, borderSide: BorderSide(color: Color(0xFFe28568), width: 0.8)),
+                borderSide: BorderSide(color: Color(0xFFe28568), width: 0.8)),
             enabledBorder: const OutlineInputBorder(
-                gapPadding: 5.0,
                 borderSide: BorderSide(color: Color(0xff999999), width: 0.8))),
       ),
     );
