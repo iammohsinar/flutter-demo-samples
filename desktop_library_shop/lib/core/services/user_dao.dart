@@ -6,7 +6,7 @@ import 'package:desktop_library_shop/locator.dart';
 
 class UserDaoImpl extends UserDao {
   final UserRepository _userRepository = loc<UserRepository>();
-  StreamController<User> userController = StreamController<User>();
+
   @override
   Future<List<User>> getAll() {
     // TODO: implement getAll
@@ -39,6 +39,7 @@ class UserDaoImpl extends UserDao {
 }
 
 abstract class UserDao {
+  StreamController<User> userController = StreamController<User>();
   Future<User> getOne(int id);
   Future<List<User>> getAll();
   Future<bool> getAuthUser(String userName, String password);

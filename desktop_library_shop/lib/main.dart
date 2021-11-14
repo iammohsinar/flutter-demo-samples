@@ -16,7 +16,7 @@ class LibraryShopApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>(
-      create: (context) => loc<UserDaoImpl>().userController.stream,
+      create: (context) => loc<UserDao>().userController.stream,
       initialData: User.initial(),
       child: MaterialApp(
         title: 'Library Shop',

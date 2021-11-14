@@ -1,3 +1,4 @@
+import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class AppTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final IconData? icon;
   final String validationMsg;
+  final bool obscureText;
 
   bool isEnable;
 
@@ -21,6 +23,7 @@ class AppTextFormField extends StatelessWidget {
       required this.controller,
       required this.validationMsg,
       this.icon,
+      this.obscureText = false,
       this.isEnable = true})
       : super(key: key);
 
@@ -30,6 +33,7 @@ class AppTextFormField extends StatelessWidget {
       width: width,
       height: height,
       child: TextFormField(
+        obscureText: obscureText,
         controller: controller,
         validator: (value) {
           if (value!.isEmpty) {
@@ -47,16 +51,16 @@ class AppTextFormField extends StatelessWidget {
             prefixIcon: Icon(icon),
             enabled: isEnable,
             contentPadding: const EdgeInsets.all(10.0),
-            fillColor: (isEnable) ? const Color(0xFFFFFFD6) : const Color(0xffC9C7BB),
+            fillColor: (isEnable) ? fieldActiveColor : fieldFocusColor,
             filled: true,
             focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xff999999), width: 0.8)),
+                borderSide: BorderSide(color: borderColor, width: 0.8)),
             focusedErrorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFe28568), width: 0.8)),
+                borderSide: BorderSide(color: errorBorderColor, width: 0.8)),
             errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFe28568), width: 0.8)),
+                borderSide: BorderSide(color: errorBorderColor, width: 0.8)),
             enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xff999999), width: 0.8))),
+                borderSide: BorderSide(color: borderColor, width: 0.8))),
       ),
     );
   }

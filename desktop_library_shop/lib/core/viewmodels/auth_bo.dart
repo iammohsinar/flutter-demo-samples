@@ -5,17 +5,17 @@ import 'package:desktop_library_shop/core/viewmodels/base_bo.dart';
 import '../../locator.dart';
 
 abstract class AuthBo extends BaseBoImpl {
+  late String errorMessage;
   Future<bool> login(String userName, String password);
 }
 
 class AuthBoImpl extends AuthBo {
   final UserDao _userDao = loc<UserDao>();
-  late String errorMessage;
 
   @override
   Future<bool> login(String userName, String password) async {
     setState(StateEnum.busy);
-    var uName = int.tryParse(userName.substring(0, 0));
+    var uName = int.tryParse(userName.substring(0, 1));
     // should not number
     if (uName != null) {
       errorMessage = 'user name should not start with Number';
@@ -23,6 +23,9 @@ class AuthBoImpl extends AuthBo {
       return false;
     }
     var success = await _userDao.getAuthUser(userName, password);
+    if (!success) {
+      errorMessage = 'username or password invalid';
+    }
     setState(StateEnum.idle);
     return success;
   }

@@ -1,10 +1,11 @@
 import 'package:desktop_library_shop/core/enums/state_enums.dart';
 import 'package:desktop_library_shop/core/viewmodels/auth_bo.dart';
+import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
 import 'package:desktop_library_shop/ui/views/base_view.dart';
-import 'package:desktop_library_shop/ui/widget/app_button.dart';
-import 'package:desktop_library_shop/ui/widget/app_text.dart';
-import 'package:desktop_library_shop/ui/widget/app_textformfield.dart';
+import 'package:desktop_library_shop/ui/widgets/app_button.dart';
+import 'package:desktop_library_shop/ui/widgets/app_text.dart';
+import 'package:desktop_library_shop/ui/widgets/app_textformfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,6 +24,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _controllerUserName = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -42,55 +44,27 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
-    print(MediaQuery.of(context).size.width);
-    return BaseView<AuthBo>(
-        builder: (context, model, child) => Scaffold(
-            backgroundColor: Theme.of(context).backgroundColor,
-            body: Form(
-              key: _formKey,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    top: MediaQuery.of(context).size.height / 4,
-                    left: MediaQuery.of(context).size.width / 6,
-                    right: MediaQuery.of(context).size.width / 6,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 2,
-                      width: MediaQuery.of(context).size.width / 2,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-                      child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/login_background_left.png',
-                              height: 350,
-                            ),
-                            Image.asset(
-                              'assets/images/login_background_right.png',
-                              height: 350,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const LoginBackground(),
+          Positioned(
+              top: MediaQuery.of(context).size.height / 5.5,
+              left: MediaQuery.of(context).size.width / 2.8,
+              right: MediaQuery.of(context).size.width / 2.8,
+              bottom: MediaQuery.of(context).size.height / 3,
+              child: Container(
+                  padding: const EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: borderColor, width: 0.8),
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: const Color(0xEfFFFFFF),
                   ),
-                  Positioned(
-                    top: MediaQuery.of(context).size.height / 5.5,
-                    left: MediaQuery.of(context).size.width / 2.8,
-                    right: MediaQuery.of(context).size.width / 2.8,
-                    bottom: MediaQuery.of(context).size.height / 6,
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xff999999), width: 0.8),
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: const Color(0xEfFFFFFF),
-                      ),
+                  child: BaseView<AuthBo>(
+                    builder: (context, model, _) => Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -130,21 +104,16 @@ class _LoginViewState extends State<LoginView> {
                               ),
                             ],
                           ),
-                          // UIUtil.vSmallSpace(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(child: AppTextLabel('Password')),
-
-                              //     Text(
-                              //   'Password',
-                              //   style: TextStyle(fontWeight: FontWeight.bold),
-                              // )),
                               UIUtil.hSmallSpace(),
                               Expanded(
                                 flex: 2,
                                 child: AppTextFormField(
+                                    obscureText: true,
                                     controller: _controllerPassword,
                                     validationMsg: 'Please Enter your password',
                                     icon: Icons.vpn_key,
@@ -155,56 +124,74 @@ class _LoginViewState extends State<LoginView> {
                               ),
                             ],
                           ),
-                          // UIUtil.vSmallSpace(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              AppElevatedBtn(
-                                  imgUrl: 'assets/images/lock.png',
-                                  focusNode: _loginFocus,
-                                  isEnable: true,
-                                  onPressedFn: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      // bool success = await model.login(
-                                      //     _controllerUserName.text, _controllerPassword.text);
-                                      // if (success) {
-                                      //   Navigator.pushNamed(context, '/');
-                                      // }
-                                    }
-                                  },
-                                  text: 'Login')
-                            ],
-                          ),
-                          // UIUtil.vSmallSpace(),
-                          // Row(children: [Expanded(child:
-                          // A],)
+                          AppErrorText(_errorMessage),
+                          (model.state == StateEnum.busy)
+                              ? const CircularProgressIndicator()
+                              : Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: AppElevatedBtn(
+                                      width: 80.0,
+                                      imgUrl: 'assets/images/lock.png',
+                                      focusNode: _loginFocus,
+                                      isEnable: true,
+                                      onPressedFn: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          bool successLogin = await model.login(
+                                              _controllerUserName.text,
+                                              _controllerPassword.text);
+                                          if (successLogin) {
+                                            Navigator.pushNamed(context, '/');
+                                          } else {
+                                            _errorMessage = model.errorMessage;
+                                          }
+                                        }
+                                      },
+                                      text: 'Login')),
+                          UIUtil.vMediumSpace(),
+                          const Divider(color: dividerColor),
+                          const Text('Powered By CodeSeekhlo | 2021')
                         ],
                       ),
                     ),
-                  ),
-                  // ),
-                ],
-              ),
-            )
+                  ))),
+          // ),
+        ],
+      ),
+    );
+  }
+}
 
-            // Container(
-            //   child: Column(
-            //     children: [
-            //       const Text('user:Mohsin pass:123456 '),
-            //       (model.state == StateEnum.busy)
-            //           ? CircularProgressIndicator(
-            //               value: null,
-            //             )
-            //           : ElevatedButton(
-            //               onPressed: () async {
-            //                 var success = await model.login('mohsin', '123456');
-            //                 print(success);
-            //                 if (success) Navigator.pushNamed(context, '/');
-            //               },
-            //               child: Text('login'))
-            //     ],
-            //   ),
-            // ),
-            ));
+class LoginBackground extends StatelessWidget {
+  const LoginBackground({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: MediaQuery.of(context).size.height / 4,
+      left: MediaQuery.of(context).size.width / 6,
+      right: MediaQuery.of(context).size.width / 6,
+      child: Container(
+        height: MediaQuery.of(context).size.height / 4,
+        width: MediaQuery.of(context).size.width / 2,
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/login_background_left.png',
+                height: 350,
+              ),
+              Image.asset(
+                'assets/images/login_background_right.png',
+                height: 350,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

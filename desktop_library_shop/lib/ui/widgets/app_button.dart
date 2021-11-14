@@ -1,3 +1,4 @@
+import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -9,6 +10,8 @@ class AppElevatedBtn extends StatelessWidget {
   final Function()? onPressedFn;
   String imgUrl;
   final String text;
+  int colorValue;
+  double? width;
 
   AppElevatedBtn(
       {required this.focusNode,
@@ -16,6 +19,8 @@ class AppElevatedBtn extends StatelessWidget {
       required this.onPressedFn,
       this.imgUrl = '',
       required this.text,
+      this.colorValue = 0,
+      this.width,
       Key? key})
       : super(key: key);
 
@@ -26,24 +31,21 @@ class AppElevatedBtn extends StatelessWidget {
             gradient: LinearGradient(
                 begin: const Alignment(0, 0.2),
                 end: Alignment.bottomCenter,
-                colors: [
-              const Color(0xffDDDCD4),
-              _adjustBrightness(const Color(0xffDDDCD4), 0.1)
-            ])),
+                colors: [inActiveColor, _adjustBrightness(inActiveColor, 0.1)])),
         child: ElevatedButton(
             focusNode: focusNode,
             style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(2.0),
                 enableFeedback: false,
-                primary: Colors.transparent,
-                side: const BorderSide(color: Color(0xff999999), width: 0.8),
+                primary: (colorValue > 0) ? Color(colorValue) : Colors.transparent,
+                side: const BorderSide(color: borderColor, width: 0.8),
                 elevation: 0.0,
                 shadowColor: Colors.transparent,
                 onPrimary: Colors.black),
             onPressed: (!isEnable) ? null : onPressedFn,
             child: SizedBox(
               height: 35.0,
-              width: 80.0,
+              width: width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
