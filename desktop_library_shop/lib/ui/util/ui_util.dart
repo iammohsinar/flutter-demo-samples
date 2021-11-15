@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 
 class UIUtil {
   /// vertical spacing constants.
+  static const double _vXSmallSpace = 3.0;
   static const double _vSmallSpace = 15.0;
   static const double _vMediumSpace = 30.0;
   static const double _vLargeSpace = 75.0;
 
 // hotizontal spacing constants
+  static const double _hXSmallSpace = 3.0;
   static const double _hSmallSpace = 15.0;
   static const double _hMediumSpace = 30.0;
   static const double _hLargeSpace = 75.0;
+
+  static Widget vXSmallSpace() {
+    return verticalSpace(_vXSmallSpace);
+  }
 
   static Widget vSmallSpace() {
     return verticalSpace(_vSmallSpace);
@@ -27,6 +33,10 @@ class UIUtil {
     return SizedBox(
       height: height,
     );
+  }
+
+  static Widget hXSmallSpace() {
+    return horizontalSpace(_hXSmallSpace);
   }
 
   static Widget hSmallSpace() {

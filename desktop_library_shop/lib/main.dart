@@ -19,8 +19,11 @@ class LibraryShopApp extends StatelessWidget {
       create: (context) => loc<UserDao>().userController.stream,
       initialData: User.initial(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Library Shop',
-        theme: ThemeData(backgroundColor: const Color(0xFFF7F5ee)),
+        theme: ThemeData(
+            backgroundColor: const Color(0xFFF7F5ee),
+            textTheme: const TextTheme(headline4: TextStyle(color: Colors.black))),
         initialRoute: 'login',
         onGenerateRoute: AppRouter.generateRoute,
       ),
