@@ -1,6 +1,9 @@
+import 'package:desktop_library_shop/core/viewmodels/home_bo.dart';
+import 'package:desktop_library_shop/locator.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
 import 'package:desktop_library_shop/ui/widgets/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -27,89 +30,89 @@ class _HomeViewState extends State<HomeView> {
                         bodyColor: const Color(0xFFFFF7D7),
                         title: 'BOOKS',
                         imageUrl: 'assets/images/library_logo.png',
-                        dataCount1: '4',
+                        dataCount1: BookHomeData(),
                         dataTitle1: 'BOOKS',
                         dataCount2: '21',
                         dataTitle2: 'COPIES'),
                     UIUtil.hSmallSpace(),
-                    DashboardCard(
-                        headerColor: const Color(0xFF007F7F),
-                        bodyColor: const Color(0xFFEFFFFF),
-                        title: 'CIRCULATION',
-                        imageUrl: 'assets/images/icons/circulation.png',
-                        dataCount1: '4',
-                        dataTitle1: 'ACTIVE ISSUES',
-                        dataCount2: '21',
-                        dataTitle2: 'ISSUES SO FAR'),
-                    UIUtil.hSmallSpace(),
-                    DashboardCard(
-                        headerColor: const Color(0xFF00751E),
-                        bodyColor: const Color(0xFFE3FFE3),
-                        title: 'TODAY',
-                        imageUrl: 'assets/images/icons/today.png',
-                        dataCount1: '4',
-                        dataTitle1: 'ISSUED TODAY',
-                        dataCount2: '21',
-                        dataTitle2: 'GOT RETURNED'),
-                    UIUtil.hSmallSpace(),
-                    DashboardCard(
-                        headerColor: const Color(0xFF001D74),
-                        bodyColor: const Color(0xFFD8E4C3),
-                        title: 'DUE RETURN',
-                        imageUrl: 'assets/images/icons/due_return.png',
-                        dataCount1: '4',
-                        dataTitle1: 'DELAY RETURN',
-                        dataCount2: '21',
-                        dataTitle2: 'IN TOTAL'),
+                    //         DashboardCard(
+                    //             headerColor: const Color(0xFF007F7F),
+                    //             bodyColor: const Color(0xFFEFFFFF),
+                    //             title: 'CIRCULATION',
+                    //             imageUrl: 'assets/images/icons/circulation.png',
+                    //             dataCount1: '4',
+                    //             dataTitle1: 'ACTIVE ISSUES',
+                    //             dataCount2: '21',
+                    //             dataTitle2: 'ISSUES SO FAR'),
+                    //         UIUtil.hSmallSpace(),
+                    //         DashboardCard(
+                    //             headerColor: const Color(0xFF00751E),
+                    //             bodyColor: const Color(0xFFE3FFE3),
+                    //             title: 'TODAY',
+                    //             imageUrl: 'assets/images/icons/today.png',
+                    //             dataCount1: '4',
+                    //             dataTitle1: 'ISSUED TODAY',
+                    //             dataCount2: '21',
+                    //             dataTitle2: 'GOT RETURNED'),
+                    //         UIUtil.hSmallSpace(),
+                    //         DashboardCard(
+                    //             headerColor: const Color(0xFF001D74),
+                    //             bodyColor: const Color(0xFFD8E4C3),
+                    //             title: 'DUE RETURN',
+                    //             imageUrl: 'assets/images/icons/due_return.png',
+                    //             dataCount1: '4',
+                    //             dataTitle1: 'DELAY RETURN',
+                    //             dataCount2: '21',
+                    //             dataTitle2: 'IN TOTAL'),
                   ],
                 )),
-            UIUtil.vMediumSpace(),
-            Expanded(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DashboardCard(
-                        headerColor: const Color(0xFF4C602A),
-                        bodyColor: const Color(0xFFFFF7D7),
-                        title: 'CONDITION',
-                        imageUrl: 'assets/images/icons/condition.png',
-                        dataCount1: '4',
-                        dataTitle1: 'AS NEW',
-                        dataCount2: '21',
-                        dataTitle2: 'ARE USEABLE'),
-                    UIUtil.hSmallSpace(),
-                    DashboardCard(
-                        headerColor: const Color(0xFF007F7F),
-                        bodyColor: const Color(0xFFEFFFFF),
-                        title: 'RETIRE',
-                        imageUrl: 'assets/images/icons/retire.png',
-                        dataCount1: '4',
-                        dataTitle1: 'TO DISCARD',
-                        dataCount2: '21',
-                        dataTitle2: 'POOR'),
-                    UIUtil.hSmallSpace(),
-                    DashboardCard(
-                        headerColor: const Color(0xFF00751E),
-                        bodyColor: const Color(0xFFE3FFE3),
-                        title: 'RACKS',
-                        imageUrl: 'assets/images/icons/racks.png',
-                        dataCount1: '4',
-                        dataTitle1: 'RACK WITH',
-                        dataCount2: '21',
-                        dataTitle2: 'CAPACITY'),
-                    UIUtil.hSmallSpace(),
-                    DashboardCard(
-                        headerColor: const Color(0xFF001D74),
-                        bodyColor: const Color(0xFFD8E4C3),
-                        title: 'BENEFICIARIES',
-                        imageUrl: 'assets/images/icons/beneficiaries.png',
-                        dataCount1: '4',
-                        dataTitle1: 'STUDENTS',
-                        dataCount2: '21',
-                        dataTitle2: 'STAFFS'),
-                  ],
-                ))
+            // UIUtil.vMediumSpace(),
+            // Expanded(
+            //     flex: 1,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         DashboardCard(
+            //             headerColor: const Color(0xFF4C602A),
+            //             bodyColor: const Color(0xFFFFF7D7),
+            //             title: 'CONDITION',
+            //             imageUrl: 'assets/images/icons/condition.png',
+            //             dataCount1: '4',
+            //             dataTitle1: 'AS NEW',
+            //             dataCount2: '21',
+            //             dataTitle2: 'ARE USEABLE'),
+            //         UIUtil.hSmallSpace(),
+            //         DashboardCard(
+            //             headerColor: const Color(0xFF007F7F),
+            //             bodyColor: const Color(0xFFEFFFFF),
+            //             title: 'RETIRE',
+            //             imageUrl: 'assets/images/icons/retire.png',
+            //             dataCount1: '4',
+            //             dataTitle1: 'TO DISCARD',
+            //             dataCount2: '21',
+            //             dataTitle2: 'POOR'),
+            //         UIUtil.hSmallSpace(),
+            //         DashboardCard(
+            //             headerColor: const Color(0xFF00751E),
+            //             bodyColor: const Color(0xFFE3FFE3),
+            //             title: 'RACKS',
+            //             imageUrl: 'assets/images/icons/racks.png',
+            //             dataCount1: '4',
+            //             dataTitle1: 'RACK WITH',
+            //             dataCount2: '21',
+            //             dataTitle2: 'CAPACITY'),
+            //         UIUtil.hSmallSpace(),
+            //         DashboardCard(
+            //             headerColor: const Color(0xFF001D74),
+            //             bodyColor: const Color(0xFFD8E4C3),
+            //             title: 'BENEFICIARIES',
+            //             imageUrl: 'assets/images/icons/beneficiaries.png',
+            //             dataCount1: '4',
+            //             dataTitle1: 'STUDENTS',
+            //             dataCount2: '21',
+            //             dataTitle2: 'STAFFS'),
+            //       ],
+            //     ))
           ],
         ));
   }
@@ -120,7 +123,7 @@ class DashboardCard extends StatelessWidget {
   final Color bodyColor;
   final String title;
   final String imageUrl;
-  final dynamic dataCount1;
+  final Widget dataCount1;
   final String dataTitle1;
   final dynamic dataCount2;
   final String dataTitle2;
@@ -176,10 +179,11 @@ class DashboardCard extends StatelessWidget {
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          dataCount1,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
+                        dataCount1,
+                        // Text(
+                        //   dataCount1,
+                        //   style: Theme.of(context).textTheme.headline4,
+                        // ),
                         Text(
                           dataTitle1,
                           style: Theme.of(context).textTheme.headline6,
@@ -204,6 +208,54 @@ class DashboardCard extends StatelessWidget {
   }
 }
 
+class BookHomeData extends StatefulWidget {
+  const BookHomeData({Key? key}) : super(key: key);
+
+  @override
+  _BookHomeDataState createState() => _BookHomeDataState();
+}
+
+class _BookHomeDataState extends State<BookHomeData> {
+  int initData = -1;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      var data = await loc<HomeBo>().getTotalNewBookTest();
+      setState(() {
+        initData = data;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<int>(
+      create: (context) => loc<HomeBo>().totalNewBookCount.stream,
+      initialData: initData,
+      child: (initData == -1) ? CircularProgressIndicator() : MyAppDataChild(),
+    );
+  }
+}
+
+class MyAppDataChild extends StatelessWidget {
+  const MyAppDataChild({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('${Provider.of<int>(context)}'),
+        ElevatedButton(
+            onPressed: () {
+              loc<HomeBo>().saveTest();
+            },
+            child: Text('click me'))
+      ],
+    );
+  }
+}
 
 // import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 // import 'package:desktop_library_shop/ui/widgets/app_text.dart';

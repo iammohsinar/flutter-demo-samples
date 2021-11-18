@@ -6,6 +6,7 @@ import 'package:desktop_library_shop/core/services/book_dao.dart';
 import 'package:desktop_library_shop/core/services/student_dao.dart';
 import 'package:desktop_library_shop/core/services/user_dao.dart';
 import 'package:desktop_library_shop/core/viewmodels/auth_bo.dart';
+import 'package:desktop_library_shop/core/viewmodels/home_bo.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/repositories/book_repository.dart';
@@ -24,6 +25,8 @@ void setup() {
   loc.registerLazySingleton<StudentDao>(() => StudentDaoImpl());
   loc.registerLazySingleton<BookDao>(() => BookDaoImpl());
   loc.registerLazySingleton<CategoryDao>(() => CategoryDaoImpl());
+  //
+  loc.registerLazySingleton<HomeBo>(() => HomeBoImpl());
 
   loc.registerFactory<AuthBo>(() => AuthBoImpl());
   //loc.registerLazySingleton(() => AuthService());

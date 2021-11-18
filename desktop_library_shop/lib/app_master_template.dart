@@ -53,7 +53,9 @@ class _AppTabState extends State<AppTab> {
                       ),
                       UIUtil.hMediumSpace(),
                       const Text(
-                        'LIBRARY MANAGEMENT SYSTEM',
+                        '',
+
+                        ///'LIBRARY MANAGEMENT SYSTEM',
                         style: TextStyle(fontSize: 46, fontWeight: FontWeight.bold),
                       )
                     ],
