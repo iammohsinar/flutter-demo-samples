@@ -1,3 +1,4 @@
+import 'package:desktop_library_shop/core/services/book_dao.dart';
 import 'package:desktop_library_shop/core/viewmodels/home_bo.dart';
 import 'package:desktop_library_shop/locator.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
@@ -30,89 +31,89 @@ class _HomeViewState extends State<HomeView> {
                         bodyColor: const Color(0xFFFFF7D7),
                         title: 'BOOKS',
                         imageUrl: 'assets/images/library_logo.png',
-                        dataCount1: BookHomeData(),
+                        dataCount1: TotalBooks(),
                         dataTitle1: 'BOOKS',
-                        dataCount2: '21',
+                        dataCount2: BooksCopies(),
                         dataTitle2: 'COPIES'),
                     UIUtil.hSmallSpace(),
-                    //         DashboardCard(
-                    //             headerColor: const Color(0xFF007F7F),
-                    //             bodyColor: const Color(0xFFEFFFFF),
-                    //             title: 'CIRCULATION',
-                    //             imageUrl: 'assets/images/icons/circulation.png',
-                    //             dataCount1: '4',
-                    //             dataTitle1: 'ACTIVE ISSUES',
-                    //             dataCount2: '21',
-                    //             dataTitle2: 'ISSUES SO FAR'),
-                    //         UIUtil.hSmallSpace(),
-                    //         DashboardCard(
-                    //             headerColor: const Color(0xFF00751E),
-                    //             bodyColor: const Color(0xFFE3FFE3),
-                    //             title: 'TODAY',
-                    //             imageUrl: 'assets/images/icons/today.png',
-                    //             dataCount1: '4',
-                    //             dataTitle1: 'ISSUED TODAY',
-                    //             dataCount2: '21',
-                    //             dataTitle2: 'GOT RETURNED'),
-                    //         UIUtil.hSmallSpace(),
-                    //         DashboardCard(
-                    //             headerColor: const Color(0xFF001D74),
-                    //             bodyColor: const Color(0xFFD8E4C3),
-                    //             title: 'DUE RETURN',
-                    //             imageUrl: 'assets/images/icons/due_return.png',
-                    //             dataCount1: '4',
-                    //             dataTitle1: 'DELAY RETURN',
-                    //             dataCount2: '21',
-                    //             dataTitle2: 'IN TOTAL'),
+                    DashboardCard(
+                        headerColor: const Color(0xFF007F7F),
+                        bodyColor: const Color(0xFFEFFFFF),
+                        title: 'CIRCULATION',
+                        imageUrl: 'assets/images/icons/circulation.png',
+                        dataCount1: ActiveBooksIssued(),
+                        dataTitle1: 'ACTIVE ISSUES',
+                        dataCount2: BooksIssuedSoFar(),
+                        dataTitle2: 'ISSUES SO FAR'),
+                    UIUtil.hSmallSpace(),
+                    DashboardCard(
+                        headerColor: const Color(0xFF00751E),
+                        bodyColor: const Color(0xFFE3FFE3),
+                        title: 'TODAY',
+                        imageUrl: 'assets/images/icons/today.png',
+                        dataCount1: BooksIssuedToday(),
+                        dataTitle1: 'ISSUED TODAY',
+                        dataCount2: BooksReturned(),
+                        dataTitle2: 'GOT RETURNED'),
+                    UIUtil.hSmallSpace(),
+                    DashboardCard(
+                        headerColor: const Color(0xFF001D74),
+                        bodyColor: const Color(0xFFD8E4C3),
+                        title: 'DUE RETURN',
+                        imageUrl: 'assets/images/icons/due_return.png',
+                        dataCount1: BooksDelayInReturn(),
+                        dataTitle1: 'DELAY RETURN',
+                        dataCount2: BooksDueReturn(),
+                        dataTitle2: 'IN TOTAL'),
                   ],
                 )),
-            // UIUtil.vMediumSpace(),
-            // Expanded(
-            //     flex: 1,
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         DashboardCard(
-            //             headerColor: const Color(0xFF4C602A),
-            //             bodyColor: const Color(0xFFFFF7D7),
-            //             title: 'CONDITION',
-            //             imageUrl: 'assets/images/icons/condition.png',
-            //             dataCount1: '4',
-            //             dataTitle1: 'AS NEW',
-            //             dataCount2: '21',
-            //             dataTitle2: 'ARE USEABLE'),
-            //         UIUtil.hSmallSpace(),
-            //         DashboardCard(
-            //             headerColor: const Color(0xFF007F7F),
-            //             bodyColor: const Color(0xFFEFFFFF),
-            //             title: 'RETIRE',
-            //             imageUrl: 'assets/images/icons/retire.png',
-            //             dataCount1: '4',
-            //             dataTitle1: 'TO DISCARD',
-            //             dataCount2: '21',
-            //             dataTitle2: 'POOR'),
-            //         UIUtil.hSmallSpace(),
-            //         DashboardCard(
-            //             headerColor: const Color(0xFF00751E),
-            //             bodyColor: const Color(0xFFE3FFE3),
-            //             title: 'RACKS',
-            //             imageUrl: 'assets/images/icons/racks.png',
-            //             dataCount1: '4',
-            //             dataTitle1: 'RACK WITH',
-            //             dataCount2: '21',
-            //             dataTitle2: 'CAPACITY'),
-            //         UIUtil.hSmallSpace(),
-            //         DashboardCard(
-            //             headerColor: const Color(0xFF001D74),
-            //             bodyColor: const Color(0xFFD8E4C3),
-            //             title: 'BENEFICIARIES',
-            //             imageUrl: 'assets/images/icons/beneficiaries.png',
-            //             dataCount1: '4',
-            //             dataTitle1: 'STUDENTS',
-            //             dataCount2: '21',
-            //             dataTitle2: 'STAFFS'),
-            //       ],
-            //     ))
+            UIUtil.vMediumSpace(),
+            Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DashboardCard(
+                        headerColor: const Color(0xFF4C602A),
+                        bodyColor: const Color(0xFFFFF7D7),
+                        title: 'CONDITION',
+                        imageUrl: 'assets/images/icons/condition.png',
+                        dataCount1: BooksAsNew(),
+                        dataTitle1: 'AS NEW',
+                        dataCount2: UseableBooks(),
+                        dataTitle2: 'ARE USEABLE'),
+                    UIUtil.hSmallSpace(),
+                    DashboardCard(
+                        headerColor: const Color(0xFF007F7F),
+                        bodyColor: const Color(0xFFEFFFFF),
+                        title: 'RETIRE',
+                        imageUrl: 'assets/images/icons/retire.png',
+                        dataCount1: BooksToDiscard(),
+                        dataTitle1: 'TO DISCARD',
+                        dataCount2: PoorBooks(),
+                        dataTitle2: 'POOR'),
+                    UIUtil.hSmallSpace(),
+                    DashboardCard(
+                        headerColor: const Color(0xFF00751E),
+                        bodyColor: const Color(0xFFE3FFE3),
+                        title: 'RACKS',
+                        imageUrl: 'assets/images/icons/racks.png',
+                        dataCount1: BooksInSingleRack(),
+                        dataTitle1: 'RACK WITH',
+                        dataCount2: BooksCapacity(),
+                        dataTitle2: 'CAPACITY'),
+                    UIUtil.hSmallSpace(),
+                    DashboardCard(
+                        headerColor: const Color(0xFF001D74),
+                        bodyColor: const Color(0xFFD8E4C3),
+                        title: 'BENEFICIARIES',
+                        imageUrl: 'assets/images/icons/beneficiaries.png',
+                        dataCount1: TotalStudents(),
+                        dataTitle1: 'STUDENTS',
+                        dataCount2: TotalStaffs(),
+                        dataTitle2: 'STAFFS'),
+                  ],
+                ))
           ],
         ));
   }
@@ -125,7 +126,7 @@ class DashboardCard extends StatelessWidget {
   final String imageUrl;
   final Widget dataCount1;
   final String dataTitle1;
-  final dynamic dataCount2;
+  final Widget dataCount2;
   final String dataTitle2;
 
   DashboardCard({
@@ -189,10 +190,11 @@ class DashboardCard extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         UIUtil.vXSmallSpace(),
-                        Text(
-                          dataCount2,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
+                        dataCount2,
+                        // Text(
+                        //   dataCount2,
+                        //   style: Theme.of(context).textTheme.headline4,
+                        // ),
                         Text(
                           dataTitle2,
                           style: Theme.of(context).textTheme.headline6,
@@ -208,54 +210,306 @@ class DashboardCard extends StatelessWidget {
   }
 }
 
-class BookHomeData extends StatefulWidget {
-  const BookHomeData({Key? key}) : super(key: key);
-
+class TotalBooks extends StatefulWidget {
+  TotalBooks({Key? key}) : super(key: key);
+  int initData = -1;
   @override
-  _BookHomeDataState createState() => _BookHomeDataState();
+  _TotalBooksState createState() => _TotalBooksState();
 }
 
-class _BookHomeDataState extends State<BookHomeData> {
-  int initData = -1;
-
+class _TotalBooksState extends State<TotalBooks> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var data = await loc<HomeBo>().getTotalNewBookTest();
+      var data = await loc<BookDao>().getAll();
       setState(() {
-        initData = data;
+        widget.initData = data.length;
       });
     });
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return StreamProvider<int>(
-      create: (context) => loc<HomeBo>().totalNewBookCount.stream,
-      initialData: initData,
-      child: (initData == -1) ? CircularProgressIndicator() : MyAppDataChild(),
-    );
+  void dispose() {
+    // TODO: implement dispose
+    loc<BookDao>().totalBooks.close();
+    print(
+        'stream is disposed ${loc<BookDao>().totalBooks.isClosed} -- ${loc<BookDao>().totalBooks.isPaused}');
+    super.dispose();
   }
-}
-
-class MyAppDataChild extends StatelessWidget {
-  const MyAppDataChild({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('${Provider.of<int>(context)}'),
-        ElevatedButton(
-            onPressed: () {
-              loc<HomeBo>().saveTest();
-            },
-            child: Text('click me'))
-      ],
+    print('init data ${widget.initData}');
+    //return SizedBox();
+    if (loc<BookDao>().totalBooks.isClosed) {
+      print('condition is true');
+      loc<BookDao>().totalBooks.close();
+    }
+    return StreamProvider<int>(
+      create: (BuildContext context) => loc<BookDao>().totalBooks.stream,
+      initialData: widget.initData,
+      builder: (context, _) => (widget.initData == -1)
+          ? CircularProgressIndicator()
+          : Column(
+              children: [
+                Text('${Provider.of<int>(context)}'),
+              ],
+            ),
     );
   }
 }
+
+class BooksCopies extends StatefulWidget {
+  BooksCopies({Key? key}) : super(key: key);
+  int initData = -1;
+
+  @override
+  _BooksCopiesState createState() => _BooksCopiesState();
+}
+
+class _BooksCopiesState extends State<BooksCopies> {
+  // @override
+  // void initState() {
+  //   WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+  //     var data = await loc<BookDao>().getSampleDataCount();
+  //     setState(() {
+  //       widget.initData = data;
+  //     });
+  //   });
+  //   super.initState();
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox();
+    // StreamProvider<int>(
+    //   create: (BuildContext context) => loc<BookDao>().totalCopies.stream,
+    //   initialData: widget.initData,
+    //   builder: (context, _) => (widget.initData == -1)
+    //       ? CircularProgressIndicator()
+    //       : Column(
+    //           children: [
+    //             Text('${Provider.of<int>(context)}'),
+    //           ],
+    //         ),
+    // );
+  }
+}
+
+class ActiveBooksIssued extends StatefulWidget {
+  const ActiveBooksIssued({Key? key}) : super(key: key);
+
+  @override
+  _ActiveBooksIssuedState createState() => _ActiveBooksIssuedState();
+}
+
+class _ActiveBooksIssuedState extends State<ActiveBooksIssued> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksIssuedSoFar extends StatefulWidget {
+  const BooksIssuedSoFar({Key? key}) : super(key: key);
+
+  @override
+  _BooksIssuedSoFarState createState() => _BooksIssuedSoFarState();
+}
+
+class _BooksIssuedSoFarState extends State<BooksIssuedSoFar> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksIssuedToday extends StatefulWidget {
+  const BooksIssuedToday({Key? key}) : super(key: key);
+
+  @override
+  _BooksIssuedTodayState createState() => _BooksIssuedTodayState();
+}
+
+class _BooksIssuedTodayState extends State<BooksIssuedToday> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksReturned extends StatefulWidget {
+  const BooksReturned({Key? key}) : super(key: key);
+
+  @override
+  _BooksReturnedState createState() => _BooksReturnedState();
+}
+
+class _BooksReturnedState extends State<BooksReturned> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksDelayInReturn extends StatefulWidget {
+  const BooksDelayInReturn({Key? key}) : super(key: key);
+
+  @override
+  _BooksDelayInReturnState createState() => _BooksDelayInReturnState();
+}
+
+class _BooksDelayInReturnState extends State<BooksDelayInReturn> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksDueReturn extends StatefulWidget {
+  const BooksDueReturn({Key? key}) : super(key: key);
+
+  @override
+  _BooksDueReturnState createState() => _BooksDueReturnState();
+}
+
+class _BooksDueReturnState extends State<BooksDueReturn> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksAsNew extends StatefulWidget {
+  const BooksAsNew({Key? key}) : super(key: key);
+
+  @override
+  _BooksAsNewState createState() => _BooksAsNewState();
+}
+
+class _BooksAsNewState extends State<BooksAsNew> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class UseableBooks extends StatefulWidget {
+  const UseableBooks({Key? key}) : super(key: key);
+
+  @override
+  _UseableBooksState createState() => _UseableBooksState();
+}
+
+class _UseableBooksState extends State<UseableBooks> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksToDiscard extends StatefulWidget {
+  const BooksToDiscard({Key? key}) : super(key: key);
+
+  @override
+  _BooksToDiscardState createState() => _BooksToDiscardState();
+}
+
+class _BooksToDiscardState extends State<BooksToDiscard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class PoorBooks extends StatefulWidget {
+  const PoorBooks({Key? key}) : super(key: key);
+
+  @override
+  _PoorBooksState createState() => _PoorBooksState();
+}
+
+class _PoorBooksState extends State<PoorBooks> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksInSingleRack extends StatefulWidget {
+  const BooksInSingleRack({Key? key}) : super(key: key);
+
+  @override
+  _BooksInSingleRackState createState() => _BooksInSingleRackState();
+}
+
+class _BooksInSingleRackState extends State<BooksInSingleRack> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class BooksCapacity extends StatefulWidget {
+  const BooksCapacity({Key? key}) : super(key: key);
+
+  @override
+  _BooksCapacityState createState() => _BooksCapacityState();
+}
+
+class _BooksCapacityState extends State<BooksCapacity> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class TotalStudents extends StatefulWidget {
+  const TotalStudents({Key? key}) : super(key: key);
+
+  @override
+  _TotalStudentsState createState() => _TotalStudentsState();
+}
+
+class _TotalStudentsState extends State<TotalStudents> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class TotalStaffs extends StatefulWidget {
+  const TotalStaffs({Key? key}) : super(key: key);
+
+  @override
+  _TotalStaffsState createState() => _TotalStaffsState();
+}
+
+class _TotalStaffsState extends State<TotalStaffs> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+// class MyAppDataChild extends StatelessWidget {
+//   const MyAppDataChild({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         Text('${Provider.of<int>(context)}'),
+//         ElevatedButton(
+//             onPressed: () {
+//               loc<HomeBo>().saveTest();
+//             },
+//             child: Text('click me'))
+//       ],
+//     );
+//   }
+// }
 
 // import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 // import 'package:desktop_library_shop/ui/widgets/app_text.dart';

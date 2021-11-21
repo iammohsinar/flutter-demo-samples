@@ -28,6 +28,8 @@ class Book extends Equatable {
   late final int stockKeeper;
   late final DateTime stockOn;
   late final int isIssue;
+  late final String condition;
+  late final String retire;
 
   Book.initial()
       : bookId = 0,
@@ -40,7 +42,9 @@ class Book extends Equatable {
         isActive = 0,
         stockKeeper = 0,
         stockOn = DateTime.now(),
-        isIssue = 0;
+        isIssue = 0,
+        condition = '',
+        retire = '';
 
   Book.fromJson(Map<String, dynamic> json) {
     bookId = json['bookId'];
@@ -83,6 +87,8 @@ class Book extends Equatable {
     stockKeeper = r['stockKeeper'];
     stockOn = r['stockOn'];
     isIssue = r['isIssue'];
+    condition = r['condition'];
+    retire = r['retire'] ?? '';
   }
 
   @override
@@ -97,6 +103,8 @@ class Book extends Equatable {
         isActive,
         stockKeeper,
         stockOn,
-        isIssue
+        isIssue,
+        condition,
+        retire,
       ];
 }

@@ -40,4 +40,80 @@ class BookRepository {
       throw Exception('Something went wrong $e');
     }
   }
+
+  Future<List<Book>> getAll() async {
+    try {
+      var con = await Db.connection;
+      Results results = await con.query('select b.* from books b where b.isActive = 1');
+      var books = <Book>[];
+      for (var r in results) {
+        books.add(Book.fromResult(r));
+      }
+      return books;
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
+  Future<List<Book>> getAllActiveIssuedBooks() async {
+    try {
+      var con = await Db.connection;
+      Results results = await con.query(
+          'select b.* from books b inner join books_borrowed bb on b.bookId = bb.bookId where bb.returnOn is null and b.isActive = 1');
+      var books = <Book>[];
+      for (var r in results) {
+        books.add(Book.fromResult(r));
+      }
+      return books;
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
+  Future<List<Book>> getAllBooksIssuedSoFar() async {
+    try {
+      var con = await Db.connection;
+      Results results = await con.query(
+          'select b.* from books b inner join books_borrowed bb on b.bookId = bb.bookId where and b.isActive = 1');
+      var books = <Book>[];
+      for (var r in results) {
+        books.add(Book.fromResult(r));
+      }
+      return books;
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
+  Future<List<Book>> getAllBooksIssuedToday() async {
+    try {
+      var con = await Db.connection;
+      Results results = await con.query(
+          'select b.* from books b inner join books_borrowed bb on b.bookId = bb.bookId where Date(bb.borrowOn) = ? and b.isActive = 1',
+          [DateTime.now()]);
+      var books = <Book>[];
+      for (var r in results) {
+        books.add(Book.fromResult(r));
+      }
+      return books;
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
+  Future<List<Book>> getAllBooksReturnedToday() async {
+    try {
+      var con = await Db.connection;
+      Results results = await con.query(
+          'select b.* from books b inner join books_borrowed bb on b.bookId = bb.bookId where Date(bb.returnOn) = ? and b.isActive = 1',
+          [DateTime.now()]);
+      var books = <Book>[];
+      for (var r in results) {
+        books.add(Book.fromResult(r));
+      }
+      return books;
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
 }
