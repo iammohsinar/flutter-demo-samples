@@ -6,22 +6,22 @@ import 'package:desktop_library_shop/core/repositories/book_repository.dart';
 import 'package:desktop_library_shop/locator.dart';
 
 abstract class BookDao {
-  StreamController<int> totalBooks = StreamController();
-  // StreamController<int> totalCopies = StreamController();
-  // StreamController<int> totalActiveBooksIssued = StreamController();
-  // StreamController<int> totalBooksIssuedSoFar = StreamController();
-  // StreamController<int> totalBooksIssuedToday = StreamController();
-  // StreamController<int> totalBooksReturnedToday = StreamController();
-  // StreamController<int> totalBooksDelayInReturn = StreamController();
-  // StreamController<int> totalBooksDueReturn = StreamController();
-  // StreamController<int> totalBooksAsNew = StreamController();
-  // StreamController<int> totalUseableBooks = StreamController();
-  // StreamController<int> totalBooksToDiscard = StreamController();
-  // StreamController<int> totalPoorBooks = StreamController();
-  // StreamController<int> tatalBooksInSingleRack = StreamController();
-  // StreamController<int> totalBooksCapacityInRack = StreamController();
-  // StreamController<int> totalStudents = StreamController();
-  // StreamController<int> totalStaffs = StreamController();
+  StreamController<int> totalBooks = StreamController.broadcast();
+  StreamController<int> totalCopies = StreamController.broadcast();
+  StreamController<int> totalActiveBooksIssued = StreamController.broadcast();
+  StreamController<int> totalBooksIssuedSoFar = StreamController.broadcast();
+  StreamController<int> totalBooksIssuedToday = StreamController.broadcast();
+  StreamController<int> totalBooksReturnedToday = StreamController.broadcast();
+  StreamController<int> totalBooksDelayInReturn = StreamController.broadcast();
+  StreamController<int> totalBooksDueReturn = StreamController.broadcast();
+  StreamController<int> totalBooksAsNew = StreamController.broadcast();
+  StreamController<int> totalUseableBooks = StreamController.broadcast();
+  StreamController<int> totalBooksToDiscard = StreamController.broadcast();
+  StreamController<int> totalPoorBooks = StreamController.broadcast();
+  StreamController<int> totalBooksInSingleRack = StreamController.broadcast();
+  StreamController<int> totalBooksCapacityInRack = StreamController.broadcast();
+  StreamController<int> totalStudents = StreamController.broadcast();
+  StreamController<int> totalStaffs = StreamController.broadcast();
 
   Future<Book> getByCategory(int id);
   Future<Book> getByCode(String code);
@@ -34,16 +34,11 @@ abstract class BookDao {
   Future<List<Book>> getAllBooksIssuedSoFar();
   Future<List<Book>> getAllBooksIssuedToday();
   Future<List<Book>> getAllBooksReturnedToday();
+  void dispose();
 }
 
 class BookDaoImpl extends BookDao {
   final BookRepository _bookRepository = loc<BookRepository>();
-
-  BookDaoImpl() {
-    totalBooks.addStream(Stream.periodic(Duration(seconds: 1), (_) {
-      return DateTime.now().millisecond;
-    }));
-  }
 
   @override
   Future<List<BookBorrowed>> getBooksBorrowed(int id) async {
@@ -120,9 +115,37 @@ class BookDaoImpl extends BookDao {
   @override
   Future<int> getSampleDataCount() {
     try {
-      return Future<int>.delayed(Duration(seconds: 2), () => DateTime.now().millisecond * 3);
+      return Future<int>.delayed(
+          const Duration(seconds: 2), () => DateTime.now().microsecond ~/ 3);
     } catch (e) {
       rethrow;
     }
+  }
+
+  void _doDispose(StreamController controller) {
+    if (!controller.isClosed) {
+      print('controller closed');
+      controller.close();
+    }
+  }
+
+  @override
+  void dispose() {
+    _doDispose(totalBooks);
+    _doDispose(totalCopies);
+    _doDispose(totalActiveBooksIssued);
+    _doDispose(totalBooksIssuedSoFar);
+    _doDispose(totalBooksIssuedToday);
+    _doDispose(totalBooksReturnedToday);
+    _doDispose(totalBooksDelayInReturn);
+    _doDispose(totalBooksDueReturn);
+    _doDispose(totalBooksAsNew);
+    _doDispose(totalUseableBooks);
+    _doDispose(totalBooksToDiscard);
+    _doDispose(totalPoorBooks);
+    _doDispose(totalBooksInSingleRack);
+    _doDispose(totalBooksCapacityInRack);
+    _doDispose(totalStudents);
+    _doDispose(totalStaffs);
   }
 }

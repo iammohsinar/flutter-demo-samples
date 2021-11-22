@@ -7,16 +7,24 @@ import 'app_text.dart';
 class AppTabBody extends StatelessWidget {
   final Widget child;
   final String title;
+  final Color? headerColor;
+  final Color? backgroundColor;
 
-  const AppTabBody({Key? key, required this.child, required this.title}) : super(key: key);
+  const AppTabBody(
+      {Key? key,
+      required this.child,
+      required this.title,
+      this.headerColor = const Color(0xFF0a9396),
+      this.backgroundColor = panelBackgroundColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         //height: double.maxFinite,
         //width: double.maxFinite,
-        decoration: BoxDecoration(
-            color: panelBackgroundColor, border: Border.all(color: Colors.black)),
+        decoration:
+            BoxDecoration(color: backgroundColor, border: Border.all(color: Colors.black)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +32,7 @@ class AppTabBody extends StatelessWidget {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(left: 20.0),
-                color: Color(0xFF0a9396),
+                color: headerColor,
                 child: Row(
                   children: [
                     Expanded(
