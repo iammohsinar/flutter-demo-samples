@@ -21,7 +21,9 @@ class AppPanel extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
-          color: headerColor, //Color(0xAA4C602A),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 2.0),
+              color: headerColor), //Color(0xAA4C602A),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -34,7 +36,13 @@ class AppPanel extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(child: Container(color: bodyColor, child: child))
+        Expanded(
+            child: Container(
+          child: child,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 2.0),
+              color: bodyColor), //Color(0xAA4C602A),
+        ))
       ],
     );
   }

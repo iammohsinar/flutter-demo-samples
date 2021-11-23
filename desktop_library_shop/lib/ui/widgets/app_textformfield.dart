@@ -7,7 +7,7 @@ class AppTextFormField extends StatelessWidget {
   final FocusNode next;
   final double width;
   final double height;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final IconData? icon;
   final String validationMsg;
   final bool obscureText;
@@ -20,7 +20,7 @@ class AppTextFormField extends StatelessWidget {
       required this.height,
       required this.current,
       required this.next,
-      required this.controller,
+      this.controller,
       required this.validationMsg,
       this.icon,
       this.obscureText = false,
