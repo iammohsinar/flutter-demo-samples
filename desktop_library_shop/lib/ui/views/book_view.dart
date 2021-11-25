@@ -6,6 +6,7 @@ import 'package:desktop_library_shop/ui/widgets/app_text.dart';
 import 'package:desktop_library_shop/ui/widgets/app_textformfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class BookView extends StatefulWidget {
   const BookView({Key? key}) : super(key: key);
@@ -45,101 +46,65 @@ class _BookViewState extends State<BookView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppTextLabel('Book ID'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                              flex: 3,
-                              child: AppTextFormField(
-                                  maxLength: 6,
-                                  icon: Icons.book,
-                                  width: 100,
-                                  height: 45,
-                                  current: _bookIdFocus,
-                                  next: _barCodeIdFocus,
-                                  validationMsg: 'Book Id not found'),
-                            ),
-                            UIUtil.hSmallSpace(),
-                            AppTextLabel('Barcode ID'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                              flex: 5,
-                              child: AppTextFormField(
-                                  maxLength: 15,
-                                  icon: Icons.qr_code,
-                                  width: 190,
-                                  height: 45,
-                                  current: _barCodeIdFocus,
-                                  next: _referenceNoFocus,
-                                  validationMsg: 'Please type barcode number'),
-                            ),
-                            UIUtil.hSmallSpace(),
-                            AppTextLabel('Reference No.'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                              flex: 5,
-                              child: AppTextFormField(
-                                  maxLength: 15,
-                                  icon: Icons.library_books,
-                                  width: 190,
-                                  height: 45,
-                                  current: _referenceNoFocus,
-                                  next: _bookTitleFocus,
-                                  validationMsg: 'Please type reference number'),
-                            ),
-                            UIUtil.hSmallSpace(),
-                            AppTextLabel('Book Title'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                                fit: FlexFit.tight,
-                                flex: 12,
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 00),
-                                  color: Colors.red,
-                                  //  height: 45,
-                                  child: TextFormField(
-                                    minLines: 1,
-                                    decoration: InputDecoration(
-                                        fillColor: Colors.amber,
-                                        filled: true,
-                                        counterText: ' ',
-                                        prefixIcon: Container(
-                                            // padding: const EdgeInsets.all(0.0),
-                                            // child: Icon(
-                                            //   Icons.person,
-                                            //   size: 14.0,
-                                            // ), // myIcon is a 48px-wide widget.
-                                            ),
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.only(
-                                          top: 10,
-                                        ),
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: borderColor, width: 0.8)),
-                                        focusedErrorBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: errorBorderColor, width: 0.8)),
-                                        errorBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: errorBorderColor, width: 0.8)),
-                                        enabledBorder: const OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: borderColor, width: 0.8))),
-                                  ),
-                                )
-                                // AppTextFormField(
-                                //     icon: Icons.title,
-                                //     //width: 10,
-                                //     //height: 45,
-                                //     current: _bookTitleFocus,
-                                //     next: _bookIdFocus,
-                                //     validationMsg: 'Please type book title'),
-                                )
-                          ],
-                        )
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppTextLabel('Book ID'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                flex: 1,
+                                child: AppTextFormField(
+                                    maxLength: 6,
+                                    icon: Icons.book,
+                                    // width: 100,
+                                    height: 45,
+                                    current: _bookIdFocus,
+                                    next: _barCodeIdFocus,
+                                    validationMsg: 'Book Id not found'),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Barcode ID'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                flex: 2,
+                                child: AppTextFormField(
+                                    maxLength: 20,
+                                    icon: Icons.qr_code,
+                                    // width: 190,
+                                    height: 45,
+                                    current: _barCodeIdFocus,
+                                    next: _referenceNoFocus,
+                                    validationMsg: 'Please type barcode number'),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Reference No.'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                flex: 2,
+                                child: AppTextFormField(
+                                    maxLength: 20,
+                                    icon: Icons.library_books,
+                                    //width: 190,
+                                    height: 45,
+                                    current: _referenceNoFocus,
+                                    next: _bookTitleFocus,
+                                    validationMsg: 'Please type reference number'),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Book Title'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                  flex: 10,
+                                  fit: FlexFit.tight,
+                                  child: AppTextFormField(
+                                      maxLength: 100,
+                                      icon: Icons.library_books,
+                                      // width: 190,
+                                      height: 45,
+                                      current: _bookTitleFocus,
+                                      next: _bookIdFocus,
+                                      validationMsg: 'Please type reference number'))
+                            ])
                       ],
                     ),
                   ),

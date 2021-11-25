@@ -1,11 +1,22 @@
+import 'dart:io';
+
 import 'package:desktop_library_shop/app_router.dart';
 import 'package:desktop_library_shop/core/models/user.dart';
 import 'package:desktop_library_shop/core/services/user_dao.dart';
 import 'package:desktop_library_shop/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:window_size/window_size.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    setWindowTitle('App title');
+    //Size s = await getWindowMaxSize();
+
+    setWindowMinSize(const Size(1000, 1000));
+    setWindowMaxSize(Size.infinite);
+  }
   setup();
   runApp(LibraryShopApp());
 }

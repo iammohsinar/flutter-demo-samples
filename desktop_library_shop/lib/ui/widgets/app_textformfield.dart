@@ -2,8 +2,6 @@ import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//class
-
 class AppTextFormField extends StatelessWidget {
   final FocusNode current;
   final FocusNode next;
@@ -37,7 +35,7 @@ class AppTextFormField extends StatelessWidget {
       width: width,
       height: height,
       child: TextFormField(
-        //style: const TextStyle(height: 1.2, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
         //maxLines: 1,
         minLines: 1,
         maxLength: maxLength,
@@ -55,13 +53,12 @@ class AppTextFormField extends StatelessWidget {
         },
         focusNode: current,
         decoration: InputDecoration(
-            isDense: true,
+            //isDense: true,
             counterText: ' ',
-            prefixIcon: Icon(icon),
-            enabled: isEnable,
-            contentPadding: const EdgeInsets.only(
-              top: 5,
-            ), //const EdgeInsets.all(10.0),,
+            // prefixIcon: Icon(icon),
+            // enabled: isEnable,
+            contentPadding:
+                const EdgeInsets.only(top: 15, left: 10), //const EdgeInsets.all(10.0),,
             fillColor: (isEnable) ? fieldActiveColor : fieldFocusColor,
             filled: true,
             focusedBorder: const OutlineInputBorder(
