@@ -94,11 +94,12 @@ class _LoginViewState extends State<LoginView> {
                               Expanded(
                                 flex: 2,
                                 child: AppTextFormField(
+                                    maxLength: 10,
                                     controller: _controllerUserName,
                                     validationMsg: 'Please type your user name',
                                     icon: Icons.person,
                                     width: 150.0,
-                                    height: 55.0,
+                                    height: 45.0,
                                     current: _userNameFocus,
                                     next: _passwordFocus),
                               ),
@@ -113,12 +114,13 @@ class _LoginViewState extends State<LoginView> {
                               Expanded(
                                 flex: 2,
                                 child: AppTextFormField(
+                                    maxLength: 20,
                                     obscureText: true,
                                     controller: _controllerPassword,
                                     validationMsg: 'Please Enter your password',
                                     icon: Icons.vpn_key,
                                     width: 150.0,
-                                    height: 55.0,
+                                    height: 45.0,
                                     current: _passwordFocus,
                                     next: _loginFocus),
                               ),

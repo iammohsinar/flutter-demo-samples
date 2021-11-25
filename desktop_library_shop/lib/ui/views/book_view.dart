@@ -1,3 +1,4 @@
+import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
 import 'package:desktop_library_shop/ui/widgets/app_panel.dart';
 import 'package:desktop_library_shop/ui/widgets/app_tab.dart';
@@ -49,10 +50,13 @@ class _BookViewState extends State<BookView> {
                           children: [
                             AppTextLabel('Book ID'),
                             UIUtil.hXSmallSpace(),
-                            Expanded(
+                            Flexible(
+                              flex: 3,
                               child: AppTextFormField(
-                                  width: 150,
-                                  height: 55,
+                                  maxLength: 6,
+                                  icon: Icons.book,
+                                  width: 100,
+                                  height: 45,
                                   current: _bookIdFocus,
                                   next: _barCodeIdFocus,
                                   validationMsg: 'Book Id not found'),
@@ -60,10 +64,13 @@ class _BookViewState extends State<BookView> {
                             UIUtil.hSmallSpace(),
                             AppTextLabel('Barcode ID'),
                             UIUtil.hXSmallSpace(),
-                            Expanded(
+                            Flexible(
+                              flex: 5,
                               child: AppTextFormField(
-                                  width: 150,
-                                  height: 55,
+                                  maxLength: 15,
+                                  icon: Icons.qr_code,
+                                  width: 190,
+                                  height: 45,
                                   current: _barCodeIdFocus,
                                   next: _referenceNoFocus,
                                   validationMsg: 'Please type barcode number'),
@@ -71,10 +78,13 @@ class _BookViewState extends State<BookView> {
                             UIUtil.hSmallSpace(),
                             AppTextLabel('Reference No.'),
                             UIUtil.hXSmallSpace(),
-                            Expanded(
+                            Flexible(
+                              flex: 5,
                               child: AppTextFormField(
-                                  width: 150,
-                                  height: 55,
+                                  maxLength: 15,
+                                  icon: Icons.library_books,
+                                  width: 190,
+                                  height: 45,
                                   current: _referenceNoFocus,
                                   next: _bookTitleFocus,
                                   validationMsg: 'Please type reference number'),
@@ -82,14 +92,52 @@ class _BookViewState extends State<BookView> {
                             UIUtil.hSmallSpace(),
                             AppTextLabel('Book Title'),
                             UIUtil.hXSmallSpace(),
-                            Expanded(
-                              child: AppTextFormField(
-                                  width: 150,
-                                  height: 55,
-                                  current: _bookTitleFocus,
-                                  next: _bookIdFocus,
-                                  validationMsg: 'Please type book title'),
-                            )
+                            Flexible(
+                                fit: FlexFit.tight,
+                                flex: 12,
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 00),
+                                  color: Colors.red,
+                                  //  height: 45,
+                                  child: TextFormField(
+                                    minLines: 1,
+                                    decoration: InputDecoration(
+                                        fillColor: Colors.amber,
+                                        filled: true,
+                                        counterText: ' ',
+                                        prefixIcon: Container(
+                                            // padding: const EdgeInsets.all(0.0),
+                                            // child: Icon(
+                                            //   Icons.person,
+                                            //   size: 14.0,
+                                            // ), // myIcon is a 48px-wide widget.
+                                            ),
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.only(
+                                          top: 10,
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: borderColor, width: 0.8)),
+                                        focusedErrorBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: errorBorderColor, width: 0.8)),
+                                        errorBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: errorBorderColor, width: 0.8)),
+                                        enabledBorder: const OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: borderColor, width: 0.8))),
+                                  ),
+                                )
+                                // AppTextFormField(
+                                //     icon: Icons.title,
+                                //     //width: 10,
+                                //     //height: 45,
+                                //     current: _bookTitleFocus,
+                                //     next: _bookIdFocus,
+                                //     validationMsg: 'Please type book title'),
+                                )
                           ],
                         )
                       ],

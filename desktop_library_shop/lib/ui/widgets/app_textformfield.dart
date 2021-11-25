@@ -2,11 +2,14 @@ import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//class
+
 class AppTextFormField extends StatelessWidget {
   final FocusNode current;
   final FocusNode next;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
+  final int? maxLength;
   final TextEditingController? controller;
   final IconData? icon;
   final String validationMsg;
@@ -16,8 +19,9 @@ class AppTextFormField extends StatelessWidget {
 
   AppTextFormField(
       {Key? key,
-      required this.width,
-      required this.height,
+      this.maxLength,
+      this.width,
+      this.height,
       required this.current,
       required this.next,
       this.controller,
@@ -33,6 +37,10 @@ class AppTextFormField extends StatelessWidget {
       width: width,
       height: height,
       child: TextFormField(
+        //style: const TextStyle(height: 1.2, fontWeight: FontWeight.bold),
+        //maxLines: 1,
+        minLines: 1,
+        maxLength: maxLength,
         obscureText: obscureText,
         controller: controller,
         validator: (value) {
@@ -47,10 +55,13 @@ class AppTextFormField extends StatelessWidget {
         },
         focusNode: current,
         decoration: InputDecoration(
-            helperText: ' ',
+            isDense: true,
+            counterText: ' ',
             prefixIcon: Icon(icon),
             enabled: isEnable,
-            contentPadding: const EdgeInsets.all(10.0),
+            contentPadding: const EdgeInsets.only(
+              top: 5,
+            ), //const EdgeInsets.all(10.0),,
             fillColor: (isEnable) ? fieldActiveColor : fieldFocusColor,
             filled: true,
             focusedBorder: const OutlineInputBorder(
