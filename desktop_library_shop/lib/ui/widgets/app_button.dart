@@ -31,7 +31,7 @@ class AppElevatedBtn extends StatelessWidget {
             gradient: LinearGradient(
                 begin: const Alignment(0, 0.2),
                 end: Alignment.bottomCenter,
-                colors: [inActiveColor, _adjustBrightness(inActiveColor, 0.1)])),
+                colors: [inActiveColor, adjustBrightness()])),
         child: ElevatedButton(
             focusNode: focusNode,
             style: ElevatedButton.styleFrom(
