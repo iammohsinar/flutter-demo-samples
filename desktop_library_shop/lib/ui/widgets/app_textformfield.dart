@@ -68,6 +68,7 @@ class AppTextFormField extends StatelessWidget {
   final double? width;
   final double? height;
   final int? maxLength;
+  final int? maxLines;
   final TextEditingController? controller;
   final IconData? icon;
   final String validationMsg;
@@ -86,7 +87,8 @@ class AppTextFormField extends StatelessWidget {
       required this.validationMsg,
       this.icon,
       this.obscureText = false,
-      this.isEnable = true})
+      this.isEnable = true,
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -98,8 +100,7 @@ class AppTextFormField extends StatelessWidget {
         style: const TextStyle(
           fontWeight: FontWeight.bold,
         ),
-
-        //maxLines: 1,
+        maxLines: maxLines,
         minLines: 1,
         maxLength: maxLength,
         obscureText: obscureText,
