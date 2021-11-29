@@ -17,7 +17,7 @@ class AppPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           padding: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
@@ -36,13 +36,13 @@ class AppPanel extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-            child: Container(
+        Container(
+          padding: EdgeInsets.all(20.0),
           child: child,
           decoration: BoxDecoration(
               border: Border.all(color: Colors.black, width: 2.0),
               color: bodyColor), //Color(0xAA4C602A),
-        ))
+        )
       ],
     );
   }

@@ -3,18 +3,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppDropDown extends StatelessWidget {
-  const AppDropDown({Key? key}) : super(key: key);
+  final List<DropdownMenuItem<String>> items;
+  final void Function(String?)? onChange;
+  final String? Function(String?)? validator;
+  final String? value;
+  final FocusNode? currentFocus;
+
+  const AppDropDown(
+      {Key? key,
+      required this.items,
+      this.onChange,
+      this.validator,
+      this.value,
+      this.currentFocus})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
+      //height: 30,
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: const Alignment(0, 0.2),
               end: Alignment.bottomCenter,
-              colors: [inActiveColor, adjustBrightness()])),
+              colors: [fieldActiveColor, adjustBrightness()])),
       child: DropdownButtonFormField<String>(
+          focusNode: currentFocus,
           decoration: InputDecoration(
               isDense: true,
               // counterText: ' ',
@@ -36,7 +50,7 @@ class AppDropDown extends StatelessWidget {
                   borderSide: BorderSide(color: borderColor, width: 0.8))),
           style: const TextStyle(
             //fontSize: 18.0,
-            color: Color(0xFF6e4875),
+            color: activeLabelColor,
           ),
           // underline: Container(
           //   height: 2,
@@ -46,32 +60,26 @@ class AppDropDown extends StatelessWidget {
           iconEnabledColor: Color(0xFF426d8e),
           iconSize: 24.0,
           elevation: 16,
-          // onChanged: (val) {
-          //   print(val);
-          // },
-          // // validator: this.validator,
+          value: value,
+          onChanged: onChange,
+          validator: validator,
           // value: 'value',
-          items: <String>['Choose language', 'Java', 'Flutter', 'Python', 'Reactjs']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(value),
-            );
-          }).toList()),
+          items: items),
     );
   }
 }
 
 class AppTextFormField extends StatelessWidget {
   final FocusNode current;
-  final FocusNode next;
+  final FocusNode? next;
   final double? width;
   final double? height;
   final int? maxLength;
   final int? maxLines;
   final TextEditingController? controller;
   final IconData? icon;
-  final String validationMsg;
+  //final String validationMsg;
+  final String? Function(String?)? validator;
   final bool obscureText;
 
   bool isEnable;
@@ -82,9 +90,10 @@ class AppTextFormField extends StatelessWidget {
       this.width,
       this.height,
       required this.current,
-      required this.next,
+      this.next,
       this.controller,
-      required this.validationMsg,
+      this.validator,
+      // required this.validationMsg,
       this.icon,
       this.obscureText = false,
       this.isEnable = true,
@@ -101,16 +110,11 @@ class AppTextFormField extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         maxLines: maxLines,
-        minLines: 1,
+        //minLines: 1,
         maxLength: maxLength,
         obscureText: obscureText,
         controller: controller,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return validationMsg;
-          }
-          return null;
-        },
+        validator: validator,
         onFieldSubmitted: (test) {
           current.unfocus();
           FocusScope.of(context).requestFocus(next);

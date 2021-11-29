@@ -96,7 +96,12 @@ class _LoginViewState extends State<LoginView> {
                                 child: AppTextFormField(
                                     maxLength: 10,
                                     controller: _controllerUserName,
-                                    validationMsg: 'Please type your user name',
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please type your user name';
+                                      }
+                                      return null;
+                                    },
                                     icon: Icons.person,
                                     width: 150.0,
                                     height: 45.0,
@@ -117,7 +122,12 @@ class _LoginViewState extends State<LoginView> {
                                     maxLength: 20,
                                     obscureText: true,
                                     controller: _controllerPassword,
-                                    validationMsg: 'Please Enter your password',
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please Enter your password';
+                                      }
+                                      return null;
+                                    },
                                     icon: Icons.vpn_key,
                                     width: 150.0,
                                     height: 45.0,
