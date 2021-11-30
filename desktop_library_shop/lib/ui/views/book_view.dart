@@ -31,7 +31,13 @@ class _BookViewState extends State<BookView> {
       _addBtnFocus,
       _updateBtnFocus,
       _cancelBtnFocus,
-      _printBtnFocus;
+      _printBtnFocus,
+      _searchBtnFocus,
+      _fromDateFocus,
+      _toDateFocus,
+      _searchCategoryFocus,
+      _searchAuthorFocus,
+      _searchPublisherFocus;
 
   @override
   void initState() {
@@ -47,11 +53,18 @@ class _BookViewState extends State<BookView> {
     _totalCopiesFocus = FocusNode();
     _languageFocus = FocusNode();
     _descriptionFocus = FocusNode();
+    _fromDateFocus = FocusNode();
+    _toDateFocus = FocusNode();
+
+    _searchAuthorFocus = FocusNode();
+    _searchCategoryFocus = FocusNode();
+    _searchPublisherFocus = FocusNode();
 
     _addBtnFocus = FocusNode();
     _updateBtnFocus = FocusNode();
     _cancelBtnFocus = FocusNode();
     _printBtnFocus = FocusNode();
+    _searchBtnFocus = FocusNode();
 
     super.initState();
   }
@@ -171,6 +184,7 @@ class _BookViewState extends State<BookView> {
                           AppTextLabel('Author'),
                           UIUtil.hXSmallSpace(),
                           Flexible(
+                            flex: 2,
                             child: BookAuthor(
                               currentFocus: _authorFocus,
                               nextFocus: _publisherFocus,
@@ -214,7 +228,7 @@ class _BookViewState extends State<BookView> {
                             Flexible(
                                 fit: FlexFit.tight,
                                 child: AppTextFormField(
-                                  maxLength: 100,
+                                  maxLength: 4,
                                   height: 45,
                                   current: _totalCopiesFocus,
                                   next: _languageFocus,
@@ -299,9 +313,109 @@ class _BookViewState extends State<BookView> {
         Padding(
             padding: const EdgeInsets.all(20),
             child: AppPanel(
-              child: Container(
-                height: 100,
-              ),
+              child: Column(children: [
+                Container(
+                  padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                  color: Color(0xFFE3FFE3),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppTextLabel('Search By: '),
+                      UIUtil.hMediumSpace(),
+                      AppTextLabel('Category'),
+                      UIUtil.hXSmallSpace(),
+                      Flexible(
+                        child: BookCategory(
+                          currentFocus: _searchCategoryFocus,
+                          nextFocus: _searchAuthorFocus,
+                        ),
+                      ),
+                      UIUtil.hSmallSpace(),
+                      AppTextLabel('Author'),
+                      UIUtil.hXSmallSpace(),
+                      Flexible(
+                        child: BookAuthor(
+                          currentFocus: _searchAuthorFocus,
+                          nextFocus: _searchPublisherFocus,
+                        ),
+                      ),
+                      UIUtil.hSmallSpace(),
+                      AppTextLabel('Publisher'),
+                      UIUtil.hXSmallSpace(),
+                      Flexible(
+                        child: BookPublisher(
+                          currentFocus: _searchPublisherFocus,
+                          nextFocus: _fromDateFocus,
+                        ),
+                      ),
+                      UIUtil.hSmallSpace(),
+                      AppTextLabel('From Date'),
+                      UIUtil.hXSmallSpace(),
+                      Flexible(
+                          child: AppTextFormField(
+                        hintText: 'DD-MM-YYYY',
+                        maxLength: 10,
+                        height: 45,
+                        current: _fromDateFocus,
+                        next: _toDateFocus,
+                      )),
+                      UIUtil.hSmallSpace(),
+                      AppTextLabel('To Date'),
+                      UIUtil.hXSmallSpace(),
+                      Flexible(
+                          child: AppTextFormField(
+                        hintText: 'DD-MM-YYYY',
+                        maxLength: 10,
+                        //height: 65,
+                        current: _toDateFocus,
+                        next: _searchBtnFocus,
+                      )),
+                      UIUtil.hSmallSpace(),
+                      Flexible(
+                        child: AppElevatedBtn(
+                            width: 100.0,
+                            imgUrl: 'assets/images/icons/search.png',
+                            focusNode: _searchBtnFocus,
+                            isEnable: true,
+                            onPressedFn: () {
+                              //
+                            },
+                            text: 'Search'),
+                      ),
+                    ],
+                  ),
+                ),
+                UIUtil.vMediumSpace(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: DataTable(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            color: Colors.black,
+                          )),
+                          columns: [
+                            DataColumn(label: Text('Code')),
+                            DataColumn(label: Text('Reference Code')),
+                            DataColumn(label: Text('Category')),
+                            DataColumn(label: Text('Title')),
+                            DataColumn(label: Text('Author')),
+                            DataColumn(label: Text('Publisher')),
+                            DataColumn(label: Text('Publish Year')),
+                            DataColumn(label: Text('Cost')),
+                            DataColumn(label: Text('Condition')),
+                            DataColumn(label: Text('Retire')),
+                            DataColumn(label: Text('Borrower')),
+                            DataColumn(label: Text('Stock Keeper')),
+                          ],
+                          rows: [],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ]),
               title: 'Book Details',
               headerColor: const Color(0xFF001D74),
               bodyColor: Colors.white,

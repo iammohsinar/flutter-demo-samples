@@ -76,6 +76,7 @@ class AppTextFormField extends StatelessWidget {
   final double? height;
   final int? maxLength;
   final int? maxLines;
+  final String? hintText;
   final TextEditingController? controller;
   final IconData? icon;
   //final String validationMsg;
@@ -95,6 +96,7 @@ class AppTextFormField extends StatelessWidget {
       this.validator,
       // required this.validationMsg,
       this.icon,
+      this.hintText,
       this.obscureText = false,
       this.isEnable = true,
       this.maxLines = 1})
@@ -102,44 +104,41 @@ class AppTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: TextFormField(
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        maxLines: maxLines,
-        //minLines: 1,
-        maxLength: maxLength,
-        obscureText: obscureText,
-        controller: controller,
-        validator: validator,
-        onFieldSubmitted: (test) {
-          current.unfocus();
-          FocusScope.of(context).requestFocus(next);
-        },
-        focusNode: current,
-        decoration: InputDecoration(
-            isDense: true,
-            counterText: ' ',
-            prefixIcon: (icon != null) ? Icon(icon) : null, //icon ?? Icon(icon),
-            enabled: isEnable,
-            contentPadding:
-                const EdgeInsets.only(top: 15, left: 10), //const EdgeInsets.all(10.0),,
-            fillColor: (isEnable) ? fieldActiveColor : fieldFocusColor,
-            filled: true,
-            border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 0.8)),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: borderColor, width: 0.8)),
-            focusedErrorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: errorBorderColor, width: 0.8)),
-            errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: errorBorderColor, width: 0.8)),
-            enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: borderColor, width: 0.8))),
+    return TextFormField(
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
       ),
+      maxLines: maxLines,
+      //minLines: 1,
+      maxLength: maxLength,
+      obscureText: obscureText,
+      controller: controller,
+      validator: validator,
+      onFieldSubmitted: (test) {
+        current.unfocus();
+        FocusScope.of(context).requestFocus(next);
+      },
+      focusNode: current,
+      decoration: InputDecoration(
+          hintText: hintText,
+          isDense: true,
+          counterText: ' ',
+          prefixIcon: (icon != null) ? Icon(icon) : null, //icon ?? Icon(icon),
+          enabled: isEnable,
+          contentPadding:
+              const EdgeInsets.only(top: 15, left: 10), //const EdgeInsets.all(10.0),,
+          fillColor: (isEnable) ? fieldActiveColor : fieldFocusColor,
+          filled: true,
+          border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 0.8)),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 2.5)),
+          focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: errorBorderColor, width: 1.5)),
+          errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: errorBorderColor, width: 1.5)),
+          enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor, width: 0.8))),
     );
   }
 }
