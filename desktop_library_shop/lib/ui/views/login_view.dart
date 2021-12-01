@@ -51,10 +51,10 @@ class _LoginViewState extends State<LoginView> {
         children: [
           const LoginBackground(),
           Positioned(
-              top: MediaQuery.of(context).size.height / 5.5,
+              top: MediaQuery.of(context).size.height / 8,
               left: MediaQuery.of(context).size.width / 2.8,
               right: MediaQuery.of(context).size.width / 2.8,
-              bottom: MediaQuery.of(context).size.height / 3,
+              bottom: MediaQuery.of(context).size.height / 4,
               child: Container(
                   padding: const EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
                   decoration: BoxDecoration(
@@ -68,97 +68,108 @@ class _LoginViewState extends State<LoginView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 150,
-                            height: 80,
-                            color: const Color(0xA0999999),
-                            child: Image.asset(
-                              'assets/images/code_seekhlo_logo.png',
+                          Flexible(
+                            child: Container(
+                              width: 150,
+                              height: 80,
+                              color: const Color(0xA0999999),
+                              child: Image.asset(
+                                'assets/images/code_seekhlo_logo.png',
+                              ),
                             ),
                           ),
                           UIUtil.vSmallSpace(),
-                          const Text(
-                            'Library Management System',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          const Flexible(
+                            child: Text(
+                              'Library Management System',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           UIUtil.vMediumSpace(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Expanded(child: AppTextLabel('User Name')),
-                              UIUtil.hSmallSpace(),
-                              Expanded(
-                                flex: 2,
-                                child: AppTextFormField(
-                                    maxLength: 10,
-                                    controller: _controllerUserName,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please type your user name';
-                                      }
-                                      return null;
-                                    },
-                                    icon: Icons.person,
-                                    width: 150.0,
-                                    height: 45.0,
-                                    current: _userNameFocus,
-                                    next: _passwordFocus),
-                              ),
-                            ],
+                          Flexible(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Expanded(child: AppTextLabel('User Name')),
+                                UIUtil.hSmallSpace(),
+                                Expanded(
+                                  flex: 2,
+                                  child: AppTextFormField(
+                                      maxLength: 10,
+                                      controller: _controllerUserName,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please type your user name';
+                                        }
+                                        return null;
+                                      },
+                                      icon: Icons.person,
+                                      // width: 150.0,
+                                      // height: 45.0,
+                                      current: _userNameFocus,
+                                      next: _passwordFocus),
+                                ),
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Expanded(child: AppTextLabel('Password')),
-                              UIUtil.hSmallSpace(),
-                              Expanded(
-                                flex: 2,
-                                child: AppTextFormField(
-                                    maxLength: 20,
-                                    obscureText: true,
-                                    controller: _controllerPassword,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please Enter your password';
-                                      }
-                                      return null;
-                                    },
-                                    icon: Icons.vpn_key,
-                                    width: 150.0,
-                                    height: 45.0,
-                                    current: _passwordFocus,
-                                    next: _loginFocus),
-                              ),
-                            ],
+                          Flexible(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Expanded(child: AppTextLabel('Password')),
+                                UIUtil.hSmallSpace(),
+                                Expanded(
+                                  flex: 2,
+                                  child: AppTextFormField(
+                                      maxLength: 20,
+                                      obscureText: true,
+                                      controller: _controllerPassword,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please Enter your password';
+                                        }
+                                        return null;
+                                      },
+                                      icon: Icons.vpn_key,
+                                      // width: 150.0,
+                                      // height: 45.0,width: 150.0,
+                                      // height: 45.0,
+                                      current: _passwordFocus,
+                                      next: _loginFocus),
+                                ),
+                              ],
+                            ),
                           ),
                           AppErrorText(_errorMessage),
                           (model.state == StateEnum.busy)
                               ? const CircularProgressIndicator()
-                              : Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: AppElevatedBtn(
-                                      width: 80.0,
-                                      imgUrl: 'assets/images/lock.png',
-                                      focusNode: _loginFocus,
-                                      isEnable: true,
-                                      onPressedFn: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          bool successLogin = await model.login(
-                                              _controllerUserName.text,
-                                              _controllerPassword.text);
-                                          if (successLogin) {
-                                            Navigator.pushNamed(context, '/');
-                                          } else {
-                                            _errorMessage = model.errorMessage;
-                                          }
-                                        }
-                                      },
-                                      text: 'Login')),
+                              : Flexible(
+                                  child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: AppElevatedBtn(
+                                          width: 80.0,
+                                          imgUrl: 'assets/images/lock.png',
+                                          focusNode: _loginFocus,
+                                          isEnable: true,
+                                          onPressedFn: () async {
+                                            if (_formKey.currentState!.validate()) {
+                                              bool successLogin = await model.login(
+                                                  _controllerUserName.text,
+                                                  _controllerPassword.text);
+                                              if (successLogin) {
+                                                Navigator.pushNamed(context, '/');
+                                              } else {
+                                                _errorMessage = model.errorMessage;
+                                              }
+                                            }
+                                          },
+                                          text: 'Login')),
+                                ),
                           UIUtil.vMediumSpace(),
                           const Divider(color: dividerColor),
                           const Text('Powered By CodeSeekhlo | 2021')
@@ -183,8 +194,8 @@ class LoginBackground extends StatelessWidget {
       left: MediaQuery.of(context).size.width / 6,
       right: MediaQuery.of(context).size.width / 6,
       child: Container(
-        height: MediaQuery.of(context).size.height / 4,
-        width: MediaQuery.of(context).size.width / 2,
+        // height: MediaQuery.of(context).size.height / 4,
+        // width: MediaQuery.of(context).size.width / 2,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
         child: FittedBox(
