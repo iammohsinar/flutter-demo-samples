@@ -1,4 +1,5 @@
 import 'package:desktop_library_shop/ui/util/app_color.dart';
+import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -43,9 +44,8 @@ class AppElevatedBtn extends StatelessWidget {
                 shadowColor: Colors.transparent,
                 onPrimary: Colors.black),
             onPressed: (!isEnable) ? null : onPressedFn,
-            child: SizedBox(
-              height: 35.0,
-              width: width,
+            child: Container(
+              padding: (ScreenSize(context).smallSize) ? EdgeInsets.all(2) : EdgeInsets.all(5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -53,15 +53,19 @@ class AppElevatedBtn extends StatelessWidget {
                       ? Image.asset(
                           imgUrl,
                           // 'assets/save_icon.png',
-                          width: 26,
-                          height: 26,
+
+                          width: (ScreenSize(context).smallSize) ? 20 : 26,
+                          height: (ScreenSize(context).smallSize) ? 20 : 26,
                         )
                       : const SizedBox(),
-                  const SizedBox(
-                    width: 5.0,
+                  SizedBox(
+                    width: (ScreenSize(context).smallSize) ? 2.0 : 5.0,
                   ),
                   Text(
                     text,
+                    style: TextStyle(
+                      fontSize: (ScreenSize(context).smallSize) ? 12 : 16,
+                    ),
                   ),
                 ],
               ),

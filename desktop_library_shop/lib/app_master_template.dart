@@ -1,4 +1,5 @@
 import 'package:desktop_library_shop/ui/util/app_color.dart';
+import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
 import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 import 'package:desktop_library_shop/ui/widgets/app_tab.dart';
@@ -36,27 +37,28 @@ class _AppTabState extends State<AppTab> {
         backgroundColor: backgroundColor,
         body: Container(
           alignment: Alignment.topCenter,
-          padding: const EdgeInsets.only(
-              top: 40.0, bottom: 40.0, left: 10.0, right: 10.0), //all(30.0),
+          padding: const EdgeInsets.all(5), //all(30.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                  flex: 2,
+              Flexible(
+                  flex: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
                         'assets/images/library_logo.png',
-                        height: 96,
-                        width: 96,
+                        height: (ScreenSize(context).smallSize) ? 35 : 96.0,
+                        width: (ScreenSize(context).smallSize) ? 35 : 96.0,
                       ),
                       UIUtil.hMediumSpace(),
-                      const Text(
-                        '',
+                      Text(
+                        //  '',
 
-                        ///'LIBRARY MANAGEMENT SYSTEM',
-                        style: TextStyle(fontSize: 46, fontWeight: FontWeight.bold),
+                        'LIBRARY MANAGEMENT SYSTEM',
+                        style: TextStyle(
+                            fontSize: (ScreenSize(context).smallSize) ? 18 : 46,
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   )),
@@ -90,7 +92,7 @@ class _AppTabState extends State<AppTab> {
                     index: index,
                   )),
               UIUtil.vSmallSpace(),
-              Expanded(
+              Flexible(
                   child: AppTabBody(
                 title: '',
                 child: Row(
@@ -98,16 +100,16 @@ class _AppTabState extends State<AppTab> {
                   children: [
                     const Text(
                       'This software is developed by: ',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                     Container(
-                      margin: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(1),
                       decoration: BoxDecoration(
                           color: Colors.black, borderRadius: BorderRadius.circular(10.0)),
                       child: Image.asset(
                         'assets/images/code_seekhlo_logo.png',
                         width: 80,
-                        height: 60,
+                        height: 80,
                       ),
                     )
                   ],

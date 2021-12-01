@@ -1,6 +1,8 @@
 import 'package:desktop_library_shop/ui/util/app_color.dart';
+import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppDropDown extends StatelessWidget {
   final List<DropdownMenuItem<String>> items;
@@ -21,6 +23,7 @@ class AppDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      //width: 120,
       //height: 30,
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -28,14 +31,17 @@ class AppDropDown extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [fieldActiveColor, adjustBrightness()])),
       child: DropdownButtonFormField<String>(
+          isExpanded: true,
           focusNode: currentFocus,
           decoration: InputDecoration(
               isDense: true,
               // counterText: ' ',
               //prefixIcon: (icon != null) ? Icon(icon) : null, //icon ?? Icon(icon),
               //enabled: isEnable,
-              contentPadding:
-                  const EdgeInsets.only(top: 15, left: 10), //const EdgeInsets.all(10.0),,
+              contentPadding: (ScreenSize(context).smallSize)
+                  ? const EdgeInsets.only(top: 8, left: 6)
+                  : const EdgeInsets.only(top: 15, left: 10),
+              //const EdgeInsets.all(10.0),,
               // fillColor: activeColor, //(isEnable) ? fieldActiveColor : fieldFocusColor,
               filled: true,
               border: const OutlineInputBorder(
@@ -48,8 +54,9 @@ class AppDropDown extends StatelessWidget {
                   borderSide: BorderSide(color: errorBorderColor, width: 0.8)),
               enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: borderColor, width: 0.8))),
-          style: const TextStyle(
+          style: TextStyle(
             //fontSize: 18.0,
+            fontSize: (ScreenSize(context).smallSize) ? 10 : 14,
             color: activeLabelColor,
           ),
           // underline: Container(
@@ -58,8 +65,8 @@ class AppDropDown extends StatelessWidget {
           // ),
           icon: Icon(Icons.unfold_more),
           iconEnabledColor: Color(0xFF426d8e),
-          iconSize: 24.0,
-          elevation: 16,
+          //iconSize: 24.0,
+          //  elevation: 16,
           value: value,
           onChanged: onChange,
           validator: validator,
@@ -105,7 +112,8 @@ class AppTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: const TextStyle(
+      style: TextStyle(
+        fontSize: (ScreenSize(context).smallSize) ? 10 : 18,
         fontWeight: FontWeight.bold,
       ),
       maxLines: maxLines,
@@ -126,7 +134,7 @@ class AppTextFormField extends StatelessWidget {
           prefixIcon: (icon != null) ? Icon(icon) : null, //icon ?? Icon(icon),
           enabled: isEnable,
           contentPadding:
-              const EdgeInsets.only(top: 15, left: 10), //const EdgeInsets.all(10.0),,
+              const EdgeInsets.only(top: 15, left: 6), //const EdgeInsets.all(10.0),,
           fillColor: (isEnable) ? fieldActiveColor : fieldFocusColor,
           filled: true,
           border: const OutlineInputBorder(

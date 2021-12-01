@@ -1,5 +1,7 @@
 import 'package:desktop_library_shop/ui/util/app_color.dart';
+import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:window_size/window_size.dart';
 
 class AppTextLabel extends StatelessWidget {
   final String text;
@@ -7,9 +9,13 @@ class AppTextLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //ScreenSize(context).smallSize;
     return Text(
       text,
-      style: const TextStyle(fontWeight: FontWeight.bold, color: activeLabelColor),
+      style: TextStyle(
+          fontSize: (ScreenSize(context).smallSize) ? 10 : 14,
+          fontWeight: FontWeight.bold,
+          color: activeLabelColor),
     );
   }
 }

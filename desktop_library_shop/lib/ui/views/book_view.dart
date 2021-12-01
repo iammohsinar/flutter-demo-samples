@@ -1,4 +1,5 @@
 import 'package:desktop_library_shop/ui/util/app_color.dart';
+import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
 import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 import 'package:desktop_library_shop/ui/widgets/app_panel.dart';
@@ -6,7 +7,9 @@ import 'package:desktop_library_shop/ui/widgets/app_tab.dart';
 import 'package:desktop_library_shop/ui/widgets/app_text.dart';
 import 'package:desktop_library_shop/ui/widgets/app_textformfield.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
 class BookView extends StatefulWidget {
@@ -38,6 +41,7 @@ class _BookViewState extends State<BookView> {
       _searchCategoryFocus,
       _searchAuthorFocus,
       _searchPublisherFocus;
+  final ScrollController _tableHorizontalController = ScrollController();
 
   @override
   void initState() {
@@ -71,10 +75,12 @@ class _BookViewState extends State<BookView> {
 
   @override
   Widget build(BuildContext context) {
+    // width < 1000
+    // < 500
     return Column(
       children: [
         Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 0),
+            padding: const EdgeInsets.all(5),
             child: AppPanel(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -184,7 +190,7 @@ class _BookViewState extends State<BookView> {
                           AppTextLabel('Author'),
                           UIUtil.hXSmallSpace(),
                           Flexible(
-                            flex: 2,
+                            // flex: 2,
                             child: BookAuthor(
                               currentFocus: _authorFocus,
                               nextFocus: _publisherFocus,
@@ -311,11 +317,11 @@ class _BookViewState extends State<BookView> {
               bodyColor: Colors.white,
             )),
         Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(5),
             child: AppPanel(
               child: Column(children: [
                 Container(
-                  padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                  padding: EdgeInsets.only(top: 5, left: 5, right: 5),
                   color: Color(0xFFE3FFE3),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -385,31 +391,42 @@ class _BookViewState extends State<BookView> {
                     ],
                   ),
                 ),
-                UIUtil.vMediumSpace(),
+                UIUtil.vXSmallSpace(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: SingleChildScrollView(
-                        child: DataTable(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Colors.black,
-                          )),
-                          columns: [
-                            DataColumn(label: Text('Code')),
-                            DataColumn(label: Text('Reference Code')),
-                            DataColumn(label: Text('Category')),
-                            DataColumn(label: Text('Title')),
-                            DataColumn(label: Text('Author')),
-                            DataColumn(label: Text('Publisher')),
-                            DataColumn(label: Text('Publish Year')),
-                            DataColumn(label: Text('Cost')),
-                            DataColumn(label: Text('Condition')),
-                            DataColumn(label: Text('Retire')),
-                            DataColumn(label: Text('Borrower')),
-                            DataColumn(label: Text('Stock Keeper')),
-                          ],
-                          rows: [],
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _tableHorizontalController,
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(context).copyWith(
+                              dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
+                          child: SingleChildScrollView(
+                            controller: _tableHorizontalController,
+                            scrollDirection: Axis.horizontal,
+                            child: DataTable(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                color: Colors.black,
+                              )),
+                              columns: [
+                                DataColumn(label: Text('Code')),
+                                DataColumn(label: Text('Reference Code')),
+                                DataColumn(label: Text('Category')),
+                                DataColumn(label: Text('Title')),
+                                DataColumn(label: Text('Author')),
+                                DataColumn(label: Text('Publisher')),
+                                DataColumn(label: Text('Publish Year')),
+                                DataColumn(label: Text('Cost')),
+                                DataColumn(label: Text('Condition')),
+                                DataColumn(label: Text('Retire')),
+                                DataColumn(label: Text('Borrower')),
+                                DataColumn(label: Text('Stock Keeper')),
+                              ],
+                              rows: [],
+                            ),
+                          ),
                         ),
                       ),
                     )
@@ -507,7 +524,10 @@ class _BookAuthorState extends State<BookAuthor> {
         .map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem(
         value: value,
-        child: Text(value),
+        child: Text(
+          value,
+          softWrap: true,
+        ),
       );
     }).toList();
   }
@@ -559,3 +579,35 @@ class _BookPublisherState extends State<BookPublisher> {
     }).toList();
   }
 }
+
+// class ScrollDemo extends StatefulWidget {
+//   const ScrollDemo({Key? key}) : super(key: key);
+
+//   @override
+//   _ScrollDemoState createState() => _ScrollDemoState();
+// }
+
+// class _ScrollDemoState extends State<ScrollDemo> {
+//   final ScrollController _tableHorizontalController = ScrollController();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         child: Scrollbar(
+//             isAlwaysShown: true,
+//             controller: _tableHorizontalController,
+//             child: ScrollConfiguration(
+//                 behavior: ScrollConfiguration.of(context)
+//                     .copyWith(dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
+//                 child: SingleChildScrollView(
+//                     controller: _tableHorizontalController,
+//                     scrollDirection: Axis.horizontal,
+//                     child: DataTable(
+//                       decoration: BoxDecoration(
+//                           border: Border.all(
+//                         color: Colors.black,
+//                       )),
+//                       columns: [],
+//                       rows: [],
+//                     )))));
+//   }
+// }

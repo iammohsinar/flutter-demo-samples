@@ -148,27 +148,27 @@ class _LoginViewState extends State<LoginView> {
                           AppErrorText(_errorMessage),
                           (model.state == StateEnum.busy)
                               ? const CircularProgressIndicator()
-                              : Flexible(
-                                  child: Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: AppElevatedBtn(
-                                          width: 80.0,
-                                          imgUrl: 'assets/images/lock.png',
-                                          focusNode: _loginFocus,
-                                          isEnable: true,
-                                          onPressedFn: () async {
-                                            if (_formKey.currentState!.validate()) {
-                                              bool successLogin = await model.login(
-                                                  _controllerUserName.text,
-                                                  _controllerPassword.text);
-                                              if (successLogin) {
-                                                Navigator.pushNamed(context, '/');
-                                              } else {
-                                                _errorMessage = model.errorMessage;
-                                              }
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    AppElevatedBtn(
+                                        imgUrl: 'assets/images/lock.png',
+                                        focusNode: _loginFocus,
+                                        isEnable: true,
+                                        onPressedFn: () async {
+                                          if (_formKey.currentState!.validate()) {
+                                            bool successLogin = await model.login(
+                                                _controllerUserName.text,
+                                                _controllerPassword.text);
+                                            if (successLogin) {
+                                              Navigator.pushNamed(context, '/');
+                                            } else {
+                                              _errorMessage = model.errorMessage;
                                             }
-                                          },
-                                          text: 'Login')),
+                                          }
+                                        },
+                                        text: 'Login'),
+                                  ],
                                 ),
                           UIUtil.vMediumSpace(),
                           const Divider(color: dividerColor),

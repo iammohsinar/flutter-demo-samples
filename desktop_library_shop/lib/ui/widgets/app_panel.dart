@@ -37,7 +37,7 @@ class AppPanel extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 5), //all(5.0),
           child: child,
           decoration: BoxDecoration(
               border: Border.all(color: Colors.black, width: 2.0),
