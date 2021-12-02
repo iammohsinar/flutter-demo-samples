@@ -34,6 +34,9 @@ class AppDropDown extends StatelessWidget {
           isExpanded: true,
           focusNode: currentFocus,
           decoration: InputDecoration(
+              errorStyle: TextStyle(
+                fontSize: (ScreenSize(context).smallSize) ? 8 : 10,
+              ),
               isDense: true,
               // counterText: ' ',
               //prefixIcon: (icon != null) ? Icon(icon) : null, //icon ?? Icon(icon),
@@ -118,6 +121,7 @@ class AppTextFormField extends StatelessWidget {
       ),
       maxLines: maxLines,
       //minLines: 1,
+
       maxLength: maxLength,
       obscureText: obscureText,
       controller: controller,
@@ -128,6 +132,9 @@ class AppTextFormField extends StatelessWidget {
       },
       focusNode: current,
       decoration: InputDecoration(
+          errorStyle: TextStyle(
+            fontSize: (ScreenSize(context).smallSize) ? 8 : 10,
+          ),
           hintText: hintText,
           isDense: true,
           counterText: ' ',

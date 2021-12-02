@@ -8,8 +8,9 @@ class BookRepository {
     try {
       var con = await Db.connection;
       Results r = await con.query(
-          'INSERT INTO books (bookId, code, title, author, publisher, cost,categoryId, isActive, stockKeeper, stockOn, isIssue, condition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          'INSERT INTO books (publishYear,code, title, author, publisher, cost,categoryId, isActive, stockKeeper, stockOn, isIssue, condition) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,\'new\')',
           [
+            b.publishYear,
             b.code,
             b.title,
             b.author,
@@ -20,8 +21,9 @@ class BookRepository {
             b.stockKeeper,
             b.stockOn,
             b.isIssue,
-            b.condition
+            b.condition,
           ]);
+      print(r.insertId);
       return await getBookById(r.insertId!);
     } catch (e) {
       throw Exception('Something went wrong $e');

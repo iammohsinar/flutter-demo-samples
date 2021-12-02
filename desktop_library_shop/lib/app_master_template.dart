@@ -41,17 +41,17 @@ class _AppTabState extends State<AppTab> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(
-                  flex: 1,
+              Padding(
+                  padding: EdgeInsets.only(bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
                         'assets/images/library_logo.png',
-                        height: (ScreenSize(context).smallSize) ? 35 : 96.0,
-                        width: (ScreenSize(context).smallSize) ? 35 : 96.0,
+                        height: (ScreenSize(context).smallSize) ? 35 : 70.0,
+                        width: (ScreenSize(context).smallSize) ? 35 : 70.0,
                       ),
-                      UIUtil.hMediumSpace(),
+                      UIUtil.hXSmallSpace(),
                       Text(
                         //  '',
 

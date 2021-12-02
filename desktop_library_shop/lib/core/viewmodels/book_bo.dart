@@ -14,16 +14,23 @@ class BookBoImpl extends BookBo {
 
   @override
   Future<bool> save(Book b) async {
-    setState(StateEnum.busy);
-    Book _b = await _bookDao.save(b);
-    var saved = _b == Book.initial();
-    if (saved) {
-      bookMsg = 'Problem occurs posting book please data';
+    try {
+      setState(StateEnum.busy);
+      Book _b = await _bookDao.save(b);
+      var saved = _b == Book.initial();
+      if (saved) {
+        bookMsg = 'Problem occurs posting book please data';
+        setState(StateEnum.idle);
+        return false;
+      }
+      bookMsg = 'Book successfully saved';
+      setState(StateEnum.idle);
+      return true;
+    } catch (e) {
+      print(e);
+      bookMsg = 'Something went wrong in server call Adminstration $e';
       setState(StateEnum.idle);
       return false;
     }
-    bookMsg = 'Book successfully saved';
-    setState(StateEnum.idle);
-    return true;
   }
 }

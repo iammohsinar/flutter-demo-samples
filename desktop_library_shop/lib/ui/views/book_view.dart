@@ -1,5 +1,7 @@
+import 'package:desktop_library_shop/core/enums/state_enums.dart';
 import 'package:desktop_library_shop/core/models/book.dart';
 import 'package:desktop_library_shop/core/models/user.dart';
+import 'package:desktop_library_shop/core/services/book_dao.dart';
 import 'package:desktop_library_shop/core/viewmodels/book_bo.dart';
 import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';
@@ -45,7 +47,8 @@ class _BookViewState extends State<BookView> {
       _toDateFocus,
       _searchCategoryFocus,
       _searchAuthorFocus,
-      _searchPublisherFocus;
+      _searchPublisherFocus,
+      _costFocus;
   final ScrollController _tableHorizontalController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
@@ -53,8 +56,14 @@ class _BookViewState extends State<BookView> {
   final TextEditingController _categoryIdTextCtrl = TextEditingController();
   final TextEditingController _codeTextCtrl = TextEditingController();
   final TextEditingController _costTextCtrl = TextEditingController();
-  final TextEditingController _pushlisherTextCtrl = TextEditingController();
+  final TextEditingController _publishYearTextCtrl = TextEditingController();
+  //final TextEditingController _pushlisherTextCtrl = TextEditingController();
   final TextEditingController _titleTextCtrl = TextEditingController();
+  int categoryId = 0;
+
+  String _publisherInitialValue = 'Choose publisher';
+
+  String _bookAuthorInitialValue = 'Choose Author';
 
   @override
   void initState() {
@@ -82,6 +91,7 @@ class _BookViewState extends State<BookView> {
     _cancelBtnFocus = FocusNode();
     _printBtnFocus = FocusNode();
     _searchBtnFocus = FocusNode();
+    _costFocus = FocusNode();
 
     super.initState();
   }
@@ -130,6 +140,7 @@ class _BookViewState extends State<BookView> {
                               Flexible(
                                 flex: 2,
                                 child: AppTextFormField(
+                                  controller: _codeTextCtrl,
                                   maxLength: 20,
                                   height: 45,
                                   current: _barCodeIdFocus,
@@ -171,18 +182,38 @@ class _BookViewState extends State<BookView> {
                               const AppTextLabel('Book Title'),
                               UIUtil.hXSmallSpace(),
                               Flexible(
+                                  flex: 8,
                                   child: AppTextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please type Book title';
-                                  }
-                                  return null;
-                                },
-                                maxLength: 100,
-                                height: 45,
-                                current: _bookTitleFocus,
-                                next: _categoryFocus,
-                              ))
+                                    controller: _titleTextCtrl,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please type Book title';
+                                      }
+                                      return null;
+                                    },
+                                    maxLength: 100,
+                                    height: 45,
+                                    current: _bookTitleFocus,
+                                    next: _costFocus,
+                                  )),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Cost'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                child: AppTextFormField(
+                                  controller: _costTextCtrl,
+                                  maxLength: 4,
+                                  height: 45,
+                                  current: _costFocus,
+                                  next: _categoryFocus,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please add cost of book';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
                             ],
                           )),
                         ],
@@ -200,6 +231,11 @@ class _BookViewState extends State<BookView> {
                                 child: BookCategory(
                                   currentFocus: _categoryFocus,
                                   nextFocus: _authorFocus,
+                                  value: categoryId,
+                                  onChange: (value) {
+                                    categoryId = int.parse(value!);
+                                    FocusScope.of(context).requestFocus(_authorFocus);
+                                  },
                                 ),
                               ),
                               UIUtil.hSmallSpace(),
@@ -208,6 +244,11 @@ class _BookViewState extends State<BookView> {
                               Flexible(
                                 // flex: 2,
                                 child: BookAuthor(
+                                  value: _bookAuthorInitialValue,
+                                  onChange: (value) {
+                                    _bookAuthorInitialValue = value!;
+                                    FocusScope.of(context).requestFocus(_publisherFocus);
+                                  },
                                   currentFocus: _authorFocus,
                                   nextFocus: _publisherFocus,
                                 ),
@@ -217,6 +258,11 @@ class _BookViewState extends State<BookView> {
                               UIUtil.hXSmallSpace(),
                               Flexible(
                                 child: BookPublisher(
+                                  value: _publisherInitialValue,
+                                  onChange: (value) {
+                                    _publisherInitialValue = value!;
+                                    FocusScope.of(context).requestFocus(_publishYearFocus);
+                                  },
                                   currentFocus: _publisherFocus,
                                   nextFocus: _publishYearFocus,
                                 ),
@@ -232,6 +278,7 @@ class _BookViewState extends State<BookView> {
                                 UIUtil.hXSmallSpace(),
                                 Flexible(
                                   child: AppTextFormField(
+                                    controller: _publishYearTextCtrl,
                                     maxLength: 4,
                                     height: 45,
                                     current: _publishYearFocus,
@@ -294,53 +341,64 @@ class _BookViewState extends State<BookView> {
                           ),
                         ],
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // add/update/cancel buttons
-                          AppElevatedBtn(
-                              width: 80.0,
-                              imgUrl: 'assets/images/icons/save.png',
-                              focusNode: _addBtnFocus,
-                              isEnable: true,
-                              onPressedFn: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  Book b = Book(
-                                      code: _codeTextCtrl.text,
-                                      title: _titleTextCtrl.text,
-                                      author: _authorTextCtrl.text,
-                                      publisher: _pushlisherTextCtrl.text,
-                                      cost: int.parse(_costTextCtrl.text),
-                                      categoryId: int.parse(_categoryIdTextCtrl.text),
-                                      stockKeeper: Provider.of<User>(context).userId,
-                                      stockOn: DateTime.now());
-
-                                  bool success = await bookBo.save(b);
-                                  if (success) {
-                                    _addBtnFocus.unfocus();
-                                    FocusScope.of(context).requestFocus(_barCodeIdFocus);
-                                  } else {}
-                                }
-                              },
-                              text: 'Save'),
-                          UIUtil.hSmallSpace(),
-                          AppElevatedBtn(
-                              width: 80.0,
-                              imgUrl: 'assets/images/icons/cancel.png',
-                              focusNode: _cancelBtnFocus,
-                              isEnable: true,
-                              onPressedFn: () {},
-                              text: 'Cancel'),
-                          UIUtil.hSmallSpace(),
-                          AppElevatedBtn(
-                              width: 80.0,
-                              imgUrl: 'assets/images/icons/printer.png',
-                              focusNode: _printBtnFocus,
-                              isEnable: true,
-                              onPressedFn: () {},
-                              text: 'Print'),
-                        ],
-                      )
+                      (bookBo.state == StateEnum.busy)
+                          ? const CircularProgressIndicator()
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // add/update/cancel buttons
+                                AppElevatedBtn(
+                                    width: 80.0,
+                                    imgUrl: 'assets/images/icons/save.png',
+                                    focusNode: _addBtnFocus,
+                                    isEnable: true,
+                                    onPressedFn: () async {
+                                      //_formKey.currentState!.reset();
+                                      if (_formKey.currentState!.validate()) {
+                                        Book b = Book(
+                                            code: _codeTextCtrl.text,
+                                            title: _titleTextCtrl.text,
+                                            author: _bookAuthorInitialValue,
+                                            publisher: _publisherInitialValue,
+                                            publishYear: int.parse(_publishYearTextCtrl.text),
+                                            cost: 20, //int.parse(_costTextCtrl.text),
+                                            categoryId: categoryId,
+                                            stockKeeper:
+                                                Provider.of<User>(context, listen: false)
+                                                    .userId,
+                                            stockOn: DateTime.now());
+                                        print(b);
+                                        bool success = await bookBo.save(b);
+                                        if (success) {
+                                          _showDialog(context, bookBo.bookMsg, 'success');
+                                          _addBtnFocus.unfocus();
+                                          FocusScope.of(context).requestFocus(_barCodeIdFocus);
+                                          _formKey.currentState!.reset();
+                                        } else {
+                                          _showDialog(
+                                              context, 'ERROR! ${bookBo.bookMsg}', 'cancel');
+                                        }
+                                      }
+                                    },
+                                    text: 'Save'),
+                                UIUtil.hSmallSpace(),
+                                AppElevatedBtn(
+                                    width: 80.0,
+                                    imgUrl: 'assets/images/icons/cancel.png',
+                                    focusNode: _cancelBtnFocus,
+                                    isEnable: true,
+                                    onPressedFn: () {},
+                                    text: 'Cancel'),
+                                UIUtil.hSmallSpace(),
+                                AppElevatedBtn(
+                                    width: 80.0,
+                                    imgUrl: 'assets/images/icons/printer.png',
+                                    focusNode: _printBtnFocus,
+                                    isEnable: true,
+                                    onPressedFn: () {},
+                                    text: 'Print'),
+                              ],
+                            )
                     ],
                   ),
                 ),
@@ -365,6 +423,7 @@ class _BookViewState extends State<BookView> {
                       UIUtil.hXSmallSpace(),
                       Flexible(
                         child: BookCategory(
+                          value: categoryId,
                           currentFocus: _searchCategoryFocus,
                           nextFocus: _searchAuthorFocus,
                         ),
@@ -473,12 +532,53 @@ class _BookViewState extends State<BookView> {
       ],
     );
   }
+
+  void _showDialog(BuildContext context, String message, imageName) {
+    showDialog<void>(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: Container(
+                width: 300,
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      message,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    Image.asset('assets/images/icons/$imageName.png')
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(color: Color(0xFF6e4875)),
+                  )),
+            ],
+          );
+        });
+  }
 }
 
 class BookCategory extends StatefulWidget {
   final FocusNode currentFocus;
   final FocusNode nextFocus;
-  const BookCategory({Key? key, required this.currentFocus, required this.nextFocus})
+  void Function(String?)? onChange;
+  int value;
+  BookCategory(
+      {Key? key,
+      required this.currentFocus,
+      required this.nextFocus,
+      required this.value,
+      this.onChange})
       : super(key: key);
 
   @override
@@ -492,27 +592,30 @@ class _BookCategoryState extends State<BookCategory> {
     return AppDropDown(
       currentFocus: widget.currentFocus,
       validator: (value) {
-        if (value!.toLowerCase() == 'choose language') {
+        if (int.parse(value!) == 0) {
           return 'Please choose language';
         }
         return null;
       },
       items: _items(),
-      onChange: (value) {
-        setState(() {
-          this.value = value!;
-        });
-        FocusScope.of(context).requestFocus(widget.nextFocus);
-      },
-      value: value,
+      onChange: widget.onChange,
+      // (value) {
+      //   print(value);
+      //   setState(() {
+      //     widget.value = int.parse(value!);
+      //   });
+      //   FocusScope.of(context).requestFocus(widget.nextFocus);
+      // },
+      value: widget.value.toString(),
     );
   }
 
   List<DropdownMenuItem<String>> _items() {
-    return <String>['Choose language', 'Java', 'Flutter', 'Python', 'Reactjs']
+    int i = 0;
+    return ['Choose language', 'Java', 'Flutter', 'Python', 'Reactjs']
         .map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem(
-        value: value,
+        value: (i++).toString(),
         child: Text(value),
       );
     }).toList();
@@ -522,7 +625,14 @@ class _BookCategoryState extends State<BookCategory> {
 class BookAuthor extends StatefulWidget {
   final FocusNode currentFocus;
   final FocusNode nextFocus;
-  const BookAuthor({Key? key, required this.currentFocus, required this.nextFocus})
+  final Function(String?)? onChange;
+  String? value;
+  BookAuthor(
+      {Key? key,
+      required this.currentFocus,
+      required this.nextFocus,
+      this.onChange,
+      this.value})
       : super(key: key);
 
   @override
@@ -530,7 +640,7 @@ class BookAuthor extends StatefulWidget {
 }
 
 class _BookAuthorState extends State<BookAuthor> {
-  String value = 'Choose Author';
+  //String value = 'Choose Author';
   @override
   Widget build(BuildContext context) {
     return AppDropDown(
@@ -542,13 +652,8 @@ class _BookAuthorState extends State<BookAuthor> {
         return null;
       },
       items: _items(),
-      onChange: (value) {
-        setState(() {
-          this.value = value!;
-        });
-        FocusScope.of(context).requestFocus(widget.nextFocus);
-      },
-      value: value,
+      onChange: widget.onChange,
+      value: widget.value,
     );
   }
 
@@ -569,7 +674,14 @@ class _BookAuthorState extends State<BookAuthor> {
 class BookPublisher extends StatefulWidget {
   final FocusNode currentFocus;
   final FocusNode nextFocus;
-  const BookPublisher({Key? key, required this.currentFocus, required this.nextFocus})
+  void Function(String?)? onChange;
+  String? value;
+  BookPublisher(
+      {Key? key,
+      required this.currentFocus,
+      required this.nextFocus,
+      this.onChange,
+      this.value})
       : super(key: key);
 
   @override
@@ -577,7 +689,7 @@ class BookPublisher extends StatefulWidget {
 }
 
 class _BookPublisherState extends State<BookPublisher> {
-  String value = 'Choose publisher';
+  //String value = 'Choose publisher';
   @override
   Widget build(BuildContext context) {
     return AppDropDown(
@@ -589,13 +701,8 @@ class _BookPublisherState extends State<BookPublisher> {
         return null;
       },
       items: _items(),
-      onChange: (value) {
-        setState(() {
-          this.value = value!;
-        });
-        FocusScope.of(context).requestFocus(widget.nextFocus);
-      },
-      value: value,
+      onChange: widget.onChange,
+      value: widget.value,
     );
   }
 

@@ -76,7 +76,7 @@ class _AppTabHeaderState extends State<AppTabHeader> {
     return InkWell(
       onTap: widget.onTap,
       child: Container(
-        padding: const EdgeInsets.only(right: 8, left: 8), //all(2.0),
+        padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8, top: 3), //all(2.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
