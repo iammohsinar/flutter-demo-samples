@@ -5,17 +5,17 @@ import 'package:mysql1/src/results/row.dart';
 
 class Book extends Equatable {
   Book({
-    required this.bookId,
+    this.bookId = 0,
     required this.code,
     required this.title,
     required this.author,
     required this.publisher,
     required this.cost,
     required this.categoryId,
-    required this.isActive,
+    this.isActive = 1,
     required this.stockKeeper,
     required this.stockOn,
-    required this.isIssue,
+    this.isIssue = 0,
   });
   late final int bookId;
   late final String code;
@@ -39,7 +39,7 @@ class Book extends Equatable {
         publisher = '',
         cost = 0,
         categoryId = 0,
-        isActive = 0,
+        isActive = 1,
         stockKeeper = 0,
         stockOn = DateTime.now(),
         isIssue = 0,

@@ -1,6 +1,10 @@
+import 'package:desktop_library_shop/core/models/book.dart';
+import 'package:desktop_library_shop/core/models/user.dart';
+import 'package:desktop_library_shop/core/viewmodels/book_bo.dart';
 import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
+import 'package:desktop_library_shop/ui/views/base_view.dart';
 import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 import 'package:desktop_library_shop/ui/widgets/app_panel.dart';
 import 'package:desktop_library_shop/ui/widgets/app_tab.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class BookView extends StatefulWidget {
   const BookView({Key? key}) : super(key: key);
@@ -42,6 +47,14 @@ class _BookViewState extends State<BookView> {
       _searchAuthorFocus,
       _searchPublisherFocus;
   final ScrollController _tableHorizontalController = ScrollController();
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _authorTextCtrl = TextEditingController();
+  final TextEditingController _categoryIdTextCtrl = TextEditingController();
+  final TextEditingController _codeTextCtrl = TextEditingController();
+  final TextEditingController _costTextCtrl = TextEditingController();
+  final TextEditingController _pushlisherTextCtrl = TextEditingController();
+  final TextEditingController _titleTextCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -82,235 +95,255 @@ class _BookViewState extends State<BookView> {
         Padding(
             padding: const EdgeInsets.all(5),
             child: AppPanel(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
+              child: BaseView<BookBo>(
+                builder: (context, bookBo, _) => Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Expanded(
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          const AppTextLabel('Book ID'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                            child: AppTextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Book Id not found';
-                                }
-                                return null;
-                              },
-                              maxLength: 6,
-                              isEnable: false,
-                              height: 45,
-                              current: _bookIdFocus,
-                              next: _barCodeIdFocus,
-                            ),
-                          ),
-                          UIUtil.hSmallSpace(),
-                          const AppTextLabel('Barcode ID'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                            flex: 2,
-                            child: AppTextFormField(
-                              maxLength: 20,
-                              height: 45,
-                              current: _barCodeIdFocus,
-                              next: _referenceNoFocus,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please type barcode number';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          UIUtil.hSmallSpace(),
-                          AppTextLabel('Reference No.'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                            flex: 2,
-                            child: AppTextFormField(
-                              maxLength: 20,
-                              height: 45,
-                              current: _referenceNoFocus,
-                              next: _bookTitleFocus,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please type reference number';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          UIUtil.hSmallSpace(),
-                        ],
-                      )),
-                      Expanded(
-                          //flex: 2,
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const AppTextLabel('Book Title'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                              child: AppTextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please type Book title';
-                              }
-                              return null;
-                            },
-                            maxLength: 100,
-                            height: 45,
-                            current: _bookTitleFocus,
-                            next: _categoryFocus,
-                          ))
-                        ],
-                      )),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppTextLabel('Category'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                            child: BookCategory(
-                              currentFocus: _categoryFocus,
-                              nextFocus: _authorFocus,
-                            ),
-                          ),
-                          UIUtil.hSmallSpace(),
-                          AppTextLabel('Author'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                            // flex: 2,
-                            child: BookAuthor(
-                              currentFocus: _authorFocus,
-                              nextFocus: _publisherFocus,
-                            ),
-                          ),
-                          UIUtil.hSmallSpace(),
-                          AppTextLabel('Publisher'),
-                          UIUtil.hXSmallSpace(),
-                          Flexible(
-                            child: BookPublisher(
-                              currentFocus: _publisherFocus,
-                              nextFocus: _publishYearFocus,
-                            ),
-                          ),
-                          UIUtil.hSmallSpace(),
-                        ],
-                      )),
-                      Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppTextLabel('Publish year'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                              child: AppTextFormField(
-                                maxLength: 4,
-                                height: 45,
-                                current: _publishYearFocus,
-                                next: _totalCopiesFocus,
+                          Expanded(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const AppTextLabel('Book ID'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                child: AppTextFormField(
+                                  // validator: (value) {
+                                  //   if (value!.isEmpty) {
+                                  //     return 'Book Id not found';
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  maxLength: 6,
+                                  isEnable: false,
+                                  height: 45,
+                                  current: _bookIdFocus,
+                                  next: _barCodeIdFocus,
+                                ),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              const AppTextLabel('Barcode ID'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                flex: 2,
+                                child: AppTextFormField(
+                                  maxLength: 20,
+                                  height: 45,
+                                  current: _barCodeIdFocus,
+                                  next: _referenceNoFocus,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please type barcode number';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Reference No.'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                flex: 2,
+                                child: AppTextFormField(
+                                  maxLength: 20,
+                                  height: 45,
+                                  current: _referenceNoFocus,
+                                  next: _bookTitleFocus,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please type reference number';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              UIUtil.hSmallSpace(),
+                            ],
+                          )),
+                          Expanded(
+                              //flex: 2,
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const AppTextLabel('Book Title'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                  child: AppTextFormField(
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'Please type publish year';
+                                    return 'Please type Book title';
                                   }
                                   return null;
                                 },
-                              ),
-                            ),
-                            UIUtil.hSmallSpace(),
-                            AppTextLabel('Total Copies ?'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                                fit: FlexFit.tight,
-                                child: AppTextFormField(
-                                  maxLength: 4,
-                                  height: 45,
-                                  current: _totalCopiesFocus,
-                                  next: _languageFocus,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please type total copies';
-                                    }
-                                    return null;
-                                  },
-                                )),
-                            UIUtil.hSmallSpace(),
-                            AppTextLabel('Language'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                                flex: 2,
-                                child: AppTextFormField(
-                                  maxLength: 100,
-                                  height: 45,
-                                  current: _languageFocus,
-                                  next: _addBtnFocus,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please type language';
-                                    }
-                                    return null;
-                                  },
-                                )),
-                            UIUtil.hSmallSpace(),
-                            AppTextLabel('Description'),
-                            UIUtil.hXSmallSpace(),
-                            Flexible(
-                                flex: 4,
-                                child: AppTextFormField(
-                                  maxLines: 5,
-                                  maxLength: 100,
-                                  current: _descriptionFocus,
-                                  next: null,
-                                )),
-                          ],
-                        ),
+                                maxLength: 100,
+                                height: 45,
+                                current: _bookTitleFocus,
+                                next: _categoryFocus,
+                              ))
+                            ],
+                          )),
+                        ],
                       ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppTextLabel('Category'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                child: BookCategory(
+                                  currentFocus: _categoryFocus,
+                                  nextFocus: _authorFocus,
+                                ),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Author'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                // flex: 2,
+                                child: BookAuthor(
+                                  currentFocus: _authorFocus,
+                                  nextFocus: _publisherFocus,
+                                ),
+                              ),
+                              UIUtil.hSmallSpace(),
+                              AppTextLabel('Publisher'),
+                              UIUtil.hXSmallSpace(),
+                              Flexible(
+                                child: BookPublisher(
+                                  currentFocus: _publisherFocus,
+                                  nextFocus: _publishYearFocus,
+                                ),
+                              ),
+                              UIUtil.hSmallSpace(),
+                            ],
+                          )),
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppTextLabel('Publish year'),
+                                UIUtil.hXSmallSpace(),
+                                Flexible(
+                                  child: AppTextFormField(
+                                    maxLength: 4,
+                                    height: 45,
+                                    current: _publishYearFocus,
+                                    next: _totalCopiesFocus,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please type publish year';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                UIUtil.hSmallSpace(),
+                                AppTextLabel('Total Copies ?'),
+                                UIUtil.hXSmallSpace(),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: AppTextFormField(
+                                      maxLength: 4,
+                                      height: 45,
+                                      current: _totalCopiesFocus,
+                                      next: _languageFocus,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please type total copies';
+                                        }
+                                        return null;
+                                      },
+                                    )),
+                                UIUtil.hSmallSpace(),
+                                AppTextLabel('Language'),
+                                UIUtil.hXSmallSpace(),
+                                Flexible(
+                                    flex: 2,
+                                    child: AppTextFormField(
+                                      maxLength: 100,
+                                      height: 45,
+                                      current: _languageFocus,
+                                      next: _addBtnFocus,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please type language';
+                                        }
+                                        return null;
+                                      },
+                                    )),
+                                UIUtil.hSmallSpace(),
+                                AppTextLabel('Description'),
+                                UIUtil.hXSmallSpace(),
+                                Flexible(
+                                    flex: 4,
+                                    child: AppTextFormField(
+                                      maxLines: 5,
+                                      maxLength: 100,
+                                      current: _descriptionFocus,
+                                      next: null,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // add/update/cancel buttons
+                          AppElevatedBtn(
+                              width: 80.0,
+                              imgUrl: 'assets/images/icons/save.png',
+                              focusNode: _addBtnFocus,
+                              isEnable: true,
+                              onPressedFn: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  Book b = Book(
+                                      code: _codeTextCtrl.text,
+                                      title: _titleTextCtrl.text,
+                                      author: _authorTextCtrl.text,
+                                      publisher: _pushlisherTextCtrl.text,
+                                      cost: int.parse(_costTextCtrl.text),
+                                      categoryId: int.parse(_categoryIdTextCtrl.text),
+                                      stockKeeper: Provider.of<User>(context).userId,
+                                      stockOn: DateTime.now());
+
+                                  bool success = await bookBo.save(b);
+                                  if (success) {
+                                    _addBtnFocus.unfocus();
+                                    FocusScope.of(context).requestFocus(_barCodeIdFocus);
+                                  } else {}
+                                }
+                              },
+                              text: 'Save'),
+                          UIUtil.hSmallSpace(),
+                          AppElevatedBtn(
+                              width: 80.0,
+                              imgUrl: 'assets/images/icons/cancel.png',
+                              focusNode: _cancelBtnFocus,
+                              isEnable: true,
+                              onPressedFn: () {},
+                              text: 'Cancel'),
+                          UIUtil.hSmallSpace(),
+                          AppElevatedBtn(
+                              width: 80.0,
+                              imgUrl: 'assets/images/icons/printer.png',
+                              focusNode: _printBtnFocus,
+                              isEnable: true,
+                              onPressedFn: () {},
+                              text: 'Print'),
+                        ],
+                      )
                     ],
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-// add/update/cancel buttons
-                      AppElevatedBtn(
-                          width: 80.0,
-                          imgUrl: 'assets/images/icons/save.png',
-                          focusNode: _addBtnFocus,
-                          isEnable: true,
-                          onPressedFn: () {
-                            _addBtnFocus.unfocus();
-                            FocusScope.of(context).requestFocus(_barCodeIdFocus);
-                          },
-                          text: 'Save'),
-                      UIUtil.hSmallSpace(),
-                      AppElevatedBtn(
-                          width: 80.0,
-                          imgUrl: 'assets/images/icons/cancel.png',
-                          focusNode: _cancelBtnFocus,
-                          isEnable: true,
-                          onPressedFn: () {},
-                          text: 'Cancel'),
-                      UIUtil.hSmallSpace(),
-                      AppElevatedBtn(
-                          width: 80.0,
-                          imgUrl: 'assets/images/icons/printer.png',
-                          focusNode: _printBtnFocus,
-                          isEnable: true,
-                          onPressedFn: () {},
-                          text: 'Print')
-                    ],
-                  )
-                ],
+                ),
               ),
               title: 'New Book',
               headerColor: const Color(0xFF001D74),

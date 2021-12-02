@@ -34,6 +34,8 @@ abstract class BookDao {
   Future<List<Book>> getAllBooksIssuedSoFar();
   Future<List<Book>> getAllBooksIssuedToday();
   Future<List<Book>> getAllBooksReturnedToday();
+
+  Future<Book> save(Book book);
   void dispose();
 }
 
@@ -117,6 +119,15 @@ class BookDaoImpl extends BookDao {
     try {
       return Future<int>.delayed(
           const Duration(seconds: 2), () => DateTime.now().microsecond ~/ 3);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Book> save(Book book) async {
+    try {
+      return await _bookRepository.save(book);
     } catch (e) {
       rethrow;
     }

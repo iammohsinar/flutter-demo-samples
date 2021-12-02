@@ -113,7 +113,7 @@ class AppTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(
-        fontSize: (ScreenSize(context).smallSize) ? 10 : 18,
+        fontSize: (ScreenSize(context).smallSize) ? 12 : 18,
         fontWeight: FontWeight.bold,
       ),
       maxLines: maxLines,

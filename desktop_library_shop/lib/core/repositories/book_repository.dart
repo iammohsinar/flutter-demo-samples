@@ -4,6 +4,41 @@ import 'package:desktop_library_shop/core/models/book_borrowed.dart';
 import 'package:mysql1/mysql1.dart';
 
 class BookRepository {
+  Future<Book> save(Book b) async {
+    try {
+      var con = await Db.connection;
+      Results r = await con.query(
+          'INSERT INTO books (bookId, code, title, author, publisher, cost,categoryId, isActive, stockKeeper, stockOn, isIssue, condition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          [
+            b.code,
+            b.title,
+            b.author,
+            b.publisher,
+            b.cost,
+            b.categoryId,
+            b.isActive,
+            b.stockKeeper,
+            b.stockOn,
+            b.isIssue,
+            b.condition
+          ]);
+      return await getBookById(r.insertId!);
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
+  Future<Book> getBookById(int id) async {
+    try {
+      var con = await Db.connection;
+      Results result = await con
+          .query('select b.* from books b where b.bookId = ? and b.isActive = 1', [id]);
+      return result.isNotEmpty ? Book.fromResult(result.first) : Book.initial();
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
   Future<Book> getBookByCategory(int id) async {
     try {
       var con = await Db.connection;
