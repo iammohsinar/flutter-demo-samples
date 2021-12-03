@@ -7,8 +7,11 @@ class BookRepository {
   Future<Book> save(Book b) async {
     try {
       var con = await Db.connection;
+      // Results r = await con.query(
+      //     "INSERT INTO books (code, title, author, publisher, cost, categoryId, isActive, stockKeeper, stockOn, publishYear,`condition`,isIssue,retire) VALUES ('CS10007', 'Cracking 4 the Coding Interview', 'mohsin', 'pqr publisher', 40, 2, 1, 1, '2021-12-02 00:00:00', 2016,'new',1,'poor')");
+
       Results r = await con.query(
-          'INSERT INTO books (publishYear,code, title, author, publisher, cost,categoryId, isActive, stockKeeper, stockOn, isIssue, condition) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,\'new\')',
+          'INSERT INTO books (publishYear,code, title, author, publisher, cost,categoryId, isActive, stockKeeper, stockOn, isIssue, `condition`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
           [
             b.publishYear,
             b.code,
@@ -19,7 +22,7 @@ class BookRepository {
             b.categoryId,
             b.isActive,
             b.stockKeeper,
-            b.stockOn,
+            b.stockOn.toUtc(),
             b.isIssue,
             b.condition,
           ]);
@@ -35,6 +38,7 @@ class BookRepository {
       var con = await Db.connection;
       Results result = await con
           .query('select b.* from books b where b.bookId = ? and b.isActive = 1', [id]);
+
       return result.isNotEmpty ? Book.fromResult(result.first) : Book.initial();
     } catch (e) {
       throw Exception('Something went wrong $e');

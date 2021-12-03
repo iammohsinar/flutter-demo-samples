@@ -82,12 +82,13 @@ class Book extends Equatable {
   }
 
   Book.fromResult(ResultRow r) {
+    print('Book from result $r');
     bookId = r['bookId'];
     code = r['code'];
     title = r['title'];
     author = r['author'];
     publisher = r['publisher'];
-    publishYear = r['publisherYear'];
+    publishYear = r['publishYear'];
     cost = r['cost'];
     categoryId = r['categoryId'];
     isActive = r['isActive'];

@@ -1,6 +1,8 @@
+import 'package:desktop_library_shop/core/viewmodels/auth_bo.dart';
 import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
+import 'package:desktop_library_shop/ui/views/base_view.dart';
 import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 import 'package:desktop_library_shop/ui/widgets/app_tab.dart';
 import 'package:desktop_library_shop/ui/widgets/app_text.dart';
@@ -66,21 +68,26 @@ class _AppTabState extends State<AppTab> {
                 children: [
                   ...createHeaderFlags(),
                   Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text('Logged on as'),
-                      UIUtil.hXSmallSpace(),
-                      AppTextLabel(Provider.of<User>(context).role.toUpperCase()),
-                      UIUtil.hXSmallSpace(),
-                      AppElevatedBtn(
-                          width: 100.0,
-                          imgUrl: 'assets/images/icons/log_out.png',
-                          focusNode: FocusNode(),
-                          isEnable: true,
-                          onPressedFn: () {},
-                          text: 'Log out')
-                    ],
+                      child: BaseView<AuthBo>(
+                    builder: (context, model, _) => Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('Logged on as'),
+                        UIUtil.hXSmallSpace(),
+                        AppTextLabel(Provider.of<User>(context).role.toUpperCase()),
+                        UIUtil.hXSmallSpace(),
+                        AppElevatedBtn(
+                            width: 100.0,
+                            imgUrl: 'assets/images/icons/log_out.png',
+                            focusNode: FocusNode(),
+                            isEnable: true,
+                            onPressedFn: () {
+                              model.logout();
+                              Navigator.pushNamed(context, 'login');
+                            },
+                            text: 'Log out')
+                      ],
+                    ),
                   )),
                 ],
               ),

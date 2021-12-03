@@ -7,6 +7,7 @@ import '../../locator.dart';
 abstract class AuthBo extends BaseBoImpl {
   late String errorMessage;
   Future<bool> login(String userName, String password);
+  Future<void> logout();
 }
 
 class AuthBoImpl extends AuthBo {
@@ -28,5 +29,12 @@ class AuthBoImpl extends AuthBo {
     }
     setState(StateEnum.idle);
     return success;
+  }
+
+  @override
+  Future<void> logout() async {
+    setState(StateEnum.busy);
+    await _userDao.logout();
+    setState(StateEnum.idle);
   }
 }

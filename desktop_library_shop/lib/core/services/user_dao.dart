@@ -36,6 +36,12 @@ class UserDaoImpl extends UserDao {
       rethrow;
     }
   }
+
+  @override
+  Future<bool> logout() async {
+    userController.done;
+    return true;
+  }
 }
 
 abstract class UserDao {
@@ -43,4 +49,5 @@ abstract class UserDao {
   Future<User> getOne(int id);
   Future<List<User>> getAll();
   Future<bool> getAuthUser(String userName, String password);
+  Future<bool> logout();
 }
