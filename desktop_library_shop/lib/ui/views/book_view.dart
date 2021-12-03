@@ -4,6 +4,7 @@ import 'package:desktop_library_shop/core/models/user.dart';
 import 'package:desktop_library_shop/core/services/book_dao.dart';
 import 'package:desktop_library_shop/core/viewmodels/book_bo.dart';
 import 'package:desktop_library_shop/ui/util/app_color.dart';
+import 'package:desktop_library_shop/ui/util/app_date_format.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:desktop_library_shop/ui/util/ui_util.dart';
 import 'package:desktop_library_shop/ui/views/base_view.dart';
@@ -50,6 +51,7 @@ class _BookViewState extends State<BookView> {
       _searchPublisherFocus,
       _costFocus;
   final ScrollController _tableHorizontalController = ScrollController();
+  final ScrollController _tableVerticalController = ScrollController();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _codeTextCtrl = TextEditingController();
   final TextEditingController _costTextCtrl = TextEditingController();
@@ -58,12 +60,16 @@ class _BookViewState extends State<BookView> {
   final TextEditingController _totalCopiesTextCtrl = TextEditingController();
   final TextEditingController _languageTextCtrl = TextEditingController();
   final TextEditingController _titleTextCtrl = TextEditingController();
+  final TextEditingController _fromDateTextCtrl = TextEditingController();
+  final TextEditingController _toDateTextCtrl = TextEditingController();
 
   int _categoryId = 0;
 
   String _publisherInitialValue = 'Choose publisher';
 
   String _bookAuthorInitialValue = 'Choose Author';
+
+  List<Book> _books = [];
 
   @override
   void initState() {
@@ -415,121 +421,181 @@ class _BookViewState extends State<BookView> {
         Padding(
             padding: const EdgeInsets.all(5),
             child: AppPanel(
-              child: Column(children: [
-                Container(
-                  padding: EdgeInsets.only(top: 5, left: 5, right: 5),
-                  color: Color(0xFFE3FFE3),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppTextLabel('Search By: '),
-                      UIUtil.hMediumSpace(),
-                      AppTextLabel('Category'),
-                      UIUtil.hXSmallSpace(),
-                      Flexible(
-                        child: BookCategory(
-                          value: _categoryId,
-                          currentFocus: _searchCategoryFocus,
-                          nextFocus: _searchAuthorFocus,
-                        ),
-                      ),
-                      UIUtil.hSmallSpace(),
-                      AppTextLabel('Author'),
-                      UIUtil.hXSmallSpace(),
-                      Flexible(
-                        child: BookAuthor(
-                          currentFocus: _searchAuthorFocus,
-                          nextFocus: _searchPublisherFocus,
-                        ),
-                      ),
-                      UIUtil.hSmallSpace(),
-                      AppTextLabel('Publisher'),
-                      UIUtil.hXSmallSpace(),
-                      Flexible(
-                        child: BookPublisher(
-                          currentFocus: _searchPublisherFocus,
-                          nextFocus: _fromDateFocus,
-                        ),
-                      ),
-                      UIUtil.hSmallSpace(),
-                      AppTextLabel('From Date'),
-                      UIUtil.hXSmallSpace(),
-                      Flexible(
-                          child: AppTextFormField(
-                        hintText: 'DD-MM-YYYY',
-                        maxLength: 10,
-                        height: 45,
-                        current: _fromDateFocus,
-                        next: _toDateFocus,
-                      )),
-                      UIUtil.hSmallSpace(),
-                      AppTextLabel('To Date'),
-                      UIUtil.hXSmallSpace(),
-                      Flexible(
-                          child: AppTextFormField(
-                        hintText: 'DD-MM-YYYY',
-                        maxLength: 10,
-                        //height: 65,
-                        current: _toDateFocus,
-                        next: _searchBtnFocus,
-                      )),
-                      UIUtil.hSmallSpace(),
-                      Flexible(
-                        child: AppElevatedBtn(
-                            width: 100.0,
-                            imgUrl: 'assets/images/icons/search.png',
-                            focusNode: _searchBtnFocus,
-                            isEnable: true,
-                            onPressedFn: () {
-                              //
+              child: BaseView<BookBo>(
+                builder: (context, model, _) => Column(children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 5, left: 5, right: 5),
+                    color: Color(0xFFE3FFE3),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppTextLabel('Search By: '),
+                        UIUtil.hMediumSpace(),
+                        AppTextLabel('Category'),
+                        UIUtil.hXSmallSpace(),
+                        Flexible(
+                          child: BookCategory(
+                            value: _categoryId,
+                            onChange: (value) {
+                              _categoryId = int.parse(value!);
                             },
-                            text: 'Search'),
-                      ),
-                    ],
+                            currentFocus: _searchCategoryFocus,
+                            nextFocus: _searchAuthorFocus,
+                          ),
+                        ),
+                        UIUtil.hSmallSpace(),
+                        AppTextLabel('Author'),
+                        UIUtil.hXSmallSpace(),
+                        Flexible(
+                          child: BookAuthor(
+                            value: _bookAuthorInitialValue,
+                            onChange: (value) {
+                              _bookAuthorInitialValue = value!;
+                            },
+                            currentFocus: _searchAuthorFocus,
+                            nextFocus: _searchPublisherFocus,
+                          ),
+                        ),
+                        UIUtil.hSmallSpace(),
+                        AppTextLabel('Publisher'),
+                        UIUtil.hXSmallSpace(),
+                        Flexible(
+                          child: BookPublisher(
+                            value: _publisherInitialValue,
+                            onChange: (value) {
+                              _publisherInitialValue = value!;
+                            },
+                            currentFocus: _searchPublisherFocus,
+                            nextFocus: _fromDateFocus,
+                          ),
+                        ),
+                        UIUtil.hSmallSpace(),
+                        AppTextLabel('From Date'),
+                        UIUtil.hXSmallSpace(),
+                        Flexible(
+                            child: AppTextFormField(
+                          controller: _fromDateTextCtrl,
+                          hintText: 'DD-MM-YYYY',
+                          maxLength: 10,
+                          height: 45,
+                          current: _fromDateFocus,
+                          next: _toDateFocus,
+                        )),
+                        UIUtil.hSmallSpace(),
+                        AppTextLabel('To Date'),
+                        UIUtil.hXSmallSpace(),
+                        Flexible(
+                            child: AppTextFormField(
+                          controller: _toDateTextCtrl,
+                          hintText: 'DD-MM-YYYY',
+                          maxLength: 10,
+                          //height: 65,
+                          current: _toDateFocus,
+                          next: _searchBtnFocus,
+                        )),
+                        UIUtil.hSmallSpace(),
+                        Flexible(
+                          child: (model.state == StateEnum.busy)
+                              ? CircularProgressIndicator()
+                              : AppElevatedBtn(
+                                  width: 100.0,
+                                  imgUrl: 'assets/images/icons/search.png',
+                                  focusNode: _searchBtnFocus,
+                                  isEnable: true,
+                                  onPressedFn: () async {
+                                    if (_toDateTextCtrl.text.trim() != '' &&
+                                        _fromDateTextCtrl.text.trim() == '') {
+                                      _showDialog(
+                                          context, 'Please enter from and to date', 'cancel');
+                                      return;
+                                    }
+
+                                    _books = await model.searchBook(
+                                        (_categoryId != 0) ? _categoryId : null,
+                                        (_bookAuthorInitialValue != 'Choose Author')
+                                            ? _bookAuthorInitialValue
+                                            : null,
+                                        (_publisherInitialValue != 'Choose publisher')
+                                            ? _publisherInitialValue
+                                            : null,
+                                        (_fromDateTextCtrl.text.trim() != '')
+                                            ? AppDate.format(_fromDateTextCtrl.text)
+                                            : null,
+                                        (_toDateTextCtrl.text.trim() != '')
+                                            ? AppDate.format(_toDateTextCtrl.text)
+                                            : DateTime.now());
+                                  },
+                                  text: 'Search'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                UIUtil.vXSmallSpace(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Scrollbar(
-                        isAlwaysShown: true,
-                        controller: _tableHorizontalController,
-                        child: ScrollConfiguration(
-                          behavior: ScrollConfiguration.of(context).copyWith(
-                              dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
-                          child: SingleChildScrollView(
-                            controller: _tableHorizontalController,
-                            scrollDirection: Axis.horizontal,
-                            child: DataTable(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                color: Colors.black,
-                              )),
-                              columns: [
-                                DataColumn(label: Text('Code')),
-                                DataColumn(label: Text('Reference Code')),
-                                DataColumn(label: Text('Category')),
-                                DataColumn(label: Text('Title')),
-                                DataColumn(label: Text('Author')),
-                                DataColumn(label: Text('Publisher')),
-                                DataColumn(label: Text('Publish Year')),
-                                DataColumn(label: Text('Cost')),
-                                DataColumn(label: Text('Condition')),
-                                DataColumn(label: Text('Retire')),
-                                DataColumn(label: Text('Borrower')),
-                                DataColumn(label: Text('Stock Keeper')),
-                              ],
-                              rows: [],
+                  UIUtil.vXSmallSpace(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Scrollbar(
+                          isAlwaysShown: true,
+                          controller: _tableHorizontalController,
+                          child: ScrollConfiguration(
+                            behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
+                              PointerDeviceKind.touch,
+                              PointerDeviceKind.mouse
+                            }),
+                            child: SingleChildScrollView(
+                              controller: _tableHorizontalController,
+                              scrollDirection: Axis.horizontal,
+                              child: SizedBox(
+                                height: 200,
+                                child: SingleChildScrollView(
+                                  controller: _tableVerticalController,
+                                  scrollDirection: Axis.vertical,
+                                  child: DataTable(
+                                    headingRowColor: MaterialStateProperty.all(Colors.black12),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                      color: Colors.black,
+                                    )),
+                                    columns: [
+                                      DataColumn(label: Text('Code')),
+                                      DataColumn(label: Text('Reference Code')),
+                                      DataColumn(label: Text('Title')),
+                                      DataColumn(label: Text('Author')),
+                                      DataColumn(label: Text('Publisher')),
+                                      DataColumn(label: Text('Publish Year')),
+                                      DataColumn(label: Text('Cost')),
+                                      DataColumn(label: Text('Condition')),
+                                      DataColumn(label: Text('Retire')),
+                                      DataColumn(label: Text('Stock on')),
+                                    ],
+                                    rows: [
+                                      for (Book r in _books)
+                                        DataRow(cells: [
+                                          DataCell(Text(r.code)),
+                                          DataCell(Text(r.code)),
+                                          DataCell(Text(r.title)),
+                                          DataCell(Text(r.author)),
+                                          DataCell(Text(r.publisher)),
+                                          DataCell(Text(r.publishYear.toString())),
+                                          DataCell(Text(r.cost.toString())),
+                                          DataCell(Text(r.condition)),
+                                          DataCell(Text(r.retire!)),
+                                          DataCell(Text(
+                                              '${r.stockOn.day}-${r.stockOn.month}-${r.stockOn.year}')),
+                                        ])
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              ]),
+                      )
+                    ],
+                  ),
+                ]),
+              ),
               title: 'Book Details',
               headerColor: const Color(0xFF001D74),
               bodyColor: Colors.white,

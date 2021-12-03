@@ -7,9 +7,6 @@ class BookRepository {
   Future<Book> save(Book b) async {
     try {
       var con = await Db.connection;
-      // Results r = await con.query(
-      //     "INSERT INTO books (code, title, author, publisher, cost, categoryId, isActive, stockKeeper, stockOn, publishYear,`condition`,isIssue,retire) VALUES ('CS10007', 'Cracking 4 the Coding Interview', 'mohsin', 'pqr publisher', 40, 2, 1, 1, '2021-12-02 00:00:00', 2016,'new',1,'poor')");
-
       Results r = await con.query(
           'INSERT INTO books (publishYear,code, title, author, publisher, cost,categoryId, isActive, stockKeeper, stockOn, isIssue, `condition`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
           [
@@ -26,8 +23,23 @@ class BookRepository {
             b.isIssue,
             b.condition,
           ]);
-      print(r.insertId);
       return await getBookById(r.insertId!);
+    } catch (e) {
+      throw Exception('Something went wrong $e');
+    }
+  }
+
+  Future<List<Book>> getBooksByQuery(String whereQuery) async {
+    try {
+      print(whereQuery);
+      var con = await Db.connection;
+      Results results = await con.query('select b.* from books b where $whereQuery');
+      print(results.length);
+      var books = <Book>[];
+      for (var r in results) {
+        books.add(Book.fromResult(r));
+      }
+      return books;
     } catch (e) {
       throw Exception('Something went wrong $e');
     }
