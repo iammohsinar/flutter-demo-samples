@@ -1,105 +1,50 @@
-import 'dart:io';
-import 'package:desktop_library_shop/app_router.dart';
-import 'package:desktop_library_shop/core/models/user.dart';
-import 'package:desktop_library_shop/core/services/user_dao.dart';
-import 'package:desktop_library_shop/locator.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:window_size/window_size.dart';
-
 import 'dart:typed_data';
+import 'package:desktop_library_shop/ui/widgets/app_button.dart';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    setWindowTitle('App title');
-    //Size s = await getWindowMaxSize();
-
-    setWindowMinSize(const Size(1000, 1000));
-    setWindowMaxSize(Size.infinite);
-  }
-  setup();
-  runApp(LibraryShopApp());
-}
-
-class LibraryShopApp extends StatelessWidget {
-  const LibraryShopApp({Key? key}) : super(key: key);
+class InvoiceReport extends StatelessWidget {
+  final void Function()? onPressed;
+  const InvoiceReport({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>(
-      create: (context) => loc<UserDao>().userController.stream,
-      initialData: User.initial(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Library Shop',
-        theme: ThemeData(
-            backgroundColor: const Color(0xFFF7F5ee),
-            textTheme: const TextTheme(headline4: TextStyle(color: Colors.black))),
-        initialRoute: 'login',
-        onGenerateRoute: AppRouter.generateRoute,
-      ),
-    );
-  }
-}
-
-// import 'package:flutter/material.dart';
-
-// Future<void> main() async {
-//   runApp(const MyApp('Printing Demo'));
-// }
-
-class MyApp extends StatelessWidget {
-  const MyApp(this.title, {Key? key}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: null,
-        body: PdfPreview(
-          build: (format) => _generatePdf(format, title),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leadingWidth: 100,
+        leading: AppElevatedBtn(
+          width: 100,
+          focusNode: FocusNode(),
+          isEnable: true,
+          onPressedFn: onPressed,
+          text: 'Back',
+          imgUrl: 'assets/images/icons/back_arrow.png',
         ),
       ),
+      body: PdfPreview(
+        build: (format) => _generatePdf(format, 'title'),
+      ),
+
+      // Column(
+      //   children: [
+      //     // AppElevatedBtn(
+      //     //   focusNode: FocusNode(),
+      //     //   isEnable: true,
+      //     //   onPressedFn: onPressed,
+      //     //   text: 'Back',
+      //     //   imgUrl: 'assets/images/icons/back_arrow.png',
+      //     // ),
+      //     PdfPreview(
+      //       build: (format) => _generatePdf(format, 'title'),
+      //     ),
+      //   ],
+      // ),
     );
   }
-
-  // void _showDialog(BuildContext context, String message, imageName) {
-  //   showDialog<void>(
-  //       barrierDismissible: false,
-  //       context: context,
-  //       builder: (context) {
-  //         return Scaffold(
-  //           appBar: null,
-  //           body: Text(message),
-  //         );
-  //         // AlertDialog(
-  //         //   content: SingleChildScrollView(
-  //         //     child: Container(
-  //         //         width: 300,
-  //         //         height: 400,
-  //         //         child: PdfPreview(
-  //         //           build: (format) => _generatePdf(format, title),
-  //         //         )),
-  //         //   ),
-  //         //   actions: <Widget>[
-  //         //     OutlinedButton(
-  //         //         onPressed: () {
-  //         //           Navigator.of(context).pop();
-  //         //         },
-  //         //         child: const Text(
-  //         //           'OK',
-  //         //           style: TextStyle(color: Color(0xFF6e4875)),
-  //         //         )),
-  //         //   ],
-  //         // );
-  //       });
-  // }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
@@ -415,42 +360,5 @@ class MyApp extends StatelessWidget {
     );
 
     return pdf.save();
-  }
-}
-
-class PrintPdf extends StatelessWidget {
-  const PrintPdf({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () async {
-          final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-          final font = await PdfGoogleFonts.nunitoExtraLight();
-
-          pdf.addPage(
-            pw.Page(
-              pageFormat: PdfPageFormat.a4,
-              build: (context) {
-                return pw.Column(
-                  children: [
-                    pw.SizedBox(
-                      width: double.infinity,
-                      child: pw.FittedBox(
-                        child: pw.Text('hello pdf', style: pw.TextStyle(font: font)),
-                      ),
-                    ),
-                    pw.SizedBox(height: 20),
-                    pw.Flexible(child: pw.FlutterLogo())
-                  ],
-                );
-              },
-            ),
-          );
-        },
-        child: Text('print'),
-      ),
-    );
   }
 }

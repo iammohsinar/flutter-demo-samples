@@ -90,7 +90,9 @@ class AppTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final IconData? icon;
   //final String validationMsg;
+  final String? initialValue;
   final String? Function(String?)? validator;
+  final Function(String)? onFieldSubmit;
   final bool obscureText;
 
   bool isEnable;
@@ -105,8 +107,10 @@ class AppTextFormField extends StatelessWidget {
       this.controller,
       this.validator,
       // required this.validationMsg,
+      this.initialValue,
       this.icon,
       this.hintText,
+      this.onFieldSubmit,
       this.obscureText = false,
       this.isEnable = true,
       this.maxLines = 1})
@@ -115,6 +119,7 @@ class AppTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       style: TextStyle(
         fontSize: (ScreenSize(context).smallSize) ? 12 : 18,
         fontWeight: FontWeight.bold,
@@ -126,10 +131,11 @@ class AppTextFormField extends StatelessWidget {
       obscureText: obscureText,
       controller: controller,
       validator: validator,
-      onFieldSubmitted: (test) {
-        current.unfocus();
-        FocusScope.of(context).requestFocus(next);
-      },
+      onFieldSubmitted: onFieldSubmit ??
+          (test) {
+            current.unfocus();
+            FocusScope.of(context).requestFocus(next);
+          },
       focusNode: current,
       decoration: InputDecoration(
           errorStyle: TextStyle(

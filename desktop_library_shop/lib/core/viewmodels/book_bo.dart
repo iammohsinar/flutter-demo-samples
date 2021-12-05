@@ -6,6 +6,7 @@ import 'package:desktop_library_shop/locator.dart';
 
 abstract class BookBo extends BaseBoImpl {
   Future<bool> save(Book b);
+  Future<Book> getByBarCode(String code);
   Future<List<Book>> searchBook(
       int? categoryId, String? author, String? publisher, DateTime? from, DateTime to);
   late String bookMsg;
@@ -44,5 +45,14 @@ class BookBoImpl extends BookBo {
     books = await _bookDao.getBooksByQuery(categoryId, author, publisher, from, to);
     setState(StateEnum.idle);
     return books;
+  }
+
+  @override
+  Future<Book> getByBarCode(String code) async {
+    Book _b;
+    setState(StateEnum.busy);
+    _b = await _bookDao.getByCode(code);
+    setState(StateEnum.idle);
+    return _b;
   }
 }

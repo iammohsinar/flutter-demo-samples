@@ -18,7 +18,9 @@ class Book extends Equatable {
       required this.stockOn,
       this.isIssue = 0,
       this.condition = 'new',
-      this.retire});
+      this.retire,
+      this.totalCopies = 10,
+      this.language = 'English'});
 
   late final int bookId;
   late final String code;
@@ -34,6 +36,8 @@ class Book extends Equatable {
   late final int isIssue;
   late final String condition;
   late final String? retire;
+  late final int totalCopies;
+  late final String language;
 
   Book.initial()
       : bookId = 0,
@@ -46,10 +50,12 @@ class Book extends Equatable {
         categoryId = 0,
         isActive = 1,
         stockKeeper = 0,
-        stockOn = DateTime.now(),
+        stockOn = DateTime.utc(DateTime.now().year),
         isIssue = 0,
         condition = '',
-        retire = '';
+        retire = '',
+        totalCopies = 0,
+        language = '';
 
   Book.fromJson(Map<String, dynamic> json) {
     bookId = json['bookId'];
@@ -82,7 +88,6 @@ class Book extends Equatable {
   }
 
   Book.fromResult(ResultRow r) {
-    print('Book from result $r');
     bookId = r['bookId'];
     code = r['code'];
     title = r['title'];
@@ -97,6 +102,8 @@ class Book extends Equatable {
     isIssue = r['isIssue'];
     condition = r['condition'];
     retire = r['retire'] ?? '';
+    totalCopies = 10;
+    language = 'English';
   }
 
   @override
@@ -115,5 +122,7 @@ class Book extends Equatable {
         isIssue,
         condition,
         retire,
+        totalCopies,
+        language
       ];
 }

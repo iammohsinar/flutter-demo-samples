@@ -29,6 +29,17 @@ class BookRepository {
     }
   }
 
+  // Future<Book> getByBarCode(int barCode) async {
+  //   try {
+  //     var con = await Db.connection;
+  //     Results result = await con
+  //         .query('select b.* from books b where b.code = ? and b.isActive = 1', [barCode]);
+  //     return result.isNotEmpty ? Book.fromResult(result.first) : Book.initial();
+  //   } catch (e) {
+  //     throw Exception('Something went wrong $e');
+  //   }
+  // }
+
   Future<List<Book>> getBooksByQuery(String whereQuery) async {
     try {
       print(whereQuery);

@@ -37,6 +37,7 @@ abstract class BookDao {
   Future<List<Book>> getBooksByQuery(
       int? categoryId, String? author, String? publisher, DateTime? from, DateTime to);
 
+  //Future<Book> getBookByBarCode(int code);
   Future<Book> save(Book book);
   void dispose();
 }
@@ -167,11 +168,16 @@ class BookDaoImpl extends BookDao {
       int? categoryId, String? author, String? publisher, DateTime? from, DateTime to) async {
     String whereQuery = '';
     whereQuery += (categoryId != null) ? 'b.categoryId = $categoryId AND ' : '';
-    whereQuery += (author != null) ? 'b.author = $author AND ' : '';
-    whereQuery += (publisher != null) ? 'b.publisher = $publisher AND ' : '';
+    whereQuery += (author != null) ? "b.author = '$author' AND " : "";
+    whereQuery += (publisher != null) ? "b.publisher = '$publisher' AND " : "";
     whereQuery +=
         (from != null && to != null) ? "b.stockOn >= '$from' OR b.stockOn <= '$to' AND " : '';
     whereQuery += 'b.isActive = 1';
     return _bookRepository.getBooksByQuery(whereQuery);
   }
+
+  // @override
+  // Future<Book> getBookByBarCode(int code) {
+  //   return _bookRepository.getByBarCode(code);
+  // }
 }
