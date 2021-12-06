@@ -72,7 +72,8 @@ class _BookViewState extends State<BookView> {
 
   List<Book> _books = [];
 
-  Book? _book = Book.initial();
+  Book _book = Book.initial();
+  //Book? _success;
   int printIndex = 0;
 
   @override
@@ -112,7 +113,9 @@ class _BookViewState extends State<BookView> {
     // < 500
     switch (printIndex) {
       case 1:
+        print(printIndex);
         return InvoiceReport(
+          book: _book,
           onPressed: () {
             setState(() {
               printIndex = 0;
@@ -129,18 +132,18 @@ class _BookViewState extends State<BookView> {
                 child: AppPanel(
                   child: BaseView<BookBo>(
                     builder: (context, bookBo, _) {
-                      _bookdIdTextCtrl.text = _book!.bookId.toString();
-                      _referenceCodeTextCtrl.text = _book!.code;
-                      _titleTextCtrl.text = _book!.title;
-                      _costTextCtrl.text = _book!.cost.toString();
-                      _categoryId = _book!.categoryId;
+                      _bookdIdTextCtrl.text = _book.bookId.toString();
+                      _referenceCodeTextCtrl.text = _book.code;
+                      _titleTextCtrl.text = _book.title;
+                      _costTextCtrl.text = _book.cost.toString();
+                      _categoryId = _book.categoryId;
                       _bookAuthorInitialValue =
-                          (_book == Book.initial()) ? 'Choose Author' : _book!.author;
+                          (_book == Book.initial()) ? 'Choose Author' : _book.author;
                       _publisherInitialValue =
-                          (_book == Book.initial()) ? 'Choose publisher' : _book!.publisher;
-                      _publishYearTextCtrl.text = _book!.publishYear.toString();
-                      _totalCopiesTextCtrl.text = _book!.totalCopies.toString();
-                      _languageTextCtrl.text = _book!.language;
+                          (_book == Book.initial()) ? 'Choose publisher' : _book.publisher;
+                      _publishYearTextCtrl.text = _book.publishYear.toString();
+                      _totalCopiesTextCtrl.text = _book.totalCopies.toString();
+                      _languageTextCtrl.text = _book.language;
 
                       return Form(
                         key: _formKey,
@@ -397,7 +400,7 @@ class _BookViewState extends State<BookView> {
                                               width: 80.0,
                                               imgUrl: 'assets/images/icons/save.png',
                                               focusNode: _addBtnFocus,
-                                              isEnable: (_book!.bookId > 0) ? false : true,
+                                              isEnable: (_book.bookId > 0) ? false : true,
                                               onPressedFn: () async {
                                                 if (_formKey.currentState!.validate()) {
                                                   Book b = Book(
@@ -414,8 +417,8 @@ class _BookViewState extends State<BookView> {
                                                               listen: false)
                                                           .userId,
                                                       stockOn: DateTime.now());
-                                                  bool success = await bookBo.save(b);
-                                                  if (success) {
+                                                  _book = await bookBo.save(b);
+                                                  if (_book.bookId > 0) {
                                                     _resetBookForm();
                                                     _showDialog(
                                                         context, bookBo.bookMsg, 'success');
@@ -432,7 +435,7 @@ class _BookViewState extends State<BookView> {
                                           : SizedBox(),
                                       UIUtil.hSmallSpace(),
                                       (Provider.of<User>(context).role == 'manager' ||
-                                              _book!.bookId > 0)
+                                              _book.bookId > 0)
                                           ? AppElevatedBtn(
                                               width: 80.0,
                                               imgUrl: 'assets/images/icons/update.png',
@@ -460,9 +463,16 @@ class _BookViewState extends State<BookView> {
                                           focusNode: _printBtnFocus,
                                           isEnable: true,
                                           onPressedFn: () {
-                                            setState(() {
-                                              printIndex = 1;
-                                            });
+                                            switch (_book.bookId) {
+                                              case 0:
+                                                _showDialog(
+                                                    context, 'noting to print', 'cancel');
+                                                return;
+                                              default:
+                                                setState(() {
+                                                  printIndex = 1;
+                                                });
+                                            }
                                           },
                                           text: 'Print'),
                                     ],

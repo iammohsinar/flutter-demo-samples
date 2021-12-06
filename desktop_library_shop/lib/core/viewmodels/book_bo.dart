@@ -5,7 +5,7 @@ import 'package:desktop_library_shop/core/viewmodels/base_bo.dart';
 import 'package:desktop_library_shop/locator.dart';
 
 abstract class BookBo extends BaseBoImpl {
-  Future<bool> save(Book b);
+  Future<Book> save(Book b);
   Future<Book> getByBarCode(String code);
   Future<List<Book>> searchBook(
       int? categoryId, String? author, String? publisher, DateTime? from, DateTime to);
@@ -16,7 +16,7 @@ class BookBoImpl extends BookBo {
   final BookDao _bookDao = loc<BookDao>();
 
   @override
-  Future<bool> save(Book b) async {
+  Future<Book> save(Book b) async {
     try {
       setState(StateEnum.busy);
       Book _b = await _bookDao.save(b);
@@ -24,16 +24,16 @@ class BookBoImpl extends BookBo {
       if (saved) {
         bookMsg = 'Problem occurs posting book please data';
         setState(StateEnum.idle);
-        return false;
+        return _b;
       }
       bookMsg = 'Book successfully saved';
       setState(StateEnum.idle);
-      return true;
+      return _b;
     } catch (e) {
       print(e);
       bookMsg = 'Something went wrong in server call Adminstration $e';
       setState(StateEnum.idle);
-      return false;
+      return Book.initial();
     }
   }
 

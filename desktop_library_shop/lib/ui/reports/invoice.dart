@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:desktop_library_shop/core/models/book.dart';
 import 'package:desktop_library_shop/ui/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
@@ -6,8 +7,10 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class InvoiceReport extends StatelessWidget {
+  final Book book;
   final void Function()? onPressed;
-  const InvoiceReport({Key? key, required this.onPressed}) : super(key: key);
+  const InvoiceReport({Key? key, required this.book, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +119,7 @@ class InvoiceReport extends StatelessWidget {
                         fit: pw.FlexFit.tight,
                         child: pw.Container(
                           padding: const pw.EdgeInsets.all(2.0),
-                          child: pw.Text('DONNER NAME'),
+                          child: pw.Text('Mohsin Azeem'),
                           height: 20,
                           // decoration: pw.BoxDecoration(
                           //     border: pw.Border.all(color: PdfColors.black, width: 2.0),
@@ -144,6 +147,7 @@ class InvoiceReport extends StatelessWidget {
                       pw.Flexible(
                           child: pw.Container(
                               height: 25,
+                              child: pw.Text(book.code),
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
@@ -160,6 +164,8 @@ class InvoiceReport extends StatelessWidget {
                               ))),
                       pw.Flexible(
                           child: pw.Container(
+                              child: pw.Text(
+                                  '${book.stockOn.day}-${book.stockOn.month}-${book.stockOn.year}'),
                               height: 25,
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
@@ -171,12 +177,13 @@ class InvoiceReport extends StatelessWidget {
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
                               width: 80,
-                              child: pw.Text('INV. NO.'),
+                              child: pw.Text('Time'),
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
                           child: pw.Container(
+                              child: pw.Text('${DateTime.now().toLocal()}'),
                               height: 25,
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
@@ -188,12 +195,13 @@ class InvoiceReport extends StatelessWidget {
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
                               width: 80,
-                              child: pw.Text('PAGE'),
+                              child: pw.Text('User'),
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
                           child: pw.Container(
+                              child: pw.Text('Mohsin'),
                               height: 25,
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
@@ -232,6 +240,29 @@ class InvoiceReport extends StatelessWidget {
                             alignment: pw.Alignment.center,
                           ),
                         ]),
+                        pw.TableRow(children: [
+                          pw.Container(alignment: pw.Alignment.center, child: pw.Text('01')),
+                          pw.Container(
+                            width: 120,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text('${book.title}'),
+                          ),
+                          pw.Container(
+                            alignment: pw.Alignment.center,
+                            child: pw.Text('${book.author}'),
+                          ),
+                          pw.Container(
+                            alignment: pw.Alignment.center,
+                            child: pw.Text('${book.publisher}'),
+                          ),
+                          pw.Container(
+                            alignment: pw.Alignment.center,
+                            child: pw.Text('${book.publishYear}'),
+                          ),
+                          pw.Container(
+                            alignment: pw.Alignment.center,
+                          ),
+                        ])
                       ]),
                 )),
             pw.SizedBox(height: 20),
@@ -246,46 +277,13 @@ class InvoiceReport extends StatelessWidget {
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
                               width: 150,
-                              child: pw.Text('TOTAL AMOUNT'),
+                              child: pw.Text('Condition'),
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
                           child: pw.Container(
-                              height: 25,
-                              decoration: pw.BoxDecoration(
-                                border: pw.Border.all(color: PdfColors.black, width: 2.0),
-                              ))),
-                    ]),
-                    pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                      pw.Flexible(
-                          child: pw.Container(
-                              padding: const pw.EdgeInsets.all(2.0),
-                              height: 25,
-                              width: 150,
-                              child: pw.Text('DISCOUNT'),
-                              decoration: pw.BoxDecoration(
-                                border: pw.Border.all(color: PdfColors.black, width: 2.0),
-                              ))),
-                      pw.Flexible(
-                          child: pw.Container(
-                              height: 25,
-                              decoration: pw.BoxDecoration(
-                                border: pw.Border.all(color: PdfColors.black, width: 2.0),
-                              ))),
-                    ]),
-                    pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                      pw.Flexible(
-                          child: pw.Container(
-                              padding: const pw.EdgeInsets.all(2.0),
-                              height: 25,
-                              width: 150,
-                              child: pw.Text('FINAL AMOUNT'),
-                              decoration: pw.BoxDecoration(
-                                border: pw.Border.all(color: PdfColors.black, width: 2.0),
-                              ))),
-                      pw.Flexible(
-                          child: pw.Container(
+                              child: pw.Text('${book.condition}'),
                               height: 25,
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
