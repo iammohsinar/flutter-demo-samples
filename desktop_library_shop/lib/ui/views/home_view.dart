@@ -213,6 +213,7 @@ class DashboardCard extends StatelessWidget {
 class TotalBooks extends StatefulWidget {
   TotalBooks({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _TotalBooksState createState() => _TotalBooksState();
 }
@@ -222,9 +223,11 @@ class _TotalBooksState extends State<TotalBooks> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getAll();
-      setState(() {
-        widget.initData = data.length;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data.length;
+        });
+      }
     });
     super.initState();
   }
@@ -232,6 +235,7 @@ class _TotalBooksState extends State<TotalBooks> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -272,6 +276,7 @@ class BaseStreamProvider extends StatelessWidget {
 class BooksCopies extends StatefulWidget {
   BooksCopies({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
 
   @override
   _BooksCopiesState createState() => _BooksCopiesState();
@@ -282,9 +287,11 @@ class _BooksCopiesState extends State<BooksCopies> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -292,6 +299,7 @@ class _BooksCopiesState extends State<BooksCopies> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -308,6 +316,7 @@ class _BooksCopiesState extends State<BooksCopies> {
 class ActiveBooksIssued extends StatefulWidget {
   ActiveBooksIssued({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _ActiveBooksIssuedState createState() => _ActiveBooksIssuedState();
 }
@@ -317,9 +326,12 @@ class _ActiveBooksIssuedState extends State<ActiveBooksIssued> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -327,6 +339,7 @@ class _ActiveBooksIssuedState extends State<ActiveBooksIssued> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -343,6 +356,7 @@ class _ActiveBooksIssuedState extends State<ActiveBooksIssued> {
 class BooksIssuedSoFar extends StatefulWidget {
   BooksIssuedSoFar({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksIssuedSoFarState createState() => _BooksIssuedSoFarState();
 }
@@ -352,9 +366,11 @@ class _BooksIssuedSoFarState extends State<BooksIssuedSoFar> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -362,6 +378,7 @@ class _BooksIssuedSoFarState extends State<BooksIssuedSoFar> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -378,6 +395,7 @@ class _BooksIssuedSoFarState extends State<BooksIssuedSoFar> {
 class BooksIssuedToday extends StatefulWidget {
   BooksIssuedToday({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksIssuedTodayState createState() => _BooksIssuedTodayState();
 }
@@ -387,9 +405,14 @@ class _BooksIssuedTodayState extends State<BooksIssuedToday> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
+      // setState(() {
+      //   widget.initData = data;
+      // });
     });
     super.initState();
   }
@@ -397,6 +420,7 @@ class _BooksIssuedTodayState extends State<BooksIssuedToday> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -413,6 +437,7 @@ class _BooksIssuedTodayState extends State<BooksIssuedToday> {
 class BooksReturned extends StatefulWidget {
   BooksReturned({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksReturnedState createState() => _BooksReturnedState();
 }
@@ -422,9 +447,11 @@ class _BooksReturnedState extends State<BooksReturned> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -432,6 +459,7 @@ class _BooksReturnedState extends State<BooksReturned> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -447,6 +475,7 @@ class _BooksReturnedState extends State<BooksReturned> {
 
 class BooksDelayInReturn extends StatefulWidget {
   BooksDelayInReturn({Key? key}) : super(key: key);
+  bool isMount = true;
   int initData = -1;
   @override
   _BooksDelayInReturnState createState() => _BooksDelayInReturnState();
@@ -457,9 +486,11 @@ class _BooksDelayInReturnState extends State<BooksDelayInReturn> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -467,6 +498,7 @@ class _BooksDelayInReturnState extends State<BooksDelayInReturn> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -483,6 +515,7 @@ class _BooksDelayInReturnState extends State<BooksDelayInReturn> {
 class BooksDueReturn extends StatefulWidget {
   BooksDueReturn({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksDueReturnState createState() => _BooksDueReturnState();
 }
@@ -492,9 +525,11 @@ class _BooksDueReturnState extends State<BooksDueReturn> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -502,6 +537,7 @@ class _BooksDueReturnState extends State<BooksDueReturn> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -518,6 +554,7 @@ class _BooksDueReturnState extends State<BooksDueReturn> {
 class BooksAsNew extends StatefulWidget {
   BooksAsNew({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksAsNewState createState() => _BooksAsNewState();
 }
@@ -527,9 +564,11 @@ class _BooksAsNewState extends State<BooksAsNew> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -537,6 +576,7 @@ class _BooksAsNewState extends State<BooksAsNew> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -553,6 +593,7 @@ class _BooksAsNewState extends State<BooksAsNew> {
 class UseableBooks extends StatefulWidget {
   UseableBooks({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _UseableBooksState createState() => _UseableBooksState();
 }
@@ -562,9 +603,11 @@ class _UseableBooksState extends State<UseableBooks> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -572,6 +615,7 @@ class _UseableBooksState extends State<UseableBooks> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -588,6 +632,7 @@ class _UseableBooksState extends State<UseableBooks> {
 class BooksToDiscard extends StatefulWidget {
   BooksToDiscard({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksToDiscardState createState() => _BooksToDiscardState();
 }
@@ -597,9 +642,11 @@ class _BooksToDiscardState extends State<BooksToDiscard> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -607,6 +654,7 @@ class _BooksToDiscardState extends State<BooksToDiscard> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -623,6 +671,7 @@ class _BooksToDiscardState extends State<BooksToDiscard> {
 class PoorBooks extends StatefulWidget {
   PoorBooks({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _PoorBooksState createState() => _PoorBooksState();
 }
@@ -632,9 +681,11 @@ class _PoorBooksState extends State<PoorBooks> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -642,6 +693,7 @@ class _PoorBooksState extends State<PoorBooks> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -658,6 +710,7 @@ class _PoorBooksState extends State<PoorBooks> {
 class BooksInSingleRack extends StatefulWidget {
   BooksInSingleRack({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksInSingleRackState createState() => _BooksInSingleRackState();
 }
@@ -667,9 +720,11 @@ class _BooksInSingleRackState extends State<BooksInSingleRack> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -677,6 +732,7 @@ class _BooksInSingleRackState extends State<BooksInSingleRack> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -693,6 +749,7 @@ class _BooksInSingleRackState extends State<BooksInSingleRack> {
 class BooksCapacity extends StatefulWidget {
   BooksCapacity({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _BooksCapacityState createState() => _BooksCapacityState();
 }
@@ -702,9 +759,11 @@ class _BooksCapacityState extends State<BooksCapacity> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -712,6 +771,7 @@ class _BooksCapacityState extends State<BooksCapacity> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -728,6 +788,7 @@ class _BooksCapacityState extends State<BooksCapacity> {
 class TotalStudents extends StatefulWidget {
   TotalStudents({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _TotalStudentsState createState() => _TotalStudentsState();
 }
@@ -737,9 +798,11 @@ class _TotalStudentsState extends State<TotalStudents> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -747,6 +810,7 @@ class _TotalStudentsState extends State<TotalStudents> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }
@@ -763,6 +827,7 @@ class _TotalStudentsState extends State<TotalStudents> {
 class TotalStaffs extends StatefulWidget {
   TotalStaffs({Key? key}) : super(key: key);
   int initData = -1;
+  bool isMount = true;
   @override
   _TotalStaffsState createState() => _TotalStaffsState();
 }
@@ -772,9 +837,11 @@ class _TotalStaffsState extends State<TotalStaffs> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var data = await loc<BookDao>().getSampleDataCount();
-      setState(() {
-        widget.initData = data;
-      });
+      if (widget.isMount) {
+        setState(() {
+          widget.initData = data;
+        });
+      }
     });
     super.initState();
   }
@@ -782,6 +849,7 @@ class _TotalStaffsState extends State<TotalStaffs> {
   @override
   void dispose() {
     // TODO: implement dispose
+    widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
   }

@@ -172,6 +172,9 @@ class BookDaoImpl extends BookDao {
     whereQuery += (publisher != null) ? "b.publisher = '$publisher' AND " : "";
     whereQuery +=
         (from != null && to != null) ? "b.stockOn >= '$from' OR b.stockOn <= '$to' AND " : '';
+    if (whereQuery.isEmpty) {
+      return [];
+    }
     whereQuery += 'b.isActive = 1';
     return _bookRepository.getBooksByQuery(whereQuery);
   }

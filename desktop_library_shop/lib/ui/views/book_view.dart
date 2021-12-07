@@ -621,41 +621,40 @@ class _BookViewState extends State<BookView> {
                                       controller: _tableVerticalController,
                                       scrollDirection: Axis.vertical,
                                       child: DataTable(
-                                        headingRowColor:
-                                            MaterialStateProperty.all(Colors.black12),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                          color: Colors.black,
-                                        )),
-                                        columns: [
-                                          DataColumn(label: Text('Code')),
-                                          DataColumn(label: Text('Reference Code')),
-                                          DataColumn(label: Text('Title')),
-                                          DataColumn(label: Text('Author')),
-                                          DataColumn(label: Text('Publisher')),
-                                          DataColumn(label: Text('Publish Year')),
-                                          DataColumn(label: Text('Cost')),
-                                          DataColumn(label: Text('Condition')),
-                                          DataColumn(label: Text('Retire')),
-                                          DataColumn(label: Text('Stock on')),
-                                        ],
-                                        rows: [
-                                          for (Book r in _books)
-                                            DataRow(cells: [
-                                              DataCell(Text(r.code)),
-                                              DataCell(Text(r.code)),
-                                              DataCell(Text(r.title)),
-                                              DataCell(Text(r.author)),
-                                              DataCell(Text(r.publisher)),
-                                              DataCell(Text(r.publishYear.toString())),
-                                              DataCell(Text(r.cost.toString())),
-                                              DataCell(Text(r.condition)),
-                                              DataCell(Text(r.retire!)),
-                                              DataCell(Text(
-                                                  '${r.stockOn.day}-${r.stockOn.month}-${r.stockOn.year}')),
-                                            ])
-                                        ],
-                                      ),
+                                          headingRowColor:
+                                              MaterialStateProperty.all(Colors.black12),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                            color: Colors.black,
+                                          )),
+                                          columns: [
+                                            DataColumn(label: Text('Code')),
+                                            DataColumn(label: Text('Reference Code')),
+                                            DataColumn(label: Text('Title')),
+                                            DataColumn(label: Text('Author')),
+                                            DataColumn(label: Text('Publisher')),
+                                            DataColumn(label: Text('Publish Year')),
+                                            DataColumn(label: Text('Cost')),
+                                            DataColumn(label: Text('Condition')),
+                                            DataColumn(label: Text('Retire')),
+                                            DataColumn(label: Text('Stock on')),
+                                          ],
+                                          rows: [
+                                            for (Book r in _books)
+                                              DataRow(cells: [
+                                                DataCell(Text(r.code)),
+                                                DataCell(Text(r.code)),
+                                                DataCell(Text(r.title)),
+                                                DataCell(Text(r.author)),
+                                                DataCell(Text(r.publisher)),
+                                                DataCell(Text(r.publishYear.toString())),
+                                                DataCell(Text(r.cost.toString())),
+                                                DataCell(Text(r.condition)),
+                                                DataCell(Text(r.retire!)),
+                                                DataCell(Text(
+                                                    '${r.stockOn.day}-${r.stockOn.month}-${r.stockOn.year}'))
+                                              ])
+                                          ]),
                                     ),
                                   ),
                                 ),
@@ -760,14 +759,14 @@ class BookCategory extends StatefulWidget {
 }
 
 class _BookCategoryState extends State<BookCategory> {
-  String value = 'Choose language';
+  String value = 'Choose category';
   @override
   Widget build(BuildContext context) {
     return AppDropDown(
       currentFocus: widget.currentFocus,
       validator: (value) {
         if (int.parse(value!) == 0) {
-          return 'Please choose language';
+          return 'Please Choose category';
         }
         return null;
       },
@@ -786,7 +785,7 @@ class _BookCategoryState extends State<BookCategory> {
 
   List<DropdownMenuItem<String>> _items() {
     int i = 0;
-    return ['Choose language', 'Java', 'Flutter', 'Python', 'Reactjs']
+    return ['Choose category', 'It', 'Physics', 'Arts', 'Economics']
         .map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem(
         value: (i++).toString(),
@@ -884,7 +883,7 @@ class _BookPublisherState extends State<BookPublisher> {
     return <String>[
       'Choose publisher',
       'CareerCup',
-      'O\'Reilly Media',
+      'OReilly Media',
     ].map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem(
         value: value,

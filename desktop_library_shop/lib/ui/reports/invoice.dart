@@ -136,6 +136,7 @@ class InvoiceReport extends StatelessWidget {
                   child: pw.Column(children: [
                     pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
@@ -145,7 +146,9 @@ class InvoiceReport extends StatelessWidget {
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
+                              padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
                               child: pw.Text(book.code),
                               decoration: pw.BoxDecoration(
@@ -154,6 +157,7 @@ class InvoiceReport extends StatelessWidget {
                     ]),
                     pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
@@ -163,7 +167,9 @@ class InvoiceReport extends StatelessWidget {
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
+                              padding: const pw.EdgeInsets.all(2.0),
                               child: pw.Text(
                                   '${book.stockOn.day}-${book.stockOn.month}-${book.stockOn.year}'),
                               height: 25,
@@ -173,6 +179,7 @@ class InvoiceReport extends StatelessWidget {
                     ]),
                     pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
@@ -182,8 +189,11 @@ class InvoiceReport extends StatelessWidget {
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
-                              child: pw.Text('${DateTime.now().toLocal()}'),
+                              padding: const pw.EdgeInsets.all(2.0),
+                              child: pw.Text(
+                                  '${DateTime.now().hour}: ${DateTime.now().minute}:${DateTime.now().second}'),
                               height: 25,
                               decoration: pw.BoxDecoration(
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
@@ -213,30 +223,37 @@ class InvoiceReport extends StatelessWidget {
             pw.Flexible(
                 flex: 3,
                 child: pw.Container(
-                  color: PdfColors.grey400,
                   child: pw.Table(
                       border: pw.TableBorder.all(color: PdfColors.black, width: 2.0),
                       children: [
                         pw.TableRow(children: [
-                          pw.Container(alignment: pw.Alignment.center, child: pw.Text('SR')),
                           pw.Container(
+                              color: PdfColors.grey400,
+                              alignment: pw.Alignment.center,
+                              child: pw.Text('SR')),
+                          pw.Container(
+                            color: PdfColors.grey400,
                             width: 120,
                             alignment: pw.Alignment.center,
                             child: pw.Text('TITLE'),
                           ),
                           pw.Container(
+                            color: PdfColors.grey400,
                             alignment: pw.Alignment.center,
                             child: pw.Text('AUTHOR'),
                           ),
                           pw.Container(
+                            color: PdfColors.grey400,
                             alignment: pw.Alignment.center,
                             child: pw.Text('PUBLISHER'),
                           ),
                           pw.Container(
+                            color: PdfColors.grey400,
                             alignment: pw.Alignment.center,
                             child: pw.Text('PUBLISH YEAR'),
                           ),
                           pw.Container(
+                            color: PdfColors.grey400,
                             alignment: pw.Alignment.center,
                           ),
                         ]),
@@ -273,6 +290,7 @@ class InvoiceReport extends StatelessWidget {
                   child: pw.Column(children: [
                     pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
                               padding: const pw.EdgeInsets.all(2.0),
                               height: 25,
@@ -282,6 +300,7 @@ class InvoiceReport extends StatelessWidget {
                                 border: pw.Border.all(color: PdfColors.black, width: 2.0),
                               ))),
                       pw.Flexible(
+                          fit: pw.FlexFit.tight,
                           child: pw.Container(
                               child: pw.Text('${book.condition}'),
                               height: 25,
