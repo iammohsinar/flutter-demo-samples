@@ -132,19 +132,6 @@ class _BookViewState extends State<BookView> {
                 child: AppPanel(
                   child: BaseView<BookBo>(
                     builder: (context, bookBo, _) {
-                      _bookdIdTextCtrl.text = _book.bookId.toString();
-                      _referenceCodeTextCtrl.text = _book.code;
-                      _titleTextCtrl.text = _book.title;
-                      _costTextCtrl.text = _book.cost.toString();
-                      _categoryId = _book.categoryId;
-                      _bookAuthorInitialValue =
-                          (_book == Book.initial()) ? 'Choose Author' : _book.author;
-                      _publisherInitialValue =
-                          (_book == Book.initial()) ? 'Choose publisher' : _book.publisher;
-                      _publishYearTextCtrl.text = _book.publishYear.toString();
-                      _totalCopiesTextCtrl.text = _book.totalCopies.toString();
-                      _languageTextCtrl.text = _book.language;
-
                       return Form(
                         key: _formKey,
                         child: Column(
@@ -181,6 +168,24 @@ class _BookViewState extends State<BookView> {
                                         next: _referenceNoFocus,
                                         onFieldSubmit: (value) async {
                                           _book = await bookBo.getByBarCode(value);
+
+                                          _bookdIdTextCtrl.text = _book.bookId.toString();
+                                          _referenceCodeTextCtrl.text = _book.code;
+                                          _titleTextCtrl.text = _book.title;
+                                          _costTextCtrl.text = _book.cost.toString();
+                                          _categoryId = _book.categoryId;
+                                          _bookAuthorInitialValue = (_book == Book.initial())
+                                              ? 'Choose Author'
+                                              : _book.author;
+                                          _publisherInitialValue = (_book == Book.initial())
+                                              ? 'Choose publisher'
+                                              : _book.publisher;
+                                          _publishYearTextCtrl.text =
+                                              _book.publishYear.toString();
+                                          _totalCopiesTextCtrl.text =
+                                              _book.totalCopies.toString();
+                                          _languageTextCtrl.text = _book.language;
+
                                           _barCodeIdFocus.unfocus();
                                           FocusScope.of(context)
                                               .requestFocus(_referenceNoFocus);
@@ -710,18 +715,19 @@ class _BookViewState extends State<BookView> {
 
   void _resetBookForm() {
     _book = Book.initial();
+    _bookdIdTextCtrl.text = '0';
     _totalCopiesTextCtrl.text = '';
     _languageTextCtrl.text = '';
-    // _codeTextCtrl.clear();
-    // _titleTextCtrl.clear();
-    // _costTextCtrl.clear();
-    // _referenceCodeTextCtrl.clear();
-    // _totalCopiesTextCtrl.clear();
-    // _languageTextCtrl.clear();
-    // _bookAuthorInitialValue = 'Choose Author';
-    // _categoryId = 0;
-    // _publisherInitialValue = 'Choose publisher';
-    // _publishYearTextCtrl.clear();
+    _codeTextCtrl.text = '';
+    _titleTextCtrl.text = '';
+    _costTextCtrl.text = '';
+    _referenceCodeTextCtrl.text = '';
+    _totalCopiesTextCtrl.text = '';
+    _languageTextCtrl.text = '';
+    _bookAuthorInitialValue = 'Choose Author';
+    _categoryId = 0;
+    _publisherInitialValue = 'Choose publisher';
+    _publishYearTextCtrl.text = '';
     //_formKey.currentState!.reset();
   }
 
@@ -772,13 +778,6 @@ class _BookCategoryState extends State<BookCategory> {
       },
       items: _items(),
       onChange: widget.onChange,
-      // (value) {
-      //   print(value);
-      //   setState(() {
-      //     widget.value = int.parse(value!);
-      //   });
-      //   FocusScope.of(context).requestFocus(widget.nextFocus);
-      // },
       value: widget.value.toString(),
     );
   }

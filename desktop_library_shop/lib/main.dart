@@ -13,14 +13,14 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    setWindowTitle('App title');
-    //Size s = await getWindowMaxSize();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  //   setWindowTitle('App title');
+  //   //Size s = await getWindowMaxSize();
 
-    setWindowMinSize(const Size(1000, 1000));
-    setWindowMaxSize(Size.infinite);
-  }
+  //   setWindowMinSize(const Size(1000, 1000));
+  //   setWindowMaxSize(Size.infinite);
+  // }
   setup();
   runApp(LibraryShopApp());
 }

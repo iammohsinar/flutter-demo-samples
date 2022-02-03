@@ -36,8 +36,6 @@ abstract class BookDao {
   Future<List<Book>> getAllBooksReturnedToday();
   Future<List<Book>> getBooksByQuery(
       int? categoryId, String? author, String? publisher, DateTime? from, DateTime to);
-
-  //Future<Book> getBookByBarCode(int code);
   Future<Book> save(Book book);
   void dispose();
 }

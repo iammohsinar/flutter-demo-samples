@@ -31,21 +31,6 @@ class InvoiceReport extends StatelessWidget {
       body: PdfPreview(
         build: (format) => _generatePdf(format, 'title'),
       ),
-
-      // Column(
-      //   children: [
-      //     // AppElevatedBtn(
-      //     //   focusNode: FocusNode(),
-      //     //   isEnable: true,
-      //     //   onPressedFn: onPressed,
-      //     //   text: 'Back',
-      //     //   imgUrl: 'assets/images/icons/back_arrow.png',
-      //     // ),
-      //     PdfPreview(
-      //       build: (format) => _generatePdf(format, 'title'),
-      //     ),
-      //   ],
-      // ),
     );
   }
 
@@ -328,50 +313,9 @@ class InvoiceReport extends StatelessWidget {
                     decoration: pw.BoxDecoration(
                       border: pw.Border.all(color: PdfColors.black, width: 2.0),
                     )),
-
-                // pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                //   pw.Column(children: [
-                //     // pw.Flexible(
-                //     //   child:
-                //     pw.Container(
-                //         padding: const pw.EdgeInsets.all(2.0),
-                //         child: pw.Text("RECEIVER'S SIGNATURE"),
-                //         decoration: pw.BoxDecoration(
-                //             border: pw.Border.all(color: PdfColors.black, width: 2.0),
-                //             color: PdfColors.grey300)),
-                //     //),
-                //     pw.Flexible(
-                //       fit: pw.FlexFit.tight,
-                //       child:
-                //           //  pw.Row(children: [
-                //           pw.Container(
-                //               padding: const pw.EdgeInsets.all(2.0),
-                //               height: 20,
-                //               //width: 100,
-                //               decoration: pw.BoxDecoration(
-                //                   border: pw.Border.all(color: PdfColors.black, width: 2.0),
-                //                   color: PdfColors.white)),
-                //     )
-                //   ])
-                //   //  )
-                // ]),
-                //])
               ),
             ])),
           ]);
-
-          // pw.Column(
-          //   children: [
-          //     pw.SizedBox(
-          //       width: double.infinity,
-          //       child: pw.FittedBox(
-          //         child: pw.Text(title, style: pw.TextStyle(font: font)),
-          //       ),
-          //     ),
-          //     pw.SizedBox(height: 20),
-          //     pw.Flexible(child: pw.FlutterLogo())
-          //   ],
-          // );
         },
       ),
     );

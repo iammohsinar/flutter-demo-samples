@@ -195,7 +195,7 @@ class LoginBackground extends StatelessWidget {
       right: MediaQuery.of(context).size.width / 6,
       child: Container(
         // height: MediaQuery.of(context).size.height / 4,
-        // width: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery.of(context).size.width / 2,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
         child: FittedBox(
@@ -206,10 +206,12 @@ class LoginBackground extends StatelessWidget {
               Image.asset(
                 'assets/images/login_background_left.png',
                 height: 350,
+                //width: MediaQuery.of(context).size.width / 6,
               ),
               Image.asset(
                 'assets/images/login_background_right.png',
                 height: 350,
+                //width: 100,
               ),
             ],
           ),

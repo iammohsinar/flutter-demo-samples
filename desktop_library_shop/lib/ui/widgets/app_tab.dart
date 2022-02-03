@@ -21,13 +21,10 @@ class AppTabBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        //height: double.maxFinite,
-        //width: double.maxFinite,
         decoration:
             BoxDecoration(color: backgroundColor, border: Border.all(color: Colors.black)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Container(

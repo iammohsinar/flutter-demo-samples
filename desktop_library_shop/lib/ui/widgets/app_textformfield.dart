@@ -23,8 +23,6 @@ class AppDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //width: 120,
-      //height: 30,
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: const Alignment(0, 0.2),
@@ -38,14 +36,9 @@ class AppDropDown extends StatelessWidget {
                 fontSize: (ScreenSize(context).smallSize) ? 8 : 10,
               ),
               isDense: true,
-              // counterText: ' ',
-              //prefixIcon: (icon != null) ? Icon(icon) : null, //icon ?? Icon(icon),
-              //enabled: isEnable,
               contentPadding: (ScreenSize(context).smallSize)
                   ? const EdgeInsets.only(top: 8, left: 6)
                   : const EdgeInsets.only(top: 15, left: 10),
-              //const EdgeInsets.all(10.0),,
-              // fillColor: activeColor, //(isEnable) ? fieldActiveColor : fieldFocusColor,
               filled: true,
               border: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black, width: 0.8)),
@@ -58,22 +51,14 @@ class AppDropDown extends StatelessWidget {
               enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: borderColor, width: 0.8))),
           style: TextStyle(
-            //fontSize: 18.0,
             fontSize: (ScreenSize(context).smallSize) ? 10 : 14,
             color: activeLabelColor,
           ),
-          // underline: Container(
-          //   height: 2,
-          //   color: Color(0xFF6e4875),
-          // ),
           icon: Icon(Icons.unfold_more),
           iconEnabledColor: Color(0xFF426d8e),
-          //iconSize: 24.0,
-          //  elevation: 16,
           value: value,
           onChanged: onChange,
           validator: validator,
-          // value: 'value',
           items: items),
     );
   }
@@ -89,7 +74,6 @@ class AppTextFormField extends StatelessWidget {
   final String? hintText;
   final TextEditingController? controller;
   final IconData? icon;
-  //final String validationMsg;
   final String? initialValue;
   final String? Function(String?)? validator;
   final Function(String)? onFieldSubmit;
@@ -106,7 +90,6 @@ class AppTextFormField extends StatelessWidget {
       this.next,
       this.controller,
       this.validator,
-      // required this.validationMsg,
       this.initialValue,
       this.icon,
       this.hintText,
@@ -125,8 +108,6 @@ class AppTextFormField extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
       maxLines: maxLines,
-      //minLines: 1,
-
       maxLength: maxLength,
       obscureText: obscureText,
       controller: controller,

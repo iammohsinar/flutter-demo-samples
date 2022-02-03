@@ -16,10 +16,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => AppTab());
       case 'login':
         return MaterialPageRoute(builder: (_) => LoginView());
-      // case 'student':
-      //   return MaterialPageRoute(builder: (_) => StudentView());
-      // case 'book':
-      //   return MaterialPageRoute(builder: (_) => BookView());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
