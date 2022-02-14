@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 01-12-2021 21:31:58
+// @ Modified time: 10-02-2022 00:42:52
+//
+
 import 'package:desktop_library_shop/core/enums/state_enums.dart';
 import 'package:desktop_library_shop/core/viewmodels/auth_bo.dart';
 import 'package:desktop_library_shop/ui/util/app_color.dart';
@@ -44,6 +52,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final appMediaQ = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
@@ -51,10 +60,10 @@ class _LoginViewState extends State<LoginView> {
         children: [
           const LoginBackground(),
           Positioned(
-              top: MediaQuery.of(context).size.height / 8,
-              left: MediaQuery.of(context).size.width / 2.8,
-              right: MediaQuery.of(context).size.width / 2.8,
-              bottom: MediaQuery.of(context).size.height / 4,
+              top: appMediaQ.height * 0.13,
+              left: appMediaQ.width * 0.36,
+              right: appMediaQ.width * 0.36,
+              bottom: appMediaQ.height * 0.25,
               child: Container(
                   padding: const EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
                   decoration: BoxDecoration(

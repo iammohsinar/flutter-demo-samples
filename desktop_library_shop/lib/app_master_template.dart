@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 03-12-2021 23:57:39
+// @ Modified time: 10-02-2022 00:41:54
+//
+
 import 'package:desktop_library_shop/core/viewmodels/auth_bo.dart';
 import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';

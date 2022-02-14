@@ -4,12 +4,29 @@
 ### For Flutter
 This is just demo app for learning purpose, fork to understand the code architecture or watch full youtube videos tutorial.
 
+### Configuration
+Import [create.sql](https://github.com/iammohsinar/flutter-demo-samples/blob/ce47075f89fb57f82bce09251eaec252ab06cb9b/desktop_library_shop/db/create.sql) to `Mysql`
+
+Change `Mysql` Database parameters in [db_connection.dart](https://github.com/iammohsinar/flutter-demo-samples/blob/ce47075f89fb57f82bce09251eaec252ab06cb9b/desktop_library_shop/lib/core/config/db_connection.dart), what you set on your machine.
+
+
 ### For windows
 This app has support of win32.
 
 to run on windows: type in cmd  `flutter run -d windows`
 
 ### For macOS
+Please read: https://flutter.dev/desktop#entitlements-and-the-app-sandbox
+
+add below permission in 
+
+Path: `macos-->Runner` directory 
+
+Files: `Release.entitlements` and `DebugProfile.entitlements` if required
+```
+<key>com.apple.security.network.client</key>
+<true/>
+```
 to run on mac: type in terminal `flutter run -d macos`
 
 
@@ -20,7 +37,7 @@ to run on mac: type in terminal `flutter run -d macos`
 
 ### full videos playlist tutorial
 
-([Youtube](https://youtube.com/playlist?list=PLuBF1mtcoAFmjTQd-inuGk9Rvnn9cldJR)
+([Youtube](https://youtube.com/playlist?list=PLuBF1mtcoAFmjTQd-inuGk9Rvnn9cldJR))
 
 
 ## Screen shot

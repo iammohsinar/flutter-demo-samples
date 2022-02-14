@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 26-10-2021 00:02:52
+// @ Modified time: 10-02-2022 00:45:33
+//
+
 import 'package:equatable/equatable.dart';
 import 'package:mysql1/mysql1.dart';
 
@@ -22,14 +30,6 @@ class User extends Equatable {
         isActive = 0,
         role = '';
 
-  User.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    userName = json['userName'];
-    password = json['password'];
-    isActive = json['isActive'];
-    role = json['role'];
-  }
-
   User.fromResult(ResultRow row) {
     print(row.fields);
     userId = row['userId'];
@@ -39,17 +39,6 @@ class User extends Equatable {
     role = row['role'];
   }
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['userId'] = userId;
-    _data['userName'] = userName;
-    _data['password'] = password;
-    _data['isActive'] = isActive;
-    _data['role'] = role;
-    return _data;
-  }
-
   @override
-  // TODO: implement props
   List<Object?> get props => [userId, userName, password, isActive, role];
 }

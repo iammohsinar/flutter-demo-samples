@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 21-11-2021 22:57:54
+// @ Modified time: 10-02-2022 00:43:00
+//
+
 import 'package:desktop_library_shop/core/services/book_dao.dart';
 import 'package:desktop_library_shop/core/viewmodels/home_bo.dart';
 import 'package:desktop_library_shop/locator.dart';
@@ -234,7 +242,6 @@ class _TotalBooksState extends State<TotalBooks> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -298,7 +305,6 @@ class _BooksCopiesState extends State<BooksCopies> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -338,7 +344,6 @@ class _ActiveBooksIssuedState extends State<ActiveBooksIssued> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -377,7 +382,6 @@ class _BooksIssuedSoFarState extends State<BooksIssuedSoFar> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -419,7 +423,6 @@ class _BooksIssuedTodayState extends State<BooksIssuedToday> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -458,7 +461,6 @@ class _BooksReturnedState extends State<BooksReturned> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -497,7 +499,6 @@ class _BooksDelayInReturnState extends State<BooksDelayInReturn> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -536,7 +537,6 @@ class _BooksDueReturnState extends State<BooksDueReturn> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -575,7 +575,6 @@ class _BooksAsNewState extends State<BooksAsNew> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -614,7 +613,6 @@ class _UseableBooksState extends State<UseableBooks> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -653,7 +651,6 @@ class _BooksToDiscardState extends State<BooksToDiscard> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -692,7 +689,6 @@ class _PoorBooksState extends State<PoorBooks> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -731,7 +727,6 @@ class _BooksInSingleRackState extends State<BooksInSingleRack> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -770,7 +765,6 @@ class _BooksCapacityState extends State<BooksCapacity> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -809,7 +803,6 @@ class _TotalStudentsState extends State<TotalStudents> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();
@@ -848,7 +841,6 @@ class _TotalStaffsState extends State<TotalStaffs> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     widget.isMount = false;
     loc<BookDao>().dispose();
     super.dispose();

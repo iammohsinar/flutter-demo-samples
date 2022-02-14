@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 02-11-2021 22:45:34
+// @ Modified time: 10-02-2022 00:45:47
+//
+
 import 'package:desktop_library_shop/core/models/book.dart';
 import 'package:desktop_library_shop/core/models/student.dart';
 import 'package:desktop_library_shop/core/models/user.dart';

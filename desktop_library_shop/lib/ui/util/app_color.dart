@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 14-11-2021 23:29:57
+// @ Modified time: 10-02-2022 00:44:10
+//
+
 //(index == 0) ? const Color(0xff8E8D88) : Color(0xffDDDCD4)
 
 import 'package:flutter/material.dart';

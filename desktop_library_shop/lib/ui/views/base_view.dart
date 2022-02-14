@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 19-12-2021 12:57:23
+// @ Modified time: 10-02-2022 00:43:24
+//
+
 import 'package:desktop_library_shop/core/viewmodels/base_bo.dart';
 import 'package:desktop_library_shop/locator.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 27-11-2021 15:31:52
+// @ Modified time: 10-02-2022 00:42:29
+//
+
 import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:flutter/cupertino.dart';

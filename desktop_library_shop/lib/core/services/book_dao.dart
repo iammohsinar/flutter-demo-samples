@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 02-12-2021 23:17:01
+// @ Modified time: 10-02-2022 00:45:06
+//
+
 import 'dart:async';
 
 import 'package:desktop_library_shop/core/models/book.dart';
@@ -45,93 +53,53 @@ class BookDaoImpl extends BookDao {
 
   @override
   Future<List<BookBorrowed>> getBooksBorrowed(int id) async {
-    try {
-      return await _bookRepository.getBooksBorrowedByStudent(id);
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getBooksBorrowedByStudent(id);
   }
 
   @override
   Future<Book> getByCategory(int id) async {
-    try {
-      return await _bookRepository.getBookByCategory(id);
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getBookByCategory(id);
   }
 
   @override
   Future<Book> getByCode(String code) async {
-    try {
-      return await _bookRepository.getBookByCode(code);
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getBookByCode(code);
   }
 
   @override
   Future<List<Book>> getAll() async {
-    try {
-      return await _bookRepository.getAll();
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getAll();
   }
 
   @override
   Future<List<Book>> getAllActiveIssuedBooks() async {
-    try {
-      return await _bookRepository.getAllActiveIssuedBooks();
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getAllActiveIssuedBooks();
   }
 
   @override
   Future<List<Book>> getAllBooksIssuedSoFar() async {
-    try {
-      return await _bookRepository.getAllBooksIssuedSoFar();
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getAllBooksIssuedSoFar();
   }
 
   @override
   Future<List<Book>> getAllBooksIssuedToday() async {
-    try {
-      return await _bookRepository.getAllBooksIssuedToday();
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getAllBooksIssuedToday();
   }
 
   @override
   Future<List<Book>> getAllBooksReturnedToday() async {
-    try {
-      return await _bookRepository.getAllBooksReturnedToday();
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.getAllBooksReturnedToday();
   }
 
   @override
   Future<int> getSampleDataCount() {
-    try {
-      return Future<int>.delayed(
-          const Duration(seconds: 2), () => DateTime.now().microsecond ~/ 3);
-    } catch (e) {
-      rethrow;
-    }
+    return Future<int>.delayed(
+        const Duration(seconds: 2), () => DateTime.now().microsecond ~/ 3);
   }
 
   @override
   Future<Book> save(Book book) async {
-    try {
-      return await _bookRepository.save(book);
-    } catch (e) {
-      rethrow;
-    }
+    return await _bookRepository.save(book);
   }
 
   void _doDispose(StreamController controller) {
@@ -176,9 +144,4 @@ class BookDaoImpl extends BookDao {
     whereQuery += 'b.isActive = 1';
     return _bookRepository.getBooksByQuery(whereQuery);
   }
-
-  // @override
-  // Future<Book> getBookByBarCode(int code) {
-  //   return _bookRepository.getByBarCode(code);
-  // }
 }

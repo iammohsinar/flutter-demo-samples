@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 26-10-2021 00:02:52
+// @ Modified time: 10-02-2022 00:45:36
+//
+
 import 'package:equatable/equatable.dart';
 import 'package:mysql1/src/results/row.dart';
 
@@ -18,22 +26,6 @@ class Student extends Equatable {
         name = '',
         enrolledCardNumber = '',
         isActive = 0;
-
-  Student.fromJson(Map<String, dynamic> json) {
-    studentId = json['studentId'];
-    name = json['name'];
-    enrolledCardNumber = json['enrolledCardNumber'];
-    isActive = json['isActive'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['studentId'] = studentId;
-    _data['name'] = name;
-    _data['enrolledCardNumber'] = enrolledCardNumber;
-    _data['isActive'] = isActive;
-    return _data;
-  }
 
   Student.fromResult(ResultRow row) {
     studentId = row['studentId'];

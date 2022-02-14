@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 03-11-2021 00:22:58
+// @ Modified time: 10-02-2022 00:44:55
+//
+
 import 'package:desktop_library_shop/core/models/student.dart';
 import 'package:desktop_library_shop/core/repositories/student_repository.dart';
 import 'package:desktop_library_shop/locator.dart';
@@ -12,19 +20,11 @@ class StudentDaoImpl extends StudentDao {
 
   @override
   Future<Student> getById(int id) async {
-    try {
-      return await _studentRepository.getStudentById(id);
-    } catch (e) {
-      rethrow;
-    }
+    return await _studentRepository.getStudentById(id);
   }
 
   @override
   Future<Student> getByRollNumber(String rollNumber) async {
-    try {
-      return await _studentRepository.getStudentData(rollNumber);
-    } catch (e) {
-      rethrow;
-    }
+    return await _studentRepository.getStudentData(rollNumber);
   }
 }

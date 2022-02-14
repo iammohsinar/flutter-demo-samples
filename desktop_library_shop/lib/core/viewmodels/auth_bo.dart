@@ -1,6 +1,17 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 03-12-2021 23:57:39
+// @ Modified time: 10-02-2022 00:44:41
+//
+
+import 'dart:io';
+
 import 'package:desktop_library_shop/core/enums/state_enums.dart';
 import 'package:desktop_library_shop/core/services/user_dao.dart';
 import 'package:desktop_library_shop/core/viewmodels/base_bo.dart';
+import 'package:flutter/material.dart';
 
 import '../../locator.dart';
 
@@ -23,12 +34,24 @@ class AuthBoImpl extends AuthBo {
       setState(StateEnum.idle);
       return false;
     }
-    var success = await _userDao.getAuthUser(userName, password);
-    if (!success) {
-      errorMessage = 'username or password invalid';
+    try {
+      var success = await _userDao.getAuthUser(userName, password);
+      if (!success) {
+        errorMessage = 'username or password invalid';
+      }
+      setState(StateEnum.idle);
+      return success;
+    } on SocketException catch (e, s) {
+      debugPrint("Please Check DB connections $e $s");
+      errorMessage = "Please Check DB connections";
+      setState(StateEnum.idle);
+      return false;
+    } catch (e, s) {
+      debugPrint(" different exception $e $s");
+      errorMessage = "User is not available, please call admin";
+      setState(StateEnum.idle);
+      return false;
     }
-    setState(StateEnum.idle);
-    return success;
   }
 
   @override

@@ -1,3 +1,11 @@
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 24-12-2021 02:14:05
+// @ Modified time: 10-02-2022 00:42:01
+//
+
 import 'package:desktop_library_shop/ui/util/app_color.dart';
 import 'package:desktop_library_shop/ui/util/app_responsive.dart';
 import 'package:flutter/cupertino.dart';
@@ -113,7 +121,7 @@ class AppTextFormField extends StatelessWidget {
       controller: controller,
       validator: validator,
       onFieldSubmitted: onFieldSubmit ??
-          (test) {
+          (val) {
             current.unfocus();
             FocusScope.of(context).requestFocus(next);
           },

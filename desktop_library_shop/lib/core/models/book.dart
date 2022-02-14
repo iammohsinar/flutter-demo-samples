@@ -1,5 +1,11 @@
-import 'package:desktop_library_shop/core/models/student.dart';
-import 'package:desktop_library_shop/core/models/user.dart';
+//
+// @ Author: Mohsin AR
+// @ Email: mohsinazeemrind@gmail.com
+// @ Github: https://github.com/iammohsinar
+// @ Create Time: 03-12-2021 23:57:39
+// @ Modified time: 10-02-2022 00:45:43
+//
+
 import 'package:equatable/equatable.dart';
 import 'package:mysql1/src/results/row.dart';
 
@@ -56,36 +62,6 @@ class Book extends Equatable {
         retire = '',
         totalCopies = 0,
         language = '';
-
-  Book.fromJson(Map<String, dynamic> json) {
-    bookId = json['bookId'];
-    code = json['code'];
-    title = json['title'];
-    author = json['author'];
-    publisher = json['publisher'];
-    cost = json['cost'];
-    categoryId = json['categoryId'];
-    isActive = json['isActive'];
-    stockKeeper = json['stockKeeper'];
-    stockOn = json['stockOn'];
-    isIssue = json['isIssue'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['bookId'] = bookId;
-    _data['title'] = title;
-    _data['author'] = author;
-    _data['publisher'] = publisher;
-    _data['publisherYear'] = publishYear;
-    _data['cost'] = cost;
-    _data['categoryId'] = categoryId;
-    _data['isActive'] = isActive;
-    _data['stockKeeper'] = stockKeeper;
-    _data['stockOn'] = stockOn;
-    _data['isIssue'] = isIssue;
-    return _data;
-  }
 
   Book.fromResult(ResultRow r) {
     bookId = r['bookId'];
